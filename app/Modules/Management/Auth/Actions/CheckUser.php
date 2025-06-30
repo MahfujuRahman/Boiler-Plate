@@ -10,6 +10,7 @@ class CheckUser
     public static function execute()
     {
         try {
+            // dd(auth()->check());
             if (auth()->check()) {
                 $user = self::$model::where('id', auth()->user()->id)
                     ->select([

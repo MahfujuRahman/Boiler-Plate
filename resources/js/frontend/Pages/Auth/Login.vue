@@ -129,6 +129,7 @@ export default {
             window.s_alert("Login Successfully");
             localStorage.setItem("admin_token", data.access_token);
             localStorage.setItem("admin_role", data.user?.role_id);
+
             if (data.user?.role_id == 1) {
               window.location.href = "super-admin#/dashboard";
             } else if (data.user?.role_id == 2) {

@@ -2,46 +2,67 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Course\CourseBatchStudent;
+use App\Models\Quiz\Quiz;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-use App\Modules\UserRole\Model as UserRole;
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // protected $fillable = [
+    //     'name', 'email', 'password',
+    // ];
+    protected $guarded = [];
+    
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
+    protected $appends = ['photo_url'];
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->slug = random_int(100,999).$user->id.random_int(1000,9999);
+            $user->save();
+        });
+    }
+
+    public function getPhotoUrlAttribute() {
+        if (count(explode('http', $this->photo)) > 1) {
+            return $this->photo;
+        } else {
+            return url('') . '/' . $this->photo;
+        }
+    }
+
+    public function roles() {
+        return $this->belongsToMany(UserRole::class, 'user_user_role', 'user_id', 'user_role_id', 'id', 'role_serial');
+    }
+
+    public function permissions() {
+        return $this->belongsToMany(UserPermission::class, 'user_user_permission', 'user_id', 'user_permission_id', 'id', 'permission_serial'); //user::id
+    }
+
+    public function batchStudents() {
+        return $this->hasMany(CourseBatchStudent::class, 'student_id', 'id');
+    }
+
+    public function quizes() {
+        return $this->belongsToMany(Quiz::class, 'quiz_users', 'user_id',  'quiz_id');
+    }
+
+    // public function quizes() {
+    //     return $this->belongsToMany(Quiz::class, 'quiz_users', 'user_id',  'quiz_id');
+    // }
+    
+
 }

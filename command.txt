@@ -13,3 +13,6 @@ php artisan make:table BasicCrudManagement/Blog/BlogBlogCategory [blog_id:bigint
 php artisan make:table BasicCrudManagement/Blog/BlogView [blog_id:bigint,user_id:bigint,ip:string] --model
 
 php artisan make:table BasicCrudManagement/Blog/BlogComment [blog_id:bigint,user_id:bigint,name:string,email:string,comment:text] --model
+
+
+enum:active.inactive;

@@ -1,0 +1,13 @@
+
+/*
+|--------------------------------------------------------------------------
+| Basic CRUD Management
+|--------------------------------------------------------------------------
+*/
+
+php artisan make:module User [first_name:string-100, last_name:string-100,user_name:string-100,telegram_id:string-100,telegram_name:text,mobile_number:string-20,photo:string-255,email:string-255,email_verified_at:datetime,password:string-255,remember_token:string-255] --vue
+
+//need deafult value 0 in is_seen
+php artisan make:module ContactMessage [full_name:string-100,email:string-100,subject:string-255,message:string-text,is_seen:boolean] --vue
+
+php artisan make:module WebsiteBanners [title:string-255,subtitle:text,is_featured:boolean,image:string-255,btn_one_text:string-50,btn_one_url:string-255,btn_two_text:string-50,btn_two_url:string-255] --vue

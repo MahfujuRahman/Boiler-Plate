@@ -50,6 +50,8 @@ class StoreData
                 });
             }
 
+            
+
             return messageResponse('Settings updated successfully', $responseData, 200);
         } catch (\Exception $e) {
             return messageResponse($e->getMessage(), [], 500, 'server_error');
