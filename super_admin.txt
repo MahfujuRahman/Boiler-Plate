@@ -10,4 +10,54 @@ php artisan make:module User [first_name:string-100, last_name:string-100,user_n
 //need deafult value 0 in is_seen
 php artisan make:module ContactMessage [full_name:string-100,email:string-100,subject:string-255,message:string-text,is_seen:boolean] --vue
 
-php artisan make:module WebsiteBanners [title:string-255,subtitle:text,is_featured:boolean,image:string-255,btn_one_text:string-50,btn_one_url:string-255,btn_two_text:string-50,btn_two_url:string-255] --vue
+
+//Home page
+php artisan make:module WebsiteBanner [title:string-255,subtitle:text,is_featured:boolean,image:string-255,btn_one_text:string-50,btn_one_url:string-255,btn_two_text:string-50,btn_two_url:string-255] --vue
+
+php artisan make:module SubBanner [title:string-255,image:string-255] --vue
+ 
+php artisan make:module SuccssStories [title:string-255,thumbnail_image:string-255,video_link-string-255] --vue
+
+php artisan make:module OurSpeciality [title:string-255,image:string-255] --vue
+
+php artisan make:module OurTrainer [title:string-255,description:text,image:string-255] --vue
+
+php artisan make:module Seminer [title:string-255,poster:string-255,whatsapp_group:stringo-255,facebook_group:string-255,telegram_group:string-255,details:text,date_time:datetime,promo_video:text] --vue
+php artisan make:table Seminer/SeminerParticipant [seminar_id:bigint,full_name:string-100,email:string-50,phone_number:string-20,address:string-255] --model
+
+//Course
+php artisan make:module CourseManagement/Course [title:string-255,image:string-255,intro_video:string-255,published_at:date,is_published:boolean,what_is_this_course:text,why_is_this_course:text,course_module_text:text,type:enum-online.offline.daycare] --vue
+
+php artisan make:module CourseManagement/CourseBatch [course_id:bigint,batch_name:string-100,admission_start_date:datetime,admission_end_date:datetime,batch_student_limit:bigint,seat_booked:int,booked_percent:float,course_price:double,course_discount:double,after_discount_price:double,first_class_date:datetime,class_days:string-100,class_start_time:time,class_end_time:time,show_percentage_on_cards:enum-yes.no]
+
+php artisan make:module 
+
+php artisan make:module 
+
+php artisan make:module 
+
+php artisan make:module 
+
+php artisan make:module 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
