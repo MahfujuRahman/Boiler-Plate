@@ -5,7 +5,7 @@
 |--------------------------------------------------------------------------
 */
 
-php artisan make:module User [first_name:string-100, last_name:string-100,user_name:string-100,telegram_id:string-100,telegram_name:text,mobile_number:string-20,photo:string-255,email:string-255,email_verified_at:datetime,password:string-255,remember_token:string-255] --vue
+php artisan make:module User [first_name:string-100, last_name:string-100,user_name:string-100,telegram_id:string-100,telegram_name:text,mobile_number:string-20,photo:string-255,email:string-255,email_verified_at:datetime,password:string-255, :string-255] --vue
 php artisan make:table  UserSocialLink [user_id:bigint,media_name:string-100,link:string-100] --vue
 php artisan make:table UserContactNumber [user_id:bigint,phone_number:string-45] --vue
 
@@ -24,12 +24,12 @@ php artisan make:module OurSpeciality [title:string-255,image:string-255] --vue
 
 php artisan make:module OurTrainer [title:string-255,description:text,image:string-255] --vue
 
-php artisan make:module Seminer [title:string-255,poster:string-255,whatsapp_group:stringo-255,facebook_group:string-255,telegram_group:string-255,details:text,date_time:datetime,promo_video:text] --vue
+php artisan make:module Seminer [title:string-255,poster:string-255,whatsapp_group:string-255,facebook_group:string-255,telegram_group:string-255,details:text,date_time:datetime,promo_video:text] --vue
 php artisan make:table Seminer/SeminerParticipant [seminar_id:bigint,full_name:string-100,email:string-50,phone_number:string-20,address:string-255] --model
 
 
 
-//About Page
+//About Page        
 php artisan make:module AboutUs [title:string-255,description:text,image:string-255] --vue
 
 php artisan make:module WebsiteBrand [title:string-255,image:string-255] --vue
@@ -54,9 +54,9 @@ php artisan make:module Gallery [gallery_category_id:bigint,title:string-255,des
 
 //Blog Page
 
-php artisan make:module Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,meta_description:text,meta_keywords:string-100,thumbnail_image:string-100,images:text,blog_type:string-100,url:string-100,show_top:string-100,contributors:json] --vue
-
 php artisan make:module BlogCategory [title:string-100,description:text] --vue
+
+php artisan make:module Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,meta_description:text,meta_keywords:string-100,thumbnail_image:string-100,images:text,blog_type:string-100,url:string-100,show_top:string-100,contributors:json] --vue
 
 php artisan make:module BlogBlogCategory [blog_id:bigint,blog_category_id:bigint] --vue
 
@@ -117,7 +117,7 @@ php artisan make:module CourseModuleClass [course_id:bigint,milestone_id:bigint,
 
 php artisan make:module CourseModuleClassExam [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,exam_id:bigint] --vue
 
-php artisan make:module CourseModuleClassQuiz [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,quiz_id:bigint] --vue
+php artisan make:module   [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,quiz_id:bigint] --vue
 
 php artisan make:module CourseModuleClassResourse [course_id:bigint,course_module_class_id:bigint,course_module_id:bigint,resourse_content:text,resourse_link:string-100] --vue
 
@@ -141,17 +141,17 @@ php artisan make:module CourseYouWillLearn [course_id:bigint,title:text] --vue
 
 // Quiz
 
-php artisan make:module Quiz [title:string-255,description:text] --vue
+php artisan make:module QuizQuestionTopic [title:string-200,description:longtext] --vue
 
 php artisan make:module QuizQuestion [quiz_question_topic_id:bigint,quiz_id:bigint,topic_title:string-200,title:string-200,mark:int,is_multiple:string-100] --vue
 
 php artisan make:module QuizQuestionOption [quiz_id:bigint,question_id:bigint,title:string-191,is_correct:boolean] --vue
 
-php artisan make:module QuizQuestionSubmission [user_id:bigint,quiz_id:bigint,question_id:bigint,option_id:bigint,is_correct:boolean] --vue
-
-php artisan make:module QuizQuestionTopic [title:string-200,description:longtext] --vue
+php artisan make:module Quiz [title:string-255,description:text] --vue
 
 php artisan make:module QuizQuizQuestion [quiz_id:bigint,quiz_question_id:bigint] --vue
+
+php artisan make:module QuizQuestionSubmission [user_id:bigint,quiz_id:bigint,question_id:bigint,option_id:bigint,is_correct:boolean] --vue
 
 php artisan make:module QuizUser [user_id:bigint,quiz_id:bigint,mark:double] --vue
 

@@ -1,0 +1,165 @@
+{
+  "database_name": "techpark_english_lms",
+  "tables": [
+    {
+      "name": "users",
+      "fields": [
+        {"name": "id", "type": "bigint", "primary": true, "auto_increment": true},
+        {"name": "first_name", "type": "varchar(100)"},
+        {"name": "last_name", "type": "varchar(100)"},
+        {"name": "user_name", "type": "varchar(100)"},
+        {"name": "telegram_id", "type": "varchar(100)"},
+        {"name": "telegram_name", "type": "text"},
+        {"name": "mobile_number", "type": "varchar(20)"},
+        {"name": "photo", "type": "varchar(255)"},
+        {"name": "email", "type": "varchar(255)"},
+        {"name": "email_verified_at", "type": "datetime"},
+        {"name": "password", "type": "varchar(255)"},
+        {"name": "remember_token", "type": "varchar(255)"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "updated_at", "type": "timestamp"}
+      ],
+      "category": "user_management"
+    },
+    {
+      "name": "courses",
+      "fields": [
+        {"name": "id", "type": "bigint", "primary": true, "auto_increment": true},
+        {"name": "title", "type": "varchar(255)"},
+        {"name": "image", "type": "varchar(255)"},
+        {"name": "intro_video", "type": "varchar(255)"},
+        {"name": "published_at", "type": "date"},
+        {"name": "is_published", "type": "boolean"},
+        {"name": "what_is_this_course", "type": "text"},
+        {"name": "why_is_this_course", "type": "text"},
+        {"name": "course_module_text", "type": "text"},
+        {"name": "type", "type": "enum('online','offline','daycare')"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "updated_at", "type": "timestamp"}
+      ],
+      "category": "course_system"
+    },
+    {
+      "name": "course_batches",
+      "fields": [
+        {"name": "id", "type": "bigint", "primary": true, "auto_increment": true},
+        {"name": "course_id", "type": "bigint", "foreign_key": "courses.id"},
+        {"name": "batch_name", "type": "varchar(100)"},
+        {"name": "admission_start_date", "type": "datetime"},
+        {"name": "admission_end_date", "type": "datetime"},
+        {"name": "batch_student_limit", "type": "bigint"},
+        {"name": "seat_booked", "type": "int"},
+        {"name": "booked_percent", "type": "float"},
+        {"name": "course_price", "type": "double"},
+        {"name": "course_discount", "type": "double"},
+        {"name": "after_discount_price", "type": "double"},
+        {"name": "first_class_date", "type": "datetime"},
+        {"name": "class_days", "type": "varchar(100)"},
+        {"name": "class_start_time", "type": "time"},
+        {"name": "class_end_time", "type": "time"},
+        {"name": "show_percentage_on_cards", "type": "enum('yes','no')"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "updated_at", "type": "timestamp"}
+      ],
+      "category": "course_system"
+    },
+    {
+      "name": "blogs",
+      "fields": [
+        {"name": "id", "type": "bigint", "primary": true, "auto_increment": true},
+        {"name": "blog_category_id", "type": "bigint", "foreign_key": "blog_categories.id"},
+        {"name": "title", "type": "varchar(100)"},
+        {"name": "description", "type": "text"},
+        {"name": "tags", "type": "text"},
+        {"name": "publish_date", "type": "datetime"},
+        {"name": "writer", "type": "varchar(100)"},
+        {"name": "meta_description", "type": "text"},
+        {"name": "meta_keywords", "type": "varchar(100)"},
+        {"name": "thumbnail_image", "type": "varchar(100)"},
+        {"name": "images", "type": "text"},
+        {"name": "blog_type", "type": "varchar(100)"},
+        {"name": "url", "type": "varchar(100)"},
+        {"name": "show_top", "type": "varchar(100)"},
+        {"name": "contributors", "type": "json"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "updated_at", "type": "timestamp"}
+      ],
+      "category": "blog_system"
+    },
+    {
+      "name": "quizzes",
+      "fields": [
+        {"name": "id", "type": "bigint", "primary": true, "auto_increment": true},
+        {"name": "title", "type": "varchar(255)"},
+        {"name": "description", "type": "text"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "updated_at", "type": "timestamp"}
+      ],
+      "category": "quiz_system"
+    },
+    {
+      "name": "quiz_questions",
+      "fields": [
+        {"name": "id", "type": "bigint", "primary": true, "auto_increment": true},
+        {"name": "quiz_question_topic_id", "type": "bigint", "foreign_key": "quiz_question_topics.id"},
+        {"name": "quiz_id", "type": "bigint", "foreign_key": "quizzes.id"},
+        {"name": "topic_title", "type": "varchar(200)"},
+        {"name": "title", "type": "varchar(200)"},
+        {"name": "mark", "type": "int"},
+        {"name": "is_multiple", "type": "varchar(100)"},
+        {"name": "created_at", "type": "timestamp"},
+        {"name": "updated_at", "type": "timestamp"}
+      ],
+      "category": "quiz_system"
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "course_batches",
+      "from_field": "course_id",
+      "to_table": "courses", 
+      "to_field": "id",
+      "type": "many_to_one"
+    },
+    {
+      "from_table": "blogs",
+      "from_field": "blog_category_id", 
+      "to_table": "blog_categories",
+      "to_field": "id",
+      "type": "many_to_one"
+    },
+    {
+      "from_table": "quiz_questions",
+      "from_field": "quiz_id",
+      "to_table": "quizzes",
+      "to_field": "id", 
+      "type": "many_to_one"
+    }
+  ],
+  "categories": {
+    "user_management": {
+      "color": "#3B82F6",
+      "tables": ["users", "user_social_links", "user_contact_numbers"]
+    },
+    "course_system": {
+      "color": "#10B981", 
+      "tables": ["courses", "course_batches", "course_milestones", "course_modules", "course_module_classes"]
+    },
+    "blog_system": {
+      "color": "#F59E0B",
+      "tables": ["blogs", "blog_categories", "blog_comments", "blog_writers"]
+    },
+    "quiz_system": {
+      "color": "#8B5CF6",
+      "tables": ["quizzes", "quiz_questions", "quiz_question_options", "quiz_question_topics"]
+    },
+    "website_content": {
+      "color": "#6B7280",
+      "tables": ["website_banners", "success_stories", "about_us", "galleries"]
+    },
+    "communication": {
+      "color": "#EF4444", 
+      "tables": ["contact_messages", "seminars", "seminar_participants"]
+    }
+  }
+}
