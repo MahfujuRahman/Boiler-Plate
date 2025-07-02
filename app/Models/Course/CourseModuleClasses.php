@@ -6,7 +6,7 @@ use App\Models\Quiz\Quiz;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CourseModuleClasses extends Model
+class CourseModuleClasses extends Model 
 {
     use HasFactory;
     protected $guarded = [];

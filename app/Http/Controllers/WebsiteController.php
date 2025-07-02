@@ -165,12 +165,12 @@ class WebsiteController extends Controller
 
         if (!$course_std_check) {
             $enroll_payment = new EnrollInformation();
-            $enroll_payment->course_id = $course->id;
+            $enroll_payment->course_id = $course->id; 
             $enroll_payment->student_id = auth()->user()->id;
             $enroll_payment->batch_id = $batch->id;
             $enroll_payment->trx_id = request()->trx_id;
             $enroll_payment->payment_type = 'online';
-            $enroll_payment->save();
+            $enroll_payment->save(); 
 
             $course_batch_student = new CourseBatchStudent();
             $course_batch_student->course_id = $enroll_payment->course_id;

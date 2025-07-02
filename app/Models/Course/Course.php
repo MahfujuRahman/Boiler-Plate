@@ -111,7 +111,7 @@ class Course extends Model
     public function course_you_will_learns()
     {
         return $this->hasMany(CourseYouWillLearns::class, 'course_id');
-    }
+    } 
 
     public function course_you_will_learn_for_us()
     {
