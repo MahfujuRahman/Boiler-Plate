@@ -26,7 +26,6 @@ php artisan make:module GalleryManagement/Gallery [gallery_category_id:bigint,ti
 
 
 //Communication Messages
-
 //need deafult value 0 in is_seen
 php artisan make:module CommunicationManagement/ContactMessage [full_name:string-100,email:string-100,subject:string-255,message:string-text,is_seen:boolean] --vue
 php artisan make:table CommunicationManagement/ContactMessage/Subscriber [email:string-255] --model
@@ -50,28 +49,30 @@ php artisan make:module WebsiteManagement/OurTeam [title:string-255,description:
 
 
 //Blog Page 
-php artisan make:module Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,meta_description:text,meta_keywords:string-100,thumbnail_image:string-100,images:text,blog_type:string-100,url:string-100,show_top:string-100,contributors:json] --vue
+php artisan make:module BlogManagement/BlogCategory [title:string-100,description:text] --vue
+php artisan make:table BlogManagement/BlogCategory/BlogBlogCategory [blog_id:bigint,blog_category_id:bigint] --model
 
-php artisan make:module BlogCategory [title:string-100,description:text] --vue
+php artisan make:module BlogManagement/Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,thumbnail_image:string-100,images:text,blog_type:string-100,url:string-100,show_top:string-100,contributors:json,is_featured:boolean,is_published:boolean] --vue
+php artisan make:table BlogManagement/Blog/BlogMeta [blog_id:bigint,title:string-150,description:longtext,keywords:string-150,image:string-100,image_alter_text:string-150,image_title:string-150] --model
+php artisan make:table BlogManagement/Blog/BlogComment [blog_id:bigint,user_id:bigint,comment:text] --model
+php artisan make:table BlogManagement/Blog/BlogCommentReply [blog_comment_id:bigint,comment:json,user_id:bigint,] --model
+php artisan make:table BlogManagement/Blog/BlogCommentBlogCommentReply [blog_comment_id:bigint,blog_comment_reply_id:bigint] --model
+php artisan make:table BlogManagement/Blog/BlogVideoLink [blog_id:bigint,video_link:string-50] --model
+php artisan make:table BlogManagement/Blog/BlogView [blog_id:bigint,user_id:bigint,ip:string-100] --model
+php artisan make:table BlogManagement/Blog/BlogWriter [name:string-100] --model
 
-php artisan make:module BlogBlogCategory [blog_id:bigint,blog_category_id:bigint] --vue
+php artisan make:module BlogManagement/BlogTag [title:string-150] --vue
 
-php artisan make:module BlogComment [blog_id:bigint,user_id:bigint,name:string-100,email:string-100,comment:text] --vue
+// Quiz
+php artisan make:module QuizManagement/QuizQuestionTopic [title:string-200] --vue
 
-php artisan make:module BlogCommentBlogCommentReply [blog_comment_id:bigint,blog_comment_reply_id:bigint] --vue
+php artisan make:module QuizManagement/QuizQuestion [quiz_question_topic_id:bigint,title:string-255,question_level:enum-easy.medium.hard,mark:float,is_multiple:boolean,session_year] --vue
+php artisan make:table QuizManagement/QuizQuestion/QuizQuestionOption [quiz_question_id:bigint,title:string-255,is_correct:boolean,image:string-255] --model
 
-php artisan make:module BlogCommentReply [blog_comment_id:bigint,comment:text] --vue
-
-php artisan make:module BlogMeta [blog_id:bigint,title:string-150,description:longtext,keywords:string-150,image:string-100,image_alter_text:string-150,image_title:string-150] --vue
-
-php artisan make:module BlogTag [title:string-150] --vue
-
-php artisan make:module BlogVideoLink [blog_id:bigint,video_link:string-50] --vue
-
-php artisan make:module BlogView [blog_id:bigint,user_id:bigint,ip:string-100] --vue
-
-php artisan make:module BlogWriter [name:string-100] --vue
-
+php artisan make:module QuizManagement/Quiz [title:string-255,description:text,total_question:int,exam_start_datetime:datetime,exam_end_datetime:datetime,total_mark:float,pass_mark:float,is_negative_marking:boolean,negative_value:float] --vue
+php artisan make:table QuizManagement/Quiz/QuizQuizQuestion [quiz_id:bigint,quiz_question_id:bigint] --model
+php artisan make:table QuizManagement/Quiz/QuizSubmission [user_id:bigint,quiz_id:bigint,quiz_question_id:bigint,quiz_question_option_id:json,course_module_class_id:bigint,is_correct:boolean] --model
+php artisan make:table QuizManagement/Quiz/QuizSubmissionResult [user_id:bigint,quiz_id:bigint,submission_no,course_module_class_id:bigint,quiz_mark:double,obtain_mark:float,submission_datetime:datetime] --model
 
 
 //Course
@@ -132,29 +133,6 @@ php artisan make:module CourseWhatYouWillGet [course_id:bigint,title:text] --vue
 php artisan make:module CourseWhyYouLearnFromUs [course_id:bigint,title:text] --vue
 
 php artisan make:module CourseYouWillLearn [course_id:bigint,title:text] --vue
-
-
-
-// Quiz
-
-php artisan make:module Quiz [title:string-255,description:text] --vue
-
-php artisan make:module QuizQuestion [quiz_question_topic_id:bigint,quiz_id:bigint,topic_title:string-200,title:string-200,mark:int,is_multiple:string-100] --vue
-
-php artisan make:module QuizQuestionOption [quiz_id:bigint,question_id:bigint,title:string-191,is_correct:boolean] --vue
-
-php artisan make:module QuizQuestionSubmission [user_id:bigint,quiz_id:bigint,question_id:bigint,option_id:bigint,is_correct:boolean] --vue
-
-php artisan make:module QuizQuestionTopic [title:string-200,description:longtext] --vue
-
-php artisan make:module QuizQuizQuestion [quiz_id:bigint,quiz_question_id:bigint] --vue
-
-php artisan make:module QuizUser [user_id:bigint,quiz_id:bigint,mark:double] --vue
-
-php artisan make:module CourseModuleClassQuiz [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,quiz_id:bigint] --vue
-
-
-
 
 
 
