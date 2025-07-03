@@ -3,57 +3,53 @@
 |--------------------------------------------------------------------------
 | Basic CRUD Management
 |--------------------------------------------------------------------------
-*/
+*/    
+//User Management
+php artisan make:module UserManagement/User [role_id:bigint,first_name:string-100,last_name:string-100,user_name:string-100,image:string-255,email:string-255,email_verified_at:datetime,password:string-255,remember_token:string-255] --vue
+php artisan make:table UserManagement/User/UserAddress [user_id:bigint,phone_number:json,address:text,country:string-255,city:string-255,state:string-255,post:string-255] --model
+php artisan make:table  UserManagement/User/UserSocialLink [user_id:bigint,media_name:string-100,link:string-100] --model
+php artisan make:table UserManagement/UserLog [user_id:bigint,last_seen:string-255,log_details:json] --model
+  
+php artisan make:module UserManagement/Role [name:string-255,serial_no:tinyint] --vue
 
-php artisan make:module User [first_name:string-100, last_name:string-100,user_name:string-100,telegram_id:string-100,telegram_name:text,mobile_number:string-20,photo:string-255,email:string-255,email_verified_at:datetime,password:string-255,remember_token:string-255] --vue
-php artisan make:table  UserSocialLink [user_id:bigint,media_name:string-100,link:string-100] --vue
-php artisan make:table UserContactNumber [user_id:bigint,phone_number:string-45] --vue
+
+//Seminer Management
+php artisan make:module SeminerManagement/Seminer [title:string-255,description:text,poster:string-255,whatsapp_group:stringo-255,facebook_group:string-255,telegram_group:string-255,date_time:datetime,promo_video:text] --vue
+php artisan make:table SeminerManagement/Seminer/SeminerParticipant [seminar_id:bigint,full_name:string-255,email:string-255,phone_number:string-20,address:string-255] --model
+php artisan make:table SeminerManagement/Seminer/SeminerSubscribers [seminar_id:bigint,email:string-255] --model
+php artisan make:table SeminerManagement/Seminer/SeminerReviews [seminar_id:bigint,comment:string-255,rating:float,comment_reply:json] --model
+
+ 
+//Gallery Management
+php artisan make:module GalleryManagement/GalleryCategory [title:string-255,description:text] --vue
+php artisan make:module GalleryManagement/Gallery [gallery_category_id:bigint,title:string-255,description:text,image:string-255,top_image:boolean] --vue
+
+
+//Communication Messages
 
 //need deafult value 0 in is_seen
-php artisan make:module ContactMessage [full_name:string-100,email:string-100,subject:string-255,message:string-text,is_seen:boolean] --vue
+php artisan make:module CommunicationManagement/ContactMessage [full_name:string-100,email:string-100,subject:string-255,message:string-text,is_seen:boolean] --vue
+php artisan make:table CommunicationManagement/ContactMessage/Subscriber [email:string-255] --model
 
 
+//WebsiteContent
 //Home page
-php artisan make:module WebsiteBanner [title:string-255,subtitle:text,is_featured:boolean,image:string-255,btn_one_text:string-50,btn_one_url:string-255,btn_two_text:string-50,btn_two_url:string-255] --vue
-
-php artisan make:module SubBanner [title:string-255,image:string-255] --vue
- 
-php artisan make:module SuccssStories [title:string-255,thumbnail_image:string-255,video_link-string-255] --vue
-
-php artisan make:module OurSpeciality [title:string-255,image:string-255] --vue
-
-php artisan make:module OurTrainer [title:string-255,description:text,image:string-255] --vue
-
-php artisan make:module Seminer [title:string-255,poster:string-255,whatsapp_group:stringo-255,facebook_group:string-255,telegram_group:string-255,details:text,date_time:datetime,promo_video:text] --vue
-php artisan make:table Seminer/SeminerParticipant [seminar_id:bigint,full_name:string-100,email:string-50,phone_number:string-20,address:string-255] --model
-
-
+php artisan make:module WebsiteManagement/WebsiteMWebsiteBanner [title:string-255,subtitle:text,is_featured:boolean,image:string-255,btn_one_text:string-50,btn_one_url:string-255,btn_two_text:string-50,btn_two_url:string-255] --vue
+php artisan make:module WebsiteManagement/SubBanner [title:string-255,image:string-255] --vue
+php artisan make:module WebsiteManagement/SuccssStories [title:string-255,thumbnail_image:string-255,video_link-string-255] --vue
+php artisan make:module WebsiteManagement/OurSpeciality [title:string-255,image:string-255] --vue
+php artisan make:module WebsiteManagement/OurTrainer [title:string-255,description:text,image:string-255] --vue
 
 //About Page
-php artisan make:module AboutUs [title:string-255,description:text,image:string-255] --vue
-
-php artisan make:module WebsiteBrand [title:string-255,image:string-255] --vue
-
-php artisan make:module OurMoto [title:string-255,description:text,image:string-255] --vue
-
-php artisan make:module OurMission [title:string-255,description:text,image:string-255] --vue
-
-php artisan make:module OurVision [title:string-255,description:text,image:string-255] --vue
-
-php artisan make:module OurTeam [title:string-255,description:text,image:json] --vue
-
-php artisan make:module CourseInstructors [user_id:bigint,course_id:bigint,cover_photo:string-255,full_name:string-255,designation:string-255,details:longtext] --vue
+php artisan make:module WebsiteManagement/AboutUs [title:string-255,description:text,image:string-255] --vue
+php artisan make:module WebsiteManagement/WebsiteBrand [title:string-255,image:string-255] --vue
+php artisan make:module WebsiteManagement/OurMoto [title:string-255,description:text,image:string-255] --vue
+php artisan make:module WebsiteManagement/OurMission [title:string-255,description:text,image:string-255] --vue
+php artisan make:module WebsiteManagement/OurVision [title:string-255,description:text,image:string-255] --vue
+php artisan make:module WebsiteManagement/OurTeam [title:string-255,description:text,image:json] --vue
 
 
-
-//Gallery Page
-php artisan make:module GalleryCategory [title:string-255,description:text] --vue
-php artisan make:module Gallery [gallery_category_id:bigint,title:string-255,description:text,image:string-255,top_image:boolean] --vue
-
-
-
-//Blog Page
-
+//Blog Page 
 php artisan make:module Blog [blog_category_id:bigint,title:string-100,description:text,tags:text,publish_date:datetime,writer:string-100,meta_description:text,meta_keywords:string-100,thumbnail_image:string-100,images:text,blog_type:string-100,url:string-100,show_top:string-100,contributors:json] --vue
 
 php artisan make:module BlogCategory [title:string-100,description:text] --vue
