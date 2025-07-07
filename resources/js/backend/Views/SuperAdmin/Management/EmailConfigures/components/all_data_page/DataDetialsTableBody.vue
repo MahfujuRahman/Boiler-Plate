@@ -5,6 +5,12 @@
     <tr>
       <th>{{ row_item }}</th>
       <th class="text-center">:</th>
+      <td v-if="row_item == 'encryption'" class="text-wrap max-w-120">
+        <span class="badge" :class="item[row_item] == '0' ? 'badge-info' : 'badge-success'">
+          {{ item[row_item] == '0' ? 'TLS' : 'SSL' }}
+        </span>
+      </td>
+
       <th class="text-trim">
         {{ trim_content(item[row_item], row_item) }}
       </th>

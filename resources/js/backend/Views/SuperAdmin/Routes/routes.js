@@ -46,7 +46,6 @@ import BlogWriterRoutes from '../Management/BlogManagement/BlogWriter/setup/rout
 // import BlogRoutes from '../Management/BlogManagement/Blog/setup/routes.js';
 // import BlogCategoryRoutes from '../Management/BlogManagement/BlogCategory/setup/routes.js';
 
-import Testing from "../Management/Testing/setup/routes.js";
 const routes = {
   path: "",
   component: Layout,
@@ -95,7 +94,6 @@ const routes = {
         BlogWriterRoutes,
         BlogRoutes,
         BlogCategoryRoutes,
-        Testing,
 
 
 

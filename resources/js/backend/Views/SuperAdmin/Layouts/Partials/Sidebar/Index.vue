@@ -52,8 +52,175 @@
           icon: `zmdi zmdi-dot-circle-alt`,
         },
       ]" />
-      <SideBarSingleMenu :icon="`fa fa-plus`" :menu_title="`Testings`" :route_name="`AllTesting`" />
-      <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`Seminer`" :route_name="`AllSeminer`" />
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`CourseManagement`" :menus="[
+        {
+          route_name: `AllCourseCategory`,
+          title: `CourseCategory`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseInstructor`,
+          title: `CourseInstructors`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseBatch`,
+          title: `CourseBatch`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseBatchStudent`,
+          title: `CourseBatchStudent`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseMilestone`,
+          title: `CourseMilestone`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseModule`,
+          title: `CourseModule`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseModuleClass`,
+          title: `CourseModuleClass`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseModuleClassResourse`,
+          title: `CourseModuleClassResourse`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllCourseModuleClassRoutine`,
+          title: `CourseModuleClassRoutine`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllEnrollInformation`,
+          title: `EnrollInformation`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`QuizManagement`" :menus="[
+        {
+          route_name: `AllQuizQuestionTopic`,
+          title: `QuizQuestionTopic`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllQuizQuestion`,
+          title: `QuizQuestion`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllQuiz`,
+          title: `Quiz`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`WebsiteManagement`" :menus="[
+        {
+          route_name: `AllWebsiteMWebsiteBanner`,
+          title: `WebsiteMWebsiteBanner`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllSubBanner`,
+          title: `SubBanner`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllSuccssStory`,
+          title: `SuccssStories`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllOurSpeciality`,
+          title: `OurSpeciality`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllOurTrainer`,
+          title: `OurTrainer`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllAboutU`,
+          title: `AboutUs`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllWebsiteBrand`,
+          title: `WebsiteBrand`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllOurMoto`,
+          title: `OurMoto`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllOurMission`,
+          title: `OurMission`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllOurVision`,
+          title: `OurVision`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllOurTeam`,
+          title: `OurTeam`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`GalleryManagement`" :menus="[
+        {
+          route_name: `AllGalleryCategory`,
+          title: `GalleryCategory`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+        {
+          route_name: `AllGallery`,
+          title: `Gallery`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`ContactManagement`" :menus="[
+        {
+          route_name: `AllContactMessage`,
+          title: `ContactMessage`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`PaymentManagement`" :menus="[
+        {
+          route_name: `AllPaymentGateway`,
+          title: `PaymentGateways`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`EmailManagement`" :menus="[
+        {
+          route_name: `AllEmailConfigure`,
+          title: `EmailConfigures`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
+
+
+   
+      <!-- <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`Seminer`" :route_name="`AllSeminer`" />
       <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`GalleryCategory`" :route_name="`AllGalleryCategory`" />
       <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`Gallery`" :route_name="`AllGallery`" />
       <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`ContactMessage`" :route_name="`AllContactMessage`" />
@@ -93,7 +260,7 @@
       <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`EnrollInformation`"
         :route_name="`AllEnrollInformation`" />
       <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`PaymentGateways`" :route_name="`AllPaymentGateway`" />
-      <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`EmailConfigures`" :route_name="`AllEmailConfigure`" />
+      <side-bar-single-menu :icon="`fa fa-plus`" :menu_title="`EmailConfigures`" :route_name="`AllEmailConfigure`" /> -->
       <!-- Management end -->
     </ul>
   </div>

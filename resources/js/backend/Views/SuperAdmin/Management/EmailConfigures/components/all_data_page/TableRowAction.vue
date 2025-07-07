@@ -27,7 +27,7 @@ import active_row from '../../helpers/table_active_row';
 import Details from './action_buttons/Details.vue';
 import Edit from './action_buttons/Edit.vue';
 import StatusButton from './action_buttons/StatusButton.vue';
-import DeleteRestore    from './action_buttons/DeleteRestore.vue';
+import DeleteRestore from './action_buttons/DeleteRestore.vue';
 import Destroy from './action_buttons/Destroy.vue';
 export default {
     props: {
@@ -48,6 +48,12 @@ export default {
     }
 }
 </script>
-<style lang="">
+<style scoped>
+.table_action_btns {
+    position: absolute;
+    top: auto !important;
+    right: -2px !important;
 
+    /* Make sure it aligns to the end of the row */
+}
 </style>

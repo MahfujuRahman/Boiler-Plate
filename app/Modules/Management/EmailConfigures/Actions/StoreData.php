@@ -10,6 +10,14 @@ class StoreData
     {
         try {
             $requestData = $request->validated();
+
+            $status = $request->status == 'active' ? 'active' : 'inactive';
+       
+            if ($request->status == 'active') {
+                // Set all existing records to inactive
+                self::$model::query()->update(['status' => 'inactive']);
+            }
+
             if ($data = self::$model::query()->create($requestData)) {
                 return messageResponse('Item added successfully', $data, 201);
             }
