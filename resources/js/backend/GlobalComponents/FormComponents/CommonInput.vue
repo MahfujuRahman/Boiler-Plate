@@ -4,28 +4,8 @@
       <label for="">
         {{ label || name }}
       </label>
-      <div
-        v-if="
-          [
-            'text',
-            'number',
-            'password',
-            'email',
-            'date',
-            'time',
-            'datetime-local',
-          ].includes(type)
-        "
-        class="mt-1 mb-3"
-      >
-        <input
-          class="form-control form-control-square mb-2"
-          :type="type"
-          :name="name"
-          :id="name"
-          :value="value"
-          @change="errorReset"
-        />
+      <div v-if="['text', 'number', 'password', 'email', 'date', 'time', 'datetime-local'].includes(type)" class="mt-1 mb-3">
+        <input class="form-control form-control-square mb-2" :type="type" :name="name" :id="name" :value="value" @change="errorReset" />
       </div>
 
       <div v-if="type === 'textarea'" class="mt-1 mb-3">
@@ -36,29 +16,15 @@
       </div>
 
       <div v-if="type === 'select'" class="mt-1 mb-3">
-        <select
-          :name="name"
-          class="form-control form-control-square"
-          :id="name"
-          @change="errorReset"
-        >
+        <select :name="name" class="form-control form-control-square" :id="name" @change="errorReset">
           <option value="">Select item</option>
-          <option
-            v-for="data in data_list"
-            :key="data"
-            :value="data.value"
-            :selected="data.value == value"
-          >
+          <option v-for="data in data_list" :key="data" :value="data.value" :selected="data.value == value">
             {{ data.label }}
           </option>
         </select>
       </div>
       <div v-if="type === 'file'" class="mt-1 mb-3">
-        <image-component
-          :name="name"
-          :accept="`.jpg,.jpeg,.png`"
-          :value="value"
-        ></image-component>
+        <image-component :name="name" :accept="`.jpg,.jpeg,.png`" :value="value"></image-component>
       </div>
     </div>
   </div>

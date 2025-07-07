@@ -24,13 +24,14 @@ class Seeder extends SeederClass
                 'tags' => $faker->paragraph,
                 'publish_date' => $faker->dateTime,
                 'writer' => $faker->text(100),
-                'meta_description' => $faker->paragraph,
-                'meta_keywords' => $faker->sentence,
-                'thumbnail_image' => $faker->sentence,
-                'image' => $faker->sentence,
-                'blog_type' => $faker->sentence,
-                'url' => $faker->sentence,
-                'show_top' => $faker->sentence,
+                'thumbnail_image' => $faker->text(100),
+                'images' => $faker->paragraph,
+                'blog_type' => $faker->text(100),
+                'url' => $faker->text(100),
+                'show_top' => $faker->text(100),
+                'contributors' => json_encode([$faker->word, $faker->word]),
+                'is_featured' => $faker->boolean,
+                'is_published' => $faker->boolean,
             ]);
         }
     }

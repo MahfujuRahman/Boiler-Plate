@@ -5,19 +5,11 @@ namespace App\Modules\Management\BlogManagement\Blog\Models;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 class Model extends EloquentModel
 {
     use SoftDeletes;
     protected $table = "blogs";
     protected $guarded = [];
-    protected $casts = [
-        'contributors' => 'array',
-        'images' => 'array'
-    ];
-
-    protected static $blogCategoryModel = \App\Modules\Management\BlogManagement\BlogCategory\Models\Model::class;
-    protected static $blogWriterModel = \App\Modules\Management\BlogManagement\BlogWriter\Models\Model::class;
 
     protected static function booted()
     {
@@ -40,21 +32,12 @@ class Model extends EloquentModel
         return $q->where('status', 'active');
     }
 
-    public function scopeInactive($q)
+     public function scopeInactive($q)
     {
         return $q->where('status', 'inactive');
     }
-    public function scopeTrased($q)
+     public function scopeTrased($q)
     {
         return $q->onlyTrashed();
-    }
-
-    public function blog_categories()
-    {
-        return $this->belongsToMany(self::$blogCategoryModel, 'blog_blog_categories', 'blog_id', 'blog_category_id');
-    }
-    public function writer()
-    {
-        return $this->belongsTo(self::$blogWriterModel, 'writer', 'id');
     }
 }

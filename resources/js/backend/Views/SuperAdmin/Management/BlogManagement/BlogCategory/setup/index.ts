@@ -20,6 +20,7 @@ const setup: setup_type = {
     select_fields: [
         "id",
         "title",
+            "description",
         "status",
         "slug",
         "created_at",
@@ -29,18 +30,21 @@ const setup: setup_type = {
     sort_by_cols: [
         "id",
         "title",
+            "description",
         "status",
         "created_at",
     ],
     table_header_data: [
         "id",
         "title",
+            "description",
         "status",
         "created_at",
     ],
     table_row_data: [
         "id",
         "title",
+            "description",
         "status",
         "created_at",
     ],

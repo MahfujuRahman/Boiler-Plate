@@ -29,9 +29,6 @@ export default {
     await this.check_is_auth();
     await this.get_all_website_settings();
 
-    console.log("autdata",this.auth_info);
-      
-
     if (this.is_auth) {
       let prev_url = window.sessionStorage.getItem("prevurl");
       if (this.auth_info?.role_id == 1) {

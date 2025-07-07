@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\BlogManagement\Blog\Database\create_blog_comments_table.php'
+     php artisan migrate --path='\App\Modules\Management\BlogComment\Database\create_blog_comments_table.php'
      * Run the migrations.
      */
     public function up(): void
@@ -16,8 +16,6 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('blog_id')->nullable();
             $table->bigInteger('user_id')->nullable();
-            $table->string('name', 100)->nullable();
-            $table->string('email', 100)->nullable();
             $table->text('comment')->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();

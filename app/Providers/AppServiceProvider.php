@@ -40,12 +40,12 @@ class AppServiceProvider extends ServiceProvider
             KeysCommand::class,
         ]);
 
-        View::composer('*', function ($view) {
-            $app_settings = SettingTitleValue::get();
-            $GLOBALS['app_settings'] = $app_settings;
-            $view->with([
-                'app_settings' => $app_settings,
-            ]);
-        });
+        // View::composer('*', function ($view) {
+        //     $app_settings = SettingTitleValue::get();
+        //     $GLOBALS['app_settings'] = $app_settings;
+        //     $view->with([
+        //         'app_settings' => $app_settings,
+        //     ]);
+        // });
     }
 }

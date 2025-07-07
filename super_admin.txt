@@ -1,10 +1,9 @@
 
 /*
 |--------------------------------------------------------------------------
-| Basic CRUD Management
+| User Management
 |--------------------------------------------------------------------------
 */    
-//User Management
 php artisan make:module UserManagement/User [role_id:bigint,first_name:string-100,last_name:string-100,user_name:string-100,image:string-255,email:string-255,email_verified_at:datetime,password:string-255,remember_token:string-255] --vue
 php artisan make:table UserManagement/User/UserAddress [user_id:bigint,phone_number:json,address:text,country:string-255,city:string-255,state:string-255,post:string-255] --model
 php artisan make:table  UserManagement/User/UserSocialLink [user_id:bigint,media_name:string-100,link:string-100] --model
@@ -12,15 +11,22 @@ php artisan make:table UserManagement/UserLog [user_id:bigint,last_seen:string-2
   
 php artisan make:module UserManagement/Role [name:string-255,serial_no:tinyint] --vue
 
-
-//Seminer Management
+/*
+|--------------------------------------------------------------------------
+| Seminer Management
+|--------------------------------------------------------------------------
+*/   
 php artisan make:module SeminerManagement/Seminer [title:string-255,description:text,poster:string-255,whatsapp_group:stringo-255,facebook_group:string-255,telegram_group:string-255,date_time:datetime,promo_video:text] --vue
 php artisan make:table SeminerManagement/Seminer/SeminerParticipant [seminar_id:bigint,full_name:string-255,email:string-255,phone_number:string-20,address:string-255] --model
 php artisan make:table SeminerManagement/Seminer/SeminerSubscribers [seminar_id:bigint,email:string-255] --model
 php artisan make:table SeminerManagement/Seminer/SeminerReviews [seminar_id:bigint,comment:string-255,rating:float,comment_reply:json] --model
 
- 
-//Gallery Management
+/*
+|--------------------------------------------------------------------------
+| Gallery Management
+|--------------------------------------------------------------------------
+*/  
+
 php artisan make:module GalleryManagement/GalleryCategory [title:string-255,description:text] --vue
 php artisan make:module GalleryManagement/Gallery [gallery_category_id:bigint,title:string-255,description:text,image:string-255,top_image:boolean] --vue
 
@@ -76,63 +82,78 @@ php artisan make:table QuizManagement/Quiz/QuizSubmissionResult [user_id:bigint,
 
 
 //Course
-php artisan make:module CourseManagement/Course [title:string-255,image:string-255,intro_video:string-255,published_at:date,is_published:boolean,what_is_this_course:text,why_is_this_course:text,course_module_text:text,type:enum-online.offline.daycare] --vue
 
-php artisan make:module CourseManagement/CourseBatch [course_id:bigint,batch_name:string-100,admission_start_date:datetime,admission_end_date:datetime,batch_student_limit:bigint,seat_booked:int,booked_percent:float,course_price:double,course_discount:double,after_discount_price:double,first_class_date:datetime,class_days:string-100,class_start_time:time,class_end_time:time,show_percentage_on_cards:enum-yes.no]
+php artisan make:module CourseManagement/CourseCategory [title:string-200,image:string-100] --vue
+php artisan make:table CourseManagement/CourseCategory/CourseCourseCategory [course_category_id:bigint,course_id:bigint] --model
 
-php artisan make:module CourseManagement/CourseBatchStudent [course_id:bigint,batch_id:bigint,student_id:bigint,course_percent:float,is_complete:enum-complete.incomplete-incomplete] --vue
+php artisan make:module CourseManagement/CourseInstructors [user_id:bigint,course_id:bigint,cover_photo:string-255,image:string-255,full_name:string-100,designation:string-100,short_description:text,description:longtext] --vue
+php artisan make:table CourseManagement/CourseInstructors/CourseCourseInstructor [instructor_id:bigint,course_id:bigint,batch_id:bigint] --model
+ 
+php artisan make:module CourseManagement/CourseBatch [course_id:bigint,batch_name:string-100,admission_start_date:datetime,admission_end_date:datetime,batch_student_limit:bigint,seat_booked:int,booked_percent:float,course_price:double,course_discount:double,after_discount_price:double,first_class_date:datetime,class_days:string-255 ,class_start_time:time,class_end_time:time,show_percentage_on_cards:enum-yes.no]
+php artisan make:table CourseManagement/CourseBatch/CourseBatchStudent [course_id:bigint,batch_id:bigint,student_id:bigint,course_percent:float,is_complete:enum-complete.incomplete-incomplete] --vue
+
+php artisan make:module CourseManagement/Course [course_category_id:bigint,title:string-255,image:string-255,intro_video:string-255,published_at:date,is_published:boolean,what_is_this_course:text,why_is_this_course:text,type:enum-online.offline.daycare] --vue
+php artisan make:table CourseManagement/Course/CourseJobPosition [course_id:bigint,serial:tinyint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseWhyYouLearnFromUs [course_id:bigint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseFaq [course_id:bigint,title:text,description:text] --model
+php artisan make:table CourseManagement/Course/CourseYouWillLearn [course_id:bigint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseOutcomeStep [course_id:bigint,serial:int,title:string-100] --model
+php artisan make:table CourseManagement/Course/CourseForWhom [course_id:bigint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseJobWork [course_id:bigint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseModuleAtAGlance [course_id:bigint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseEssentialRequirement [course_id:bigint,title:text] --model
+php artisan make:table CourseManagement/Course/CourseWhatYouWillGet [course_id:bigint,title:text] --model
+
+php artisan make:module CourseManagement/CourseMilestone [course_id:bigint,milestone_no:bigint,title:string-200] --vue
+
+php artisan make:module CourseManagement/CourseModule [course_id:bigint,milestone_id:bigint,module_no:bigint,title:string-100] --vue
+
+php artisan make:module CourseManagement/CourseModuleClass [course_id:bigint,milestone_id:bigint,course_modules_id:bigint,class_no:string-20,title:text,type:enum-live.recorded,class_video_link:string-150,class_video_poster:string-100] --vue
+php artisan make:table CourseManagement/CourseModuleClass/CourseModuleClassQuiz [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,quiz_id:bigint] --model
+php artisan make:table CourseManagement/CourseModuleClass/CourseModuleTaskCompleteByUser [course_id:bigint,module_id:bigint,class_id:bigint,user_id:bigint,content_id:bigint,quiz_id:bigint,exam_id:bigint] --model
+
+php artisan make:module CourseManagement/CourseModuleClassResourse [course_id:bigint,course_module_class_id:bigint,course_module_id:bigint,resourse_content:text,resourse_link:string-100] --vue
+ 
+php artisan make:module CourseManagement/CourseModuleClassRoutine [course_id:bigint,module_id:bigint,class_id:bigint,date:date,time:time,topic:text] --vue
+
+//EnrollInformation
+php artisan make:module EnrollInformation [course_id:bigint,student_id:bigint,batch_id:bigint,payment_type:enum-offline.online,payment_by:string-50,receipt_id:string-255,trx_id:string-255,payment_status:enum-paid.unpaid.failed,total_amount,paid_amount] --vue
+
+//PaymentGateways
+php artisan make:module PaymentGateways [provider_name:enum-bkash,nagad,sslcommerze,api_key:string-255,secret_key:string-255,username:string-255,password:string-255,live:boolean] --vue
+
+//EmailConfigures
+php artisan make:module EmailConfigures [host:string-255,port:int,email:string-255,username:string-255,password:string-255,mail_from_name:string-255,mail_from_email:string-255,encryption:boolean]
 
 
-php artisan make:module CourseCategory [title:string-200,image:string-100] --vue
-
-php artisan make:module CourseCourseCategory [course_category_id:bigint,course_id:bigint] --vue
-
-php artisan make:module CourseCourseInstructor [instructor_id:bigint,course_id:bigint,batch_id:bigint] --vue
-
-php artisan make:module CourseCourseType [course_type_id:bigint,course_id:bigint] --vue
-
-php artisan make:module CourseEssentialRequirement [course_id:bigint,title:text] --vue
-
-php artisan make:module CourseFaq [course_id:bigint,title:text,description:text] --vue
-
-php artisan make:module CourseForWhom [course_id:bigint,title:text] --vue
-
-php artisan make:module CourseInstructors [user_id:bigint,course_id:bigint,cover_photo:string-100,full_name:string-100,designation:string-100,short_description:text,description:longtext,details:longtext] --vue
-
-php artisan make:module CourseJobPosition [course_id:bigint,serial:tinyint,title:text] --vue
-
-php artisan make:module CourseJobWork [course_id:bigint,title:text] --vue
-
-php artisan make:module CourseMilestone [course_id:bigint,milestone_no:bigint,title:string-200] --vue
-
-php artisan make:module CourseModule [course_id:bigint,milestone_id:bigint,module_no:bigint,title:string-100] --vue
-
-php artisan make:module CourseModuleAtAGlance [course_id:bigint,title:text] --vue
+settings alreadery build
+--------------------------------
 
 
-php artisan make:module CourseModuleClass [course_id:bigint,milestone_id:bigint,course_modules_id:bigint,class_no:string-20,title:text,type:enum-live.recorded,class_video_link:string-150,class_video_poster:string-100] --vue
+
+
+
+
+
+
+
+
+
+
+
 
 php artisan make:module CourseModuleClassExam [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,exam_id:bigint] --vue
 
-php artisan make:module CourseModuleClassQuiz [course_id:bigint,course_module_id:bigint,course_module_class_id:bigint,quiz_id:bigint] --vue
+php artisan make:module Exam [title:string-255]
 
-php artisan make:module CourseModuleClassResourse [course_id:bigint,course_module_class_id:bigint,course_module_id:bigint,resourse_content:text,resourse_link:string-100] --vue
-
-php artisan make:module CourseModuleClassRoutine [course_id:bigint,module_id:bigint,class_id:bigint,date:date,time:time,topic:text] --vue
-
-php artisan make:module CourseModuleTaskCompleteByUser [course_id:bigint,module_id:bigint,class_id:bigint,user_id:bigint,content_id:bigint,quiz_id:bigint,exam_id:bigint] --vue
-
-
-php artisan make:module CourseOutcomeStep [course_id:bigint,serial:int,title:string-100] --vue
 
 php artisan make:module CourseType [title:string-200] --vue
 
+php artisan make:module CourseCourseType [course_type_id:bigint,course_id:bigint] --vue
 
-php artisan make:module CourseWhatYouWillGet [course_id:bigint,title:text] --vue
 
-php artisan make:module CourseWhyYouLearnFromUs [course_id:bigint,title:text] --vue
 
-php artisan make:module CourseYouWillLearn [course_id:bigint,title:text] --vue
+
 
 
 

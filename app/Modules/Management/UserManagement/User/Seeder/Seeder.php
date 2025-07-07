@@ -10,7 +10,7 @@ class Seeder extends SeederClass
 {
     /**
      * Run the database seeds.
-     php artisan db:seed --class="App\Modules\Management\UserManagement\User\Seeder\Seeder"
+     php artisan db:seed --class="\App\Modules\Management\UserManagement\User\Seeder\Seeder"
      */
     static $model = \App\Modules\Management\UserManagement\User\Models\Model::class;
 

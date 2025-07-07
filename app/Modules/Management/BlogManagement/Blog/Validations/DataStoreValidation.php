@@ -48,14 +48,14 @@ class DataStoreValidation extends FormRequest
             'tags' => 'required | sometimes',
             'publish_date' => 'required | sometimes',
             'writer' => 'required | sometimes',
-            'meta_description' => 'required | sometimes',
-            'meta_keywords' => 'required | sometimes',
             'thumbnail_image' => 'required | sometimes',
             'images' => 'required | sometimes',
             'blog_type' => 'required | sometimes',
             'url' => 'required | sometimes',
             'show_top' => 'required | sometimes',
-            'contributors' => 'sometimes',
+            'contributors' => 'required | sometimes',
+            'is_featured' => 'required | sometimes',
+            'is_published' => 'required | sometimes',
             'status' => ['sometimes', Rule::in(['active', 'inactive'])],
         ];
     }

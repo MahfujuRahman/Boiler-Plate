@@ -14,7 +14,7 @@ class Login
     {
         try {
 
-            $check_auth_user = self::$model::where('status', 1)->whereAny(['name', 'email'], request()->email)->first();
+            $check_auth_user = self::$model::where('status', 'active')->whereAny(['name', 'email'], request()->email)->first();
 
             if (!$check_auth_user) {
                 return response()->json(['status' => 'error', 'message' => 'Sorry,user not found'], 404);

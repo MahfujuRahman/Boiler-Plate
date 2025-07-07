@@ -25,7 +25,7 @@ Route::get('/', [FrontendController::class, 'HomePage'])->name('HomePage');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/admin-login', [FrontendAuthController::class, 'LoginPage'])->name('LoginPage');
+Route::get('/login', [FrontendAuthController::class, 'LoginPage'])->name('LoginPage');
 Route::get('/register', [FrontendAuthController::class, 'RegisterPage'])->name('RegisterPage');
 Route::get('/forgot-password', [FrontendAuthController::class, 'ForgotPassword'])->name('ForgotPassword');
 
@@ -37,7 +37,7 @@ Route::get('/forgot-password', [FrontendAuthController::class, 'ForgotPassword']
 */
 
 // Website Routes
-Route::get('/', [WebsiteController::class, 'index'])->name("website");
+// Route::get('/', [WebsiteController::class, 'index'])->name("website");
 Route::get('/about', [WebsiteController::class, 'about'])->name("about");
 Route::get('/contact', [WebsiteController::class, 'contact'])->name("contact");
 Route::post('/contact', [WebsiteController::class, 'contact_submit'])->name("contact_submit");
@@ -115,7 +115,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Auth Routes
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+// Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login_submit'])->name('login_sumbit');
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');
