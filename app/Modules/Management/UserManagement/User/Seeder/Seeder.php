@@ -19,15 +19,17 @@ class Seeder extends SeederClass
         $faker = Faker::create();
         self::$model::truncate();
 
-        self::$model::create([
-            'name' => "super admin",
+       self::$model::create([
+            'first_name' => "super",
+            'last_name' => "super",
             'email' => "superadmin@gmail.com",
             'password' => Hash::make('@12345678'),
             'image' => 'avatar.png',
             'role_id' => 1,
         ]);
         self::$model::create([
-            'name' => "admin",
+            'first_name' => "admin",
+            'last_name' => "admin",
             'email' => "admin@gmail.com",
             'password' => Hash::make('@12345678'),
             'image' => 'avatar.png',

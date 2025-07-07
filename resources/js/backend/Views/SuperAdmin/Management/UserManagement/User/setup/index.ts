@@ -18,7 +18,8 @@ const setup: setup_type = {
 
   select_fields: [
     "id",
-    "name",
+    "first_name",
+    "last_name",
     "email",
     "phone_number",
     "image",
@@ -29,7 +30,8 @@ const setup: setup_type = {
 
   sort_by_cols: [
     "id",
-    "name",
+    "first_name",
+    "last_name",
     "email",
     "phone_number",
     "image",
