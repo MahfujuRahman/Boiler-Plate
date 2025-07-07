@@ -56,10 +56,10 @@
                     </th>
                     <th class="w-10">ID</th>
                     <th>name</th>
-                    <th>designation</th>
+                    <th>role</th>
                     <th>email</th>
-                    <th>Phone</th>
                     <th>image</th>
+                    <th>status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -165,14 +165,13 @@
                       />
                     </td>
                     <td>{{ index + 1 }}</td>
-                    <td>{{ item.name }}</td>
+                    <td>{{ item.first_name }} {{ item.first_name }}</td>
                     <td>{{ item.role?.name }}</td>
                     <td>{{ item.email }}</td>
-                    <td>{{ item.phone_number ?? "N/A " }}</td>
-
                     <td>
                       <img :src="item.image" alt="" height="50" width="50" />
                     </td>
+                    <td>{{ item.status }}</td>
                   </tr>
                 </tbody>
               </table>

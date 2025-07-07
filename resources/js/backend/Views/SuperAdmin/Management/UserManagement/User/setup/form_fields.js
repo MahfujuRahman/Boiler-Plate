@@ -1,109 +1,72 @@
 export default [
   {
-    name: "name",
-    label: "  name",
-    type: "text",
-    value: "",
-  },
-
-  {
-    name: "email",
-    label: "  email",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "phone_number",
-    label: "  phone number",
-    type: "text",
-    value: "",
-  },
-
-  {
-    name: "password_in_text",
-    label: "  password",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "present_address",
-    label: " present  address",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "permanent_address",
-    label: " permanent address",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "designation",
-    label: " designation",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "nid",
-    label: " nid",
-    type: "text",
-    value: "",
-  },
-  {
     name: "role_id",
     label: "Select  role ",
     type: "select",
     value: "",
     data_list: [],
-    onchange: "changeAction",
   },
   {
-    name: "join_date",
-    label: " join date",
-    type: "date",
+    name: "user_name",
+    label: "user name",
+    type: "text",
     value: "",
-    is_visible: false,
   },
-
   {
-    name: "salery",
-    label: "  salary",
-    type: "number",
+    name: "first_name",
+    label: "first name",
+    type: "text",
     value: "",
-    is_visible: false,
   },
-
   {
-    name: "can_login",
-    label: "Can login",
-    type: "select",
-    value: "0",
-    is_visible: false,
-    data_list: [
-      {
-        label: "Yes",
-        value: "1",
-      },
-      {
-        label: "No",
-        value: "0",
-      },
-    ],
+    name: "last_name",
+    label: "last name",
+    type: "text",
+    value: "",
   },
-
+  {
+    name: "email",
+    label: "email",
+    type: "text",
+    value: "",
+  },
+  {
+    name: "password",
+    label: "password",
+    type: "text",
+    value: "",
+  },
+  {
+    name: "state",
+    label: "state",
+    type: "text",
+    value: "",
+  },
+  {
+    name: "city",
+    label: "city",
+    type: "text",
+    value: "",
+  },
+  {
+    name: "post",
+    label: "post",
+    type: "text",
+    value: "",
+  },
+  {
+    name: "country",
+    label: "country",
+    type: "text",
+    value: "",
+  },
   {
     name: "image",
-    label: "  image",
+    label: "image",
     type: "file",
     multiple: false,
+    accept: "image/*",
     value: "",
   },
 
-  {
-    name: "description",
-    label: "  comment",
-    type: "textarea",
-    value: "",
-    row_col_class: "col-md-12",
-  },
 ];

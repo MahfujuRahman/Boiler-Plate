@@ -1,7 +1,7 @@
 import app_config from "../../../../../../Config/app_config";
 import setup_type from "./setup_type";
 
-const prefix: string = "Employee";
+const prefix: string = "User";
 
 const setup: setup_type = {
   prefix,
@@ -18,12 +18,13 @@ const setup: setup_type = {
 
   select_fields: [
     "id",
-    "name",
+    "first_name",
+    "last_name",
     "email",
-    "phone_number",
     "image",
     "role_id",
     "slug",
+    'status',
     "created_at",
   ],
 
@@ -31,7 +32,6 @@ const setup: setup_type = {
     "id",
     "name",
     "email",
-    "phone_number",
     "image",
     "role_id",
     "created_at",

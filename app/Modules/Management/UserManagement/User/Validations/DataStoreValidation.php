@@ -42,15 +42,22 @@ class DataStoreValidation extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required | sometimes',
-            'email' => 'required | sometimes',
-            'password' => 'required | sometimes',
-            'image' => 'required | sometimes',
             'role_id' => 'required | sometimes',
+            'user_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'image' => 'nullable | sometimes',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|min:6',
+            'state' => 'required|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'post' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'phone_number' => 'required|string|max:255',
+            'social_media' => 'nullable|array',
+            'social_media.*.media_name' => 'nullable|string|max:255',
+            'social_media.*.media_link' => 'nullable|string|max:255',
             'status' => ['sometimes', Rule::in(['active', 'inactive'])],
         ];
-
-
-        
     }
 }

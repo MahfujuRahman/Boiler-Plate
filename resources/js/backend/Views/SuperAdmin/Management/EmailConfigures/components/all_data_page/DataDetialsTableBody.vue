@@ -11,15 +11,16 @@
             <img :src="item[row_item]" style="width: 120px; height: 80px; object-fit: cover" alt="image" />
           </a>
         </template>
-      <td v-if="row_item == 'encryption'" class="text-wrap max-w-120">
-        <span class="badge" :class="item[row_item] == '0' ? 'badge-info' : 'badge-success'">
-          {{ item[row_item] == '0' ? 'TLS' : 'SSL' }}
-        </span>
-      </td>
 
-      <template v-else>
-        {{ trim_content(item[row_item], row_item) }}
-      </template>
+        <template v-if="row_item == 'encryption'">
+          <span class="badge" :class="item[row_item] == '0' ? 'badge-info' : 'badge-success'">
+            {{ item[row_item] == '0' ? 'TLS' : 'SSL' }}
+          </span>
+        </template>
+
+        <template v-else>
+          {{ trim_content(item[row_item], row_item) }}
+        </template>
       </th>
     </tr>
   </template>

@@ -2,7 +2,7 @@
 import app_config from "../../../../../Config/app_config";
 import setup_type from "./setup_type";
 
-const prefix: string = "EmailConfigure";
+const prefix: string = "Email Configures";
 
 const setup: setup_type = {
     prefix,
