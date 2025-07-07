@@ -48,6 +48,12 @@ export default {
     }
 }
 </script>
-<style lang="">
+<style scoped>
+.table_action_btns {
+    position: absolute;
+    top: auto !important;
+    right: -2px !important;
 
+    /* Make sure it aligns to the end of the row */
+}
 </style>

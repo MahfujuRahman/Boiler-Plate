@@ -8,16 +8,18 @@
       <th class="text-trim">
         <template v-if="row_item === 'image' && item[row_item]">
           <a :href="item[row_item]" data-lightbox="image" data-title="Preview">
-            <img
-              :src="item[row_item]"
-              style="width: 120px; height: 80px; object-fit: cover"
-              alt="image"
-            />
+            <img :src="item[row_item]" style="width: 120px; height: 80px; object-fit: cover" alt="image" />
           </a>
         </template>
-        <template v-else>
-          {{ trim_content(item[row_item], row_item) }}
-        </template>
+      <td v-if="row_item == 'encryption'" class="text-wrap max-w-120">
+        <span class="badge" :class="item[row_item] == '0' ? 'badge-info' : 'badge-success'">
+          {{ item[row_item] == '0' ? 'TLS' : 'SSL' }}
+        </span>
+      </td>
+
+      <template v-else>
+        {{ trim_content(item[row_item], row_item) }}
+      </template>
       </th>
     </tr>
   </template>

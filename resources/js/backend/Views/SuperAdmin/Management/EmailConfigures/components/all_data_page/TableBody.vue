@@ -27,6 +27,16 @@
           />
         </a>
       </td>
+       <td v-else-if="row_item == 'encryption'" class="text-wrap max-w-120">
+        <span class="badge" :class="item[row_item] == '0' ? 'badge-info' : 'badge-success'">
+          {{ item[row_item] == '0' ? 'TLS' : 'SSL' }}
+        </span>
+      </td>
+      <td v-else-if="row_item == 'status'" class="text-wrap max-w-120">
+        <span class="badge" :class="item[row_item] == 'active' ? 'badge-success' : 'badge-secondary'">
+          {{ item[row_item] }}
+        </span>
+      </td>
       <td v-else class="text-wrap max-w-120">
         {{ trim_content(item[row_item], row_item) }}
       </td>
@@ -85,5 +95,10 @@ export default {
 <style scoped>
 .max-w-120 {
   max-width: 120px;
+}
+.text-wrap {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
 }
 </style>
