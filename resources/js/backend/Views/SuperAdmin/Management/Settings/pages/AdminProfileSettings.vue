@@ -9,32 +9,36 @@
             <div class="col-lg-4">
                 <div class="card profile-card-2">
                     <div class="card-img-block">
-                        <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="Card image cap" class="img-fluid bg-dark">
+                        <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="Card image cap"
+                            class="img-fluid bg-dark m-auto d-flex justify-content-center">
                     </div>
                     <div class="card-body pt-5">
                         <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="profile-image" class="profile">
                         <h5 class="card-title text-capitalize">Name : {{ auth_info.first_name }} {{ auth_info.last_name
-                        }}</h5>
+                            }}</h5>
                         <p class="card-text">Email: {{ auth_info.email }}</p>
                         <p class="card-text">Phone: {{ auth_info.address.number }}
-                           
+
                         </p>
                         <p class="card-text">Address: {{ auth_info.address.address ?? 'N/A' }}</p>
-                       
+
                     </div>
                     <div class="card-body border-light">
                         <div class="media align-items-center">
                             <div class="icon-block">
                                 <template v-if="socialMediaLinks && socialMediaLinks.length > 0">
-                                    <a v-for="social in socialMediaLinks" :key="social.media_name" 
-                                       :href="social.media_link" target="_blank" class="me-2 mb-2">
+                                    <a v-for="social in socialMediaLinks" :key="social.media_name"
+                                        :href="social.media_link" target="_blank" class="me-2 mb-2">
                                         <i :class="getSocialIcon(social.media_name)" class="text-white"></i>
                                     </a>
                                 </template>
                                 <template v-else>
-                                    <a href="javascript:void();"><i class="fa fa-facebook bg-facebook text-white"></i></a>
-                                    <a href="javascript:void();"> <i class="fa fa-twitter bg-twitter text-white"></i></a>
-                                    <a href="javascript:void();"> <i class="fa fa-google-plus bg-google-plus text-white"></i></a>
+                                    <a href="javascript:void();"><i
+                                            class="fa fa-facebook bg-facebook text-white"></i></a>
+                                    <a href="javascript:void();"> <i
+                                            class="fa fa-twitter bg-twitter text-white"></i></a>
+                                    <a href="javascript:void();"> <i
+                                            class="fa fa-google-plus bg-google-plus text-white"></i></a>
                                 </template>
                             </div>
                         </div>
@@ -91,28 +95,18 @@
                                                 type="email" value="">
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Phone Numbers -->
-                                    <MultipleInputField
-                                        label="Phone Numbers"
-                                        name="phone_numbers"
-                                        type="phone"
+                                    <MultipleInputField label="Phone Numbers" name="phone_numbers" type="phone"
                                         placeholder="Enter phone number and press Enter"
                                         hint="Enter phone numbers one by one. Supports formats like +1234567890 or 01234567890"
-                                        v-model="phoneNumbers"
-                                        serialization="json"
-                                    />
+                                        v-model="phoneNumbers" serialization="json" />
 
                                     <!-- Social Media Links -->
-                                    <MultipleInputField
-                                        label="Social Media"
-                                        name="social_media"
-                                        type="social"
+                                    <MultipleInputField label="Social Media" name="social_media" type="social"
                                         placeholder="Enter social media URL or handle and press Enter"
                                         hint="Enter social media URLs (e.g., https://facebook.com/username) or handles (e.g., @username)"
-                                        v-model="socialMediaLinks"
-                                        serialization="json"
-                                    />
+                                        v-model="socialMediaLinks" serialization="json" />
 
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">State</label>
@@ -234,7 +228,7 @@ export default {
         phoneNumbers: [],
         socialMediaLinks: [],
     }),
-    
+
     watch: {
         auth_info: {
             handler(newValue) {
@@ -242,7 +236,7 @@ export default {
                     // Initialize phone numbers
                     if (newValue.address.phone_number) {
                         try {
-                            const phoneData = typeof newValue.address.phone_number === 'string' 
+                            const phoneData = typeof newValue.address.phone_number === 'string'
                                 ? JSON.parse(newValue.address.phone_number)
                                 : newValue.address.phone_number;
                             this.phoneNumbers = Array.isArray(phoneData) ? phoneData.filter(phone => phone) : [];
@@ -251,7 +245,7 @@ export default {
                             this.phoneNumbers = newValue.address.phone_number ? [newValue.address.phone_number] : [];
                         }
                     }
-                    
+
                     // Initialize social media links from social_links array
                     if (newValue.social_links && Array.isArray(newValue.social_links)) {
                         this.socialMediaLinks = newValue.social_links.map(item => ({
@@ -263,7 +257,7 @@ export default {
                             const socialData = typeof newValue.address.social_media === 'string'
                                 ? JSON.parse(newValue.address.social_media)
                                 : newValue.address.social_media;
-                            
+
                             // Ensure the data structure matches backend expectations
                             if (Array.isArray(socialData)) {
                                 this.socialMediaLinks = socialData.map(item => {
@@ -296,11 +290,11 @@ export default {
         }),
         UpdateProfileHandler: async function () {
             let formData = new FormData(event.target);
-            
+
             // Add phone numbers and social media as JSON strings
             formData.append('phone_numbers', JSON.stringify(this.phoneNumbers));
             formData.append('social_media', JSON.stringify(this.socialMediaLinks));
-            
+
             let response = await axios.post('user-profile-update', formData);
             if (response.data.status == 'success') {
                 window.s_alert(response.data.message)
@@ -317,7 +311,7 @@ export default {
                 this.check_is_auth()
             }
         },
-        
+
         getSocialIcon(mediaName) {
             const iconMap = {
                 facebook: 'fa fa-facebook bg-facebook',
@@ -374,12 +368,29 @@ export default {
     line-height: 16px;
 }
 
-.bg-facebook { background-color: #3b5998; }
-.bg-twitter { background-color: #1da1f2; }
-.bg-instagram { background-color: #e4405f; }
-.bg-linkedin { background-color: #0077b5; }
-.bg-youtube { background-color: #ff0000; }
-.bg-google-plus { background-color: #dd4b39; }
+.bg-facebook {
+    background-color: #3b5998;
+}
+
+.bg-twitter {
+    background-color: #1da1f2;
+}
+
+.bg-instagram {
+    background-color: #e4405f;
+}
+
+.bg-linkedin {
+    background-color: #0077b5;
+}
+
+.bg-youtube {
+    background-color: #ff0000;
+}
+
+.bg-google-plus {
+    background-color: #dd4b39;
+}
 
 .me-2 {
     margin-right: 0.5rem;
