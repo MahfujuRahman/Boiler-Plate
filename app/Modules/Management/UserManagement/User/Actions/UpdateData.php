@@ -3,9 +3,13 @@
 namespace App\Modules\Management\UserManagement\User\Actions;
 
 use Illuminate\Support\Facades\DB;
+use App\Events\UserActivityEvent;
+use App\Traits\LogsUserActivity;
 
 class UpdateData
 {
+    use LogsUserActivity;
+    
     static $model = \App\Modules\Management\UserManagement\User\Models\Model::class;
     static $UserAddressModel = \App\Modules\Management\UserManagement\User\Models\UserAddressModel::class;
     static $UserSocialLinkModel = \App\Modules\Management\UserManagement\User\Models\UserSocialLinkModel::class;
@@ -96,47 +100,66 @@ class UpdateData
                 }
             }
 
-            //create user log
-            self::$UserLogModel::query()->create([
-                'user_id' => auth()->user()->id,
-                'last_seen' => now(),
-                'log_details' => json_encode([
-                    'title' => 'updated user deatils',
+            DB::commit();
+
+            // Method 1: Using Trait (Static) - CRUD logging
+            self::logCrudStatic('update', 'User', $data->id, [
+                'user_name' => $data->user_name,
+                'email' => $data->email,
+                'updated_fields' => array_keys($requestData)
+            ], $request);
+
+            // Method 2: Manual Event (Direct) - Detailed update info
+            event(new UserActivityEvent(
+                auth()->id(),
+                [
+                    'title' => 'User Profile Update',
                     'status' => 'success',
                     'status_code' => 200,
-                    'message' => 'updated user deatils',
-                    'ip' => $request->ip(),
-                    'time' => now()->toDateTimeString(),
-                    'referer' => $request->header('referer'),
-                    'request_url' => $request->fullUrl(),
-                    'method' => $request->method(),
-                    'user_agent' => $request->userAgent(),
-                ]),
-            ]);
-
-            DB::commit();
+                    'message' => "User '{$data->user_name}' profile updated successfully",
+                    'action_type' => 'user_profile_update',
+                ],
+                $request,
+                [
+                    'updated_user_id' => $data->id,
+                    'user_name' => $data->user_name,
+                    'updated_fields' => array_keys($requestData),
+                    'has_social_links' => !empty($socialMediaData),
+                    'social_links_count' => count($socialMediaData)
+                ]
+            ));
 
             return messageResponse('Item updated successfully', $data, 201);
         } catch (\Exception $e) {
             DB::rollBack();
 
-            //create user log
-            self::$UserLogModel::query()->create([
-                'user_id' => auth()->user()->id,
-                'last_seen' => now(),
-                'log_details' => json_encode([
-                    'title' => 'updated user deatils',
+            // Method 1: Using Trait (Static) - Error logging
+            self::logErrorStatic(
+                "Failed to update user: " . $e->getMessage(),
+                'user_update',
+                500,
+                ['error' => $e->getMessage(), 'slug' => $slug],
+                $request
+            );
+
+            // Method 2: Manual Event (Direct) - Detailed error info
+            event(new UserActivityEvent(
+                auth()->check() ? auth()->id() : null,
+                [
+                    'title' => 'User Update Failed',
                     'status' => 'error',
                     'status_code' => 500,
-                    'message' => $e->getMessage(),
-                    'ip' => $request->ip(),
-                    'time' => now()->toDateTimeString(),
-                    'referer' => $request->header('referer'),
-                    'request_url' => $request->fullUrl(),
-                    'method' => $request->method(),
-                    'user_agent' => $request->userAgent(),
-                ]),
-            ]);
+                    'message' => "Critical error during user update: " . $e->getMessage(),
+                    'action_type' => 'user_update_error',
+                ],
+                $request,
+                [
+                    'error_type' => get_class($e),
+                    'slug' => $slug,
+                    'error_file' => $e->getFile(),
+                    'error_line' => $e->getLine()
+                ]
+            ));
 
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }

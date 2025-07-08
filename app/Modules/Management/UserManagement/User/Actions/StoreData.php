@@ -3,17 +3,19 @@
 namespace App\Modules\Management\UserManagement\User\Actions;
 
 use Illuminate\Support\Facades\DB;
+use App\Events\UserActivityEvent;
+use App\Traits\LogsUserActivity;
 
 class StoreData
 {
+    use LogsUserActivity;
+    
     static $model = \App\Modules\Management\UserManagement\User\Models\Model::class;
     static $UserAddressModel = \App\Modules\Management\UserManagement\User\Models\UserAddressModel::class;
-    static $UserLogModel = \App\Modules\Management\UserManagement\User\Models\UserLogModel::class;
     static $UserSocialLinkModel = \App\Modules\Management\UserManagement\User\Models\UserSocialLinkModel::class;
 
     public static function execute($request)
     {
-
         try {
             $requestData = $request->validated();
 
@@ -80,46 +82,68 @@ class StoreData
                 }
             }
 
-            //create user log
-            self::$UserLogModel::query()->create([
-                'user_id' => auth()->user()->id,
-                'last_seen' => now(),
-                'log_details' => json_encode([
-                    'title' => 'created user deatils',
-                    'status' => 'success',
-                    'status_code' => 200,
-                    'message' => 'updated user deatils',
-                    'ip' => $request->ip(),
-                    'time' => now()->toDateTimeString(),
-                    'referer' => $request->header('referer'),
-                    'request_url' => $request->fullUrl(),
-                    'method' => $request->method(),
-                    'user_agent' => $request->userAgent(),
-                ]),
-                
-            ]);
             DB::commit();
+
+            // Method 1: Using Trait (Static)
+            self::logCrudStatic('create', 'User', $data->id, [
+                'user_name' => $data->user_name,
+                'email' => $data->email
+            ], $request);
+
+            // Method 2: Manual Event (Direct)
+            event(new UserActivityEvent(
+                auth()->id(),
+                [
+                    'title' => 'User Creation Successful',
+                    'status' => 'success',
+                    'status_code' => 201,
+                    'message' => "User '{$data->user_name}' created successfully with all related data",
+                    'action_type' => 'user_creation_complete',
+                ],
+                $request,
+                [
+                    'created_user_id' => $data->id,
+                    'user_name' => $data->user_name,
+                    'has_social_links' => !empty($socialMediaData),
+                    'social_links_count' => count($socialMediaData)
+                ]
+            ));
+
             // Return success response
             return messageResponse('Item added successfully', $data, 201);
+            
         } catch (\Exception $e) {
             // Rollback transaction in case of error
             DB::rollBack();
-            self::$UserLogModel::query()->create([
-                'user_id' => auth()->user()->id,
-                'last_seen' => now(),
-                'log_details' => json_encode([
-                    'title' => 'created user deatils',
+            
+            // Method 1: Using Trait (Static) - Error logging
+            self::logErrorStatic(
+                "Failed to create user: " . $e->getMessage(),
+                'user_creation',
+                500,
+                ['error' => $e->getMessage(), 'request_data' => $requestData ?? []],
+                $request
+            );
+
+            // Method 2: Manual Event (Direct) - Additional error details
+            event(new UserActivityEvent(
+                auth()->check() ? auth()->id() : null,
+                [
+                    'title' => 'User Creation Failed',
                     'status' => 'error',
                     'status_code' => 500,
-                    'message' => $e->getMessage(),
-                    'ip' => $request->ip(),
-                    'time' => now()->toDateTimeString(),
-                    'referer' => $request->header('referer'),
-                    'request_url' => $request->fullUrl(),
-                    'method' => $request->method(),
-                    'user_agent' => $request->userAgent(),
-                ]),
-            ]);
+                    'message' => "Critical error during user creation: " . $e->getMessage(),
+                    'action_type' => 'user_creation_error',
+                ],
+                $request,
+                [
+                    'error_type' => get_class($e),
+                    'error_file' => $e->getFile(),
+                    'error_line' => $e->getLine(),
+                    'stack_trace' => $e->getTraceAsString()
+                ]
+            ));
+            
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }
     }
