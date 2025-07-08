@@ -26,18 +26,17 @@ class CheckUser
                             $query->select('id', 'name', 'serial_no');
                         },
                         'address' => function ($query) {
-                            $query->selectRaw("id, user_id, state, city, post, country, address, slug, JSON_UNQUOTE(JSON_EXTRACT(phone_number, '$[0]')) as phone_number");
+                            $query->selectRaw("id, user_id, state, phone_number, city, post, country, address, slug, JSON_UNQUOTE(JSON_EXTRACT(phone_number, '$[0]')) as number")
+                                ->where('user_id', auth()->user()->id);
                         },
-                        'socialLinks' => function ($query) {
-                            $query->select('id','user_id' ,'media_name', 'link','slug');
+                         'social_links' => function ($query) {
+                            $query->select('id', 'user_id', 'media_name', 'link')
+                                ->where('user_id', auth()->user()->id);
                         }
                     ])
                     ->first();
+                    
                 auth()->guard('web')->login($user, 1);
-                // $user->role = $user->role()->select('id', 'name', 'serial_no')->first();
-                // $user->address = $user->address()->select('id', 'state', 'city', 'post', 'country')->first();
-                // $user->socialLinks = $user->socialLinks()->select('id', 'social_name', 'link')->get();
-       
                 
                 return entityResponse($user);
             }

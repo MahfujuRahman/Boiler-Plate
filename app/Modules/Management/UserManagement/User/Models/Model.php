@@ -71,7 +71,8 @@ class Model extends Authenticatable
     {
         return $this->hasMany(self::$UserLogModel, 'user_id', 'id');
     }
-    public function socialLinks()
+
+    public function social_links()
     {
         return $this->hasMany(self::$UserSocialLinkModel, 'user_id', 'id');
     }

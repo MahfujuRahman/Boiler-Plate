@@ -9,23 +9,33 @@
             <div class="col-lg-4">
                 <div class="card profile-card-2">
                     <div class="card-img-block">
-                        <img class="img-fluid bg-dark" src="avatar.png" alt="Card image cap">
+                        <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="Card image cap" class="img-fluid bg-dark">
                     </div>
                     <div class="card-body pt-5">
                         <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="profile-image" class="profile">
                         <h5 class="card-title text-capitalize">Name : {{ auth_info.first_name }} {{ auth_info.last_name
-                            }}</h5>
-                        <p class="card-text">Eamil : {{ auth_info.email }}</p>
-                        <p class="card-text">Phone : {{ auth_info.address.phone_number ?? 'N/A' }}</p>
-                        <p class="card-text">Address : {{ auth_info.address.address ?? 'N/A' }}</p>
+                        }}</h5>
+                        <p class="card-text">Email: {{ auth_info.email }}</p>
+                        <p class="card-text">Phone: {{ auth_info.address.number }}
+                           
+                        </p>
+                        <p class="card-text">Address: {{ auth_info.address.address ?? 'N/A' }}</p>
+                       
                     </div>
-                    <div class="card-body  border-light">
+                    <div class="card-body border-light">
                         <div class="media align-items-center">
                             <div class="icon-block">
-                                <a href="javascript:void();"><i class="fa fa-facebook bg-facebook text-white"></i></a>
-                                <a href="javascript:void();"> <i class="fa fa-twitter bg-twitter text-white"></i></a>
-                                <a href="javascript:void();"> <i
-                                        class="fa fa-google-plus bg-google-plus text-white"></i></a>
+                                <template v-if="socialMediaLinks && socialMediaLinks.length > 0">
+                                    <a v-for="social in socialMediaLinks" :key="social.media_name" 
+                                       :href="social.media_link" target="_blank" class="me-2">
+                                        <i :class="getSocialIcon(social.media_name)" class="text-white"></i>
+                                    </a>
+                                </template>
+                                <template v-else>
+                                    <a href="javascript:void();"><i class="fa fa-facebook bg-facebook text-white"></i></a>
+                                    <a href="javascript:void();"> <i class="fa fa-twitter bg-twitter text-white"></i></a>
+                                    <a href="javascript:void();"> <i class="fa fa-google-plus bg-google-plus text-white"></i></a>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -81,13 +91,28 @@
                                                 type="email" value="">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-lg-3 col-form-label form-control-label">Phone</label>
-                                        <div class="col-lg-9">
-                                            <input v-model="auth_info.address.phone_number" name="phone_number"
-                                                class="form-control" type="number" value="">
-                                        </div>
-                                    </div>
+                                    
+                                    <!-- Phone Numbers -->
+                                    <MultipleInputField
+                                        label="Phone Numbers"
+                                        name="phone_numbers"
+                                        type="phone"
+                                        placeholder="Enter phone number and press Enter"
+                                        hint="Enter phone numbers one by one. Supports formats like +1234567890 or 01234567890"
+                                        v-model="phoneNumbers"
+                                        serialization="json"
+                                    />
+
+                                    <!-- Social Media Links -->
+                                    <MultipleInputField
+                                        label="Social Media"
+                                        name="social_media"
+                                        type="social"
+                                        placeholder="Enter social media URL or handle and press Enter"
+                                        hint="Enter social media URLs (e.g., https://facebook.com/username) or handles (e.g., @username)"
+                                        v-model="socialMediaLinks"
+                                        serialization="json"
+                                    />
 
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">State</label>
@@ -162,7 +187,6 @@
                                                 value="">
                                         </div>
                                     </div>
-                                    <multi-chip :name="`phone_number`" />
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label"></label>
                                         <div class="col-lg-9">
@@ -198,22 +222,91 @@
 import { auth_store } from "../../../../../GlobalStore/auth_store";
 import { settings_store } from "../store/store";
 import { mapState, mapActions } from 'pinia';
+import MultipleInputField from '../components/MultipleInputField.vue';
 
 export default {
-   
+    components: {
+        MultipleInputField
+    },
+
     data: () => ({
         tab: 'edit',
+        phoneNumbers: [],
+        socialMediaLinks: [],
     }),
+    
+    watch: {
+        auth_info: {
+            handler(newValue) {
+                if (newValue && newValue.address) {
+                    // Initialize phone numbers
+                    if (newValue.address.phone_number) {
+                        try {
+                            const phoneData = typeof newValue.address.phone_number === 'string' 
+                                ? JSON.parse(newValue.address.phone_number)
+                                : newValue.address.phone_number;
+                            this.phoneNumbers = Array.isArray(phoneData) ? phoneData.filter(phone => phone) : [];
+                        } catch (error) {
+                            // If it's not JSON, treat as single phone number
+                            this.phoneNumbers = newValue.address.phone_number ? [newValue.address.phone_number] : [];
+                        }
+                    }
+                    
+                    // Initialize social media links from social_links array
+                    if (newValue.social_links && Array.isArray(newValue.social_links)) {
+                        this.socialMediaLinks = newValue.social_links.map(item => ({
+                            media_name: item.media_name,
+                            media_link: item.link
+                        }));
+                    } else if (newValue.address && newValue.address.social_media) {
+                        try {
+                            const socialData = typeof newValue.address.social_media === 'string'
+                                ? JSON.parse(newValue.address.social_media)
+                                : newValue.address.social_media;
+                            
+                            // Ensure the data structure matches backend expectations
+                            if (Array.isArray(socialData)) {
+                                this.socialMediaLinks = socialData.map(item => {
+                                    if (typeof item === 'object' && item.media_name && (item.media_link || item.link)) {
+                                        return {
+                                            media_name: item.media_name,
+                                            media_link: item.media_link || item.link
+                                        };
+                                    }
+                                    return null;
+                                }).filter(item => item !== null);
+                            } else {
+                                this.socialMediaLinks = [];
+                            }
+                        } catch (error) {
+                            this.socialMediaLinks = [];
+                        }
+                    } else {
+                        this.socialMediaLinks = [];
+                    }
+                }
+            },
+            immediate: true,
+            deep: true
+        }
+    },
     methods: {
         ...mapActions(auth_store, {
             check_is_auth: 'check_is_auth',
         }),
         UpdateProfileHandler: async function () {
             let formData = new FormData(event.target);
+            
+            // Add phone numbers and social media as JSON strings
+            formData.append('phone_numbers', JSON.stringify(this.phoneNumbers));
+            formData.append('social_media', JSON.stringify(this.socialMediaLinks));
+            
             let response = await axios.post('user-profile-update', formData);
             if (response.data.status == 'success') {
                 window.s_alert(response.data.message)
                 this.check_is_auth()
+            } else {
+                window.s_alert(response.data.message || 'Update failed', 'error')
             }
         },
         ChangePasswordHandler: async function () {
@@ -223,6 +316,22 @@ export default {
                 window.s_alert(response.data.message)
                 this.check_is_auth()
             }
+        },
+        
+        getSocialIcon(mediaName) {
+            const iconMap = {
+                facebook: 'fa fa-facebook bg-facebook',
+                twitter: 'fa fa-twitter bg-twitter',
+                instagram: 'fa fa-instagram bg-instagram',
+                linkedin: 'fa fa-linkedin bg-linkedin',
+                youtube: 'fa fa-youtube bg-youtube',
+                tiktok: 'fa fa-video-camera bg-dark',
+                snapchat: 'fa fa-snapchat bg-warning',
+                whatsapp: 'fa fa-whatsapp bg-success',
+                telegram: 'fa fa-telegram bg-info',
+                other: 'fa fa-globe bg-secondary'
+            };
+            return iconMap[mediaName] || iconMap.other;
         }
     },
     computed: {
@@ -233,4 +342,46 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.profile-card-2 .card-img-block {
+    height: 300px;
+}
+
+.social-links .social-item {
+    display: inline-block;
+}
+
+.social-links .badge {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.icon-block a {
+    margin-right: 8px;
+    text-decoration: none;
+}
+
+.icon-block i {
+    padding: 8px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 16px;
+}
+
+.bg-facebook { background-color: #3b5998; }
+.bg-twitter { background-color: #1da1f2; }
+.bg-instagram { background-color: #e4405f; }
+.bg-linkedin { background-color: #0077b5; }
+.bg-youtube { background-color: #ff0000; }
+.bg-google-plus { background-color: #dd4b39; }
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+</style>
