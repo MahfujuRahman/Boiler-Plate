@@ -102,39 +102,6 @@ class UpdateData
 
             DB::commit();
 
-            // Method 1: Using Trait (Static) - CRUD logging
-            // self::logCrudStatic('update', 'User', $data->id, [
-            //     'user_name' => $data->user_name,
-            //     'email' => $data->email,
-            //     'updated_fields' => array_keys($requestData)
-            // ], $request);
-
-            // (new self())->logError('update', 'User', $data->id, [
-            //     'user_name' => $data->user_name,
-            //     'email' => $data->email,
-            //     'updated_fields' => array_keys($requestData)
-            // ]);
-
-            // // Method 2: Manual Event (Direct) - Detailed update info
-            // event(new UserActivityEvent(
-            //     auth()->id(),
-            //     [
-            //         'title' => 'User Profile Update',
-            //         'status' => 'success',
-            //         'status_code' => 200,
-            //         'message' => "User '{$data->user_name}' profile updated successfully",
-            //         'action_type' => 'user_profile_update',
-            //     ],
-            //     $request,
-            //     [
-            //         'updated_user_id' => $data->id,
-            //         'user_name' => $data->user_name,
-            //         'updated_fields' => array_keys($requestData),
-            //         'has_social_links' => !empty($socialMediaData),
-            //         'social_links_count' => count($socialMediaData)
-            //     ]
-            // ));
-
             return messageResponse('Item updated successfully', $data, 201);
         } catch (\Exception $e) {
             DB::rollBack();

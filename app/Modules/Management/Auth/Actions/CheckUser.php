@@ -20,10 +20,24 @@ class CheckUser
                         'email',
                         'image',
                         'role_id',
+                    ])->with([
+                        'role' => function ($query) {
+                            $query->select('id', 'name', 'serial_no');
+                        },
+                        'address' => function ($query) {
+                            $query->selectRaw("id, user_id, state, city, post, country, address, slug, JSON_UNQUOTE(JSON_EXTRACT(phone_number, '$[0]')) as phone_number");
+                        },
+                        'socialLinks' => function ($query) {
+                            $query->select('id','user_id' ,'media_name', 'link','slug');
+                        }
                     ])
                     ->first();
                 auth()->guard('web')->login($user, 1);
-                $user->role = $user->role()->select('id', 'name', 'serial_no')->first();
+                // $user->role = $user->role()->select('id', 'name', 'serial_no')->first();
+                // $user->address = $user->address()->select('id', 'state', 'city', 'post', 'country')->first();
+                // $user->socialLinks = $user->socialLinks()->select('id', 'social_name', 'link')->get();
+       
+                
                 return entityResponse($user);
             }
             return response()->json(["User not found"], 404);

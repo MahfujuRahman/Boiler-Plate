@@ -116,34 +116,6 @@ class StoreData
             // Rollback transaction in case of error
             DB::rollBack();
             
-            // Method 1: Using Trait (Static) - Error logging
-            // self::logErrorStatic(
-            //     "Failed to create user: " . $e->getMessage(),
-            //     'user_creation',
-            //     500,
-            //     ['error' => $e->getMessage(), 'request_data' => $requestData ?? []],
-            //     $request
-            // );
-
-            // // Method 2: Manual Event (Direct) - Additional error details
-            // event(new UserActivityEvent(
-            //     auth()->check() ? auth()->id() : null,
-            //     [
-            //         'title' => 'User Creation Failed',
-            //         'status' => 'error',
-            //         'status_code' => 500,
-            //         'message' => "Critical error during user creation: " . $e->getMessage(),
-            //         'action_type' => 'user_creation_error',
-            //     ],
-            //     $request,
-            //     [
-            //         'error_type' => get_class($e),
-            //         'error_file' => $e->getFile(),
-            //         'error_line' => $e->getLine(),
-            //         'stack_trace' => $e->getTraceAsString()
-            //     ]
-            // ));
-            
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }
     }

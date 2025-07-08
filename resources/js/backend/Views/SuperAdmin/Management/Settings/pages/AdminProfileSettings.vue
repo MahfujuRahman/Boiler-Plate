@@ -13,10 +13,10 @@
                     </div>
                     <div class="card-body pt-5">
                         <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="profile-image" class="profile">
-                        <h5 class="card-title text-capitalize">Name : {{ auth_info.name }}</h5>
+                        <h5 class="card-title text-capitalize">Name : {{ auth_info.first_name }} {{ auth_info.last_name }}</h5>
                         <p class="card-text">Eamil : {{ auth_info.email }}</p>
-                        <p class="card-text">Phone : {{ auth_info.phone ?? 'N/A' }}</p>
-                        <p class="card-text">Address : {{ auth_info.address ?? 'N/A' }}</p>
+                        <p class="card-text">Phone : {{ auth_info.address.phone_number ?? 'N/A' }}</p>
+                        <p class="card-text">Address : {{ auth_info.address.address ?? 'N/A' }}</p>
                     </div>
                     <div class="card-body  border-light">
                         <div class="media align-items-center">
@@ -52,9 +52,16 @@
                                 id="profile">
                                 <form @submit.prevent="UpdateProfileHandler" enctype="multipart/form-data">
                                     <div class="form-group row">
-                                        <label class="col-lg-3 col-form-label form-control-label">Name</label>
+                                        <label class="col-lg-3 col-form-label form-control-label">First Name</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.name" name="name" class="form-control" type="text"
+                                            <input v-model="auth_info.first_name" name="first_name" class="form-control" type="text"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Last Name</label>
+                                        <div class="col-lg-9">
+                                            <input v-model="auth_info.last_name" name="last_name" class="form-control" type="text"
                                                 value="">
                                         </div>
                                     </div>
@@ -69,16 +76,37 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">Phone</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.phone_number" name="phone_number"
+                                            <input v-model="auth_info.address.phone_number" name="phone_number"
                                                 class="form-control" type="number" value="">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-lg-3 col-form-label form-control-label">Address</label>
+                                        <label class="col-lg-3 col-form-label form-control-label">State</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.address" name="address" class="form-control"
-                                                type="text" value="" placeholder="Street">
+                                            <input v-model="auth_info.address.state" name="state" class="form-control"
+                                                type="text" value="" placeholder="State">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">City</label>
+                                        <div class="col-lg-9">
+                                            <input v-model="auth_info.address.city" name="city" class="form-control"
+                                                type="text" value="" placeholder="City">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Post</label>
+                                        <div class="col-lg-9">
+                                            <input v-model="auth_info.address.post" name="post" class="form-control"
+                                                type="text" value="" placeholder="Post">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">Country</label>
+                                        <div class="col-lg-9">
+                                            <input v-model="auth_info.address.country" name="country" class="form-control"
+                                                type="text" value="" placeholder="Country">
                                         </div>
                                     </div>
 

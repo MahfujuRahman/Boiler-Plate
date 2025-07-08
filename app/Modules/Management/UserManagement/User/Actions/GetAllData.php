@@ -20,7 +20,7 @@ class GetAllData
             $end_date = request()->input('end_date');
 
             $with = [
-                'role',
+                'address', 'socialLinks', 'logs','role'
             ];
             $condition = [];
 
