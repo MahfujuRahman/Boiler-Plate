@@ -10,10 +10,32 @@
         <div class="form-group">
           <label for="">media name</label>
           <div class="mt-1 mb-3">
-            <input class="form-control form-control-square mb-2" type="text"
-              :name="`social_media[${index}][media_name]`" v-model="contributor.media_name" id="media_name" :class="{
+            <select
+              class="form-control form-control-square mb-2"
+              :name="`social_media[${index}][media_name]`"
+              v-model="contributor.media_name"
+              id="media_name"
+              :class="{
                 custom_error: errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].media_name,
-              }" />
+              }"
+            >
+              <option value="">Select Platform</option>
+              <option value="facebook">Facebook</option>
+              <option value="twitter">Twitter</option>
+              <option value="instagram">Instagram</option>
+              <option value="linkedin">LinkedIn</option>
+              <option value="youtube">YouTube</option>
+              <option value="tiktok">TikTok</option>
+              <option value="pinterest">Pinterest</option>
+              <option value="snapchat">Snapchat</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="telegram">Telegram</option>
+              <option value="reddit">Reddit</option>
+              <option value="tumblr">Tumblr</option>
+              <option value="discord">Discord</option>
+              <option value="slack">Slack</option>
+              <option value="other">Other</option>
+            </select>
           </div>
           <div v-if="errors['contributor'] && errors['contributor'][index] && errors['contributor'][index].media_name"
             class="text-danger small">
