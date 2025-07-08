@@ -27,7 +27,7 @@
                             <div class="icon-block">
                                 <template v-if="socialMediaLinks && socialMediaLinks.length > 0">
                                     <a v-for="social in socialMediaLinks" :key="social.media_name" 
-                                       :href="social.media_link" target="_blank" class="me-2">
+                                       :href="social.media_link" target="_blank" class="me-2 mb-2">
                                         <i :class="getSocialIcon(social.media_name)" class="text-white"></i>
                                     </a>
                                 </template>
@@ -326,9 +326,13 @@ export default {
                 linkedin: 'fa fa-linkedin bg-linkedin',
                 youtube: 'fa fa-youtube bg-youtube',
                 tiktok: 'fa fa-video-camera bg-dark',
+                pinterest: 'fa fa-pinterest bg-danger',
                 snapchat: 'fa fa-snapchat bg-warning',
                 whatsapp: 'fa fa-whatsapp bg-success',
                 telegram: 'fa fa-telegram bg-info',
+                reddit: 'fa fa-reddit bg-danger',
+                tumblr: 'fa fa-tumblr bg-primary',
+                slack: 'fa fa-slack bg-success',
                 other: 'fa fa-globe bg-secondary'
             };
             return iconMap[mediaName] || iconMap.other;
