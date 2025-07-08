@@ -82,10 +82,36 @@ class StoreData
 
             //create user log
             self::$UserLogModel::query()->create([
-                'user_id' => $data->id,
+                'user_id' => auth()->user()->id,
                 'last_seen' => now(),
                 'log_details' => json_encode([
-                    'action' => 'create',
+                    'title' => 'created user deatils',
+                    'status' => 'success',
+                    'status_code' => 200,
+                    'message' => 'updated user deatils',
+                    'ip' => $request->ip(),
+                    'time' => now()->toDateTimeString(),
+                    'referer' => $request->header('referer'),
+                    'request_url' => $request->fullUrl(),
+                    'method' => $request->method(),
+                    'user_agent' => $request->userAgent(),
+                ]),
+                
+            ]);
+            DB::commit();
+            // Return success response
+            return messageResponse('Item added successfully', $data, 201);
+        } catch (\Exception $e) {
+            // Rollback transaction in case of error
+            DB::rollBack();
+            self::$UserLogModel::query()->create([
+                'user_id' => auth()->user()->id,
+                'last_seen' => now(),
+                'log_details' => json_encode([
+                    'title' => 'created user deatils',
+                    'status' => 'error',
+                    'status_code' => 500,
+                    'message' => $e->getMessage(),
                     'ip' => $request->ip(),
                     'time' => now()->toDateTimeString(),
                     'referer' => $request->header('referer'),
@@ -94,10 +120,6 @@ class StoreData
                     'user_agent' => $request->userAgent(),
                 ]),
             ]);
-            DB::commit();
-            // Return success response
-            return messageResponse('Item added successfully', $data, 201);
-        } catch (\Exception $e) {
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }
     }

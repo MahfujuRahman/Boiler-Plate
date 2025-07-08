@@ -124,12 +124,12 @@
                       <th>
                         <span v-if="link.link && (link.link.startsWith('http://') || link.link.startsWith('https://'))">
                           <a :href="link.link" target="_blank">
-                          {{ link.link }}
+                            {{ link.link }}
                           </a>
                         </span>
                         <span v-else-if="link.link">
                           <a :href="`https://${link.link}`" target="_blank">
-                          {{ link.link }}
+                            {{ link.link }}
                           </a>
                         </span>
                         <span v-else class="text-muted">N/A</span>
@@ -138,6 +138,26 @@
                   </tbody>
                 </table>
               </div>
+              
+              <!-- Activity Logs -->
+              <!-- <div class="mt-4" v-if="item.logs && item.logs.length">
+                <h6 class="text-info mb-3">Recent Activity (Last 5)</h6>
+                <table class="table quick_modal_table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Activity</th>
+                      <th>Date & Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(log, index) in item.logs.slice(0, 5)" :key="index">
+                      <th>User Activity</th>
+                      <th>{{ new Date(log.last_seen).toLocaleString() }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> -->
+
             </div>
           </div>
         </div>

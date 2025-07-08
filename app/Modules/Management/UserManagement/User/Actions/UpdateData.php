@@ -13,6 +13,8 @@ class UpdateData
     public static function execute($request, $slug)
     {
         try {
+            // throw new \Exception('Forced exception for testing catch block.');
+
             if (!$data = self::$model::query()->where('slug', $slug)->first()) {
                 return messageResponse('Data not found...', $data, 404, 'error');
             }
@@ -96,10 +98,13 @@ class UpdateData
 
             //create user log
             self::$UserLogModel::query()->create([
-                'user_id' => $data->id,
+                'user_id' => auth()->user()->id,
                 'last_seen' => now(),
                 'log_details' => json_encode([
-                    'action' => 'update',
+                    'title' => 'updated user deatils',
+                    'status' => 'success',
+                    'status_code' => 200,
+                    'message' => 'updated user deatils',
                     'ip' => $request->ip(),
                     'time' => now()->toDateTimeString(),
                     'referer' => $request->header('referer'),
@@ -114,6 +119,25 @@ class UpdateData
             return messageResponse('Item updated successfully', $data, 201);
         } catch (\Exception $e) {
             DB::rollBack();
+
+            //create user log
+            self::$UserLogModel::query()->create([
+                'user_id' => auth()->user()->id,
+                'last_seen' => now(),
+                'log_details' => json_encode([
+                    'title' => 'updated user deatils',
+                    'status' => 'error',
+                    'status_code' => 500,
+                    'message' => $e->getMessage(),
+                    'ip' => $request->ip(),
+                    'time' => now()->toDateTimeString(),
+                    'referer' => $request->header('referer'),
+                    'request_url' => $request->fullUrl(),
+                    'method' => $request->method(),
+                    'user_agent' => $request->userAgent(),
+                ]),
+            ]);
+
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }
     }
