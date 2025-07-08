@@ -15,6 +15,7 @@ class CheckUser
                     ->select([
                         'id',
                         'slug',
+                        'user_name',
                         'first_name',
                         'last_name',
                         'email',

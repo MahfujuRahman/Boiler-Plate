@@ -13,7 +13,8 @@
                     </div>
                     <div class="card-body pt-5">
                         <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="profile-image" class="profile">
-                        <h5 class="card-title text-capitalize">Name : {{ auth_info.first_name }} {{ auth_info.last_name }}</h5>
+                        <h5 class="card-title text-capitalize">Name : {{ auth_info.first_name }} {{ auth_info.last_name
+                            }}</h5>
                         <p class="card-text">Eamil : {{ auth_info.email }}</p>
                         <p class="card-text">Phone : {{ auth_info.address.phone_number ?? 'N/A' }}</p>
                         <p class="card-text">Address : {{ auth_info.address.address ?? 'N/A' }}</p>
@@ -52,17 +53,24 @@
                                 id="profile">
                                 <form @submit.prevent="UpdateProfileHandler" enctype="multipart/form-data">
                                     <div class="form-group row">
+                                        <label class="col-lg-3 col-form-label form-control-label">User Name</label>
+                                        <div class="col-lg-9">
+                                            <input v-model="auth_info.user_name" name="user_name" class="form-control"
+                                                type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">First Name</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.first_name" name="first_name" class="form-control" type="text"
-                                                value="">
+                                            <input v-model="auth_info.first_name" name="first_name" class="form-control"
+                                                type="text" value="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">Last Name</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.last_name" name="last_name" class="form-control" type="text"
-                                                value="">
+                                            <input v-model="auth_info.last_name" name="last_name" class="form-control"
+                                                type="text" value="">
                                         </div>
                                     </div>
 
@@ -105,8 +113,8 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">Country</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.address.country" name="country" class="form-control"
-                                                type="text" value="" placeholder="Country">
+                                            <input v-model="auth_info.address.country" name="country"
+                                                class="form-control" type="text" value="" placeholder="Country">
                                         </div>
                                     </div>
 
@@ -154,6 +162,7 @@
                                                 value="">
                                         </div>
                                     </div>
+                                    <multi-chip :name="`phone_number`" />
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label"></label>
                                         <div class="col-lg-9">
@@ -189,7 +198,9 @@
 import { auth_store } from "../../../../../GlobalStore/auth_store";
 import { settings_store } from "../store/store";
 import { mapState, mapActions } from 'pinia';
+
 export default {
+   
     data: () => ({
         tab: 'edit',
     }),
