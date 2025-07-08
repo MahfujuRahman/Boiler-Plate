@@ -15,6 +15,7 @@ import import_data from "./async_actions/import_data";
 
 /** actions */
 import set_filter_criteria from "./actions/set_filter_criteria";
+import reset_filter_criteria from "./actions/reset_filter_criteria";
 import set_item from "./actions/set_item";
 import set_only_latest_data from "./actions/set_only_latest";
 import set_page from "./actions/set_page";
@@ -51,6 +52,7 @@ export const store = defineStore(setup.store_prefix, {
         set_status,
         set_only_latest_data,
         clear_selected,
+       reset_filter_criteria,
     },
 });
 
