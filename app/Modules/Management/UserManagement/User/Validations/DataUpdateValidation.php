@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class DataStoreValidation extends FormRequest
+class DataUpdateValidation extends FormRequest
 {
     /**
      * Determine if the  is authorized to make this request.
@@ -47,8 +47,12 @@ class DataStoreValidation extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'image' => 'nullable | sometimes',
-            'email' => 'required|email|unique:users,email', // Assuming 'user' is the route parameter for the user ID
-            'password' => 'required|string|min:6',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($this->route('slug'), 'slug'),
+            ],
+            'password' => 'nullable|string|min:6',
             'state' => 'required|string|max:255',
             'city' => 'nullable|string|max:255',
             'post' => 'nullable|string|max:255',

@@ -52,7 +52,7 @@ class StoreData
                 'user_name'    => $requestData['user_name'],
                 'first_name'   => $requestData['first_name'],
                 'last_name'    => $requestData['last_name'],
-                'image'        => $requestData['image'] ?? null,
+                'image'        => $requestData['image'] ?? 'avatar.png',
                 'email'        => $requestData['email'],
                 'password'     => $requestData['password']
             ]);
@@ -85,6 +85,7 @@ class StoreData
                 'user_id' => $data->id,
                 'last_seen' => now(),
                 'log_details' => json_encode([
+                    'action' => 'create',
                     'ip' => $request->ip(),
                     'time' => now()->toDateTimeString(),
                     'referer' => $request->header('referer'),

@@ -17,6 +17,7 @@ use App\Modules\Management\UserManagement\User\Validations\BulkActionsValidation
 use App\Modules\Management\UserManagement\User\Validations\UserProfileUpdateValidation;
 use App\Modules\Management\UserManagement\User\Validations\UserChangePasswordValidation;
 use App\Modules\Management\UserManagement\User\Validations\DataStoreValidation;
+use App\Modules\Management\UserManagement\User\Validations\DataUpdateValidation;
 use App\Modules\Management\UserManagement\User\Actions\BulkActions;
 
 use App\Http\Controllers\Controller as ControllersController;
@@ -45,7 +46,7 @@ class Controller extends ControllersController
         return $data;
     }
 
-    public function update(DataStoreValidation $request, $slug)
+    public function update(DataUpdateValidation $request, $slug)
     {
         $data = UpdateData::execute($request, $slug);
         return $data;

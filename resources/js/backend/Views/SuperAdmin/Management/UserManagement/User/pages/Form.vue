@@ -23,12 +23,16 @@
           </div>
         </div>
         <div class="card-body card_body_fixed_height">
+           <div class="d-flex justify-content-between align-items-center pb-2 section-title">
+            <h5 class="m-0">User Information</h5>
+        </div>
           <div class="row">
             <template v-for="(form_field, index) in form_fields" v-bind:key="index">
               <common-input :label="form_field.label" :type="form_field.type" :name="form_field.name"
                 :multiple="form_field.multiple" :value="form_field.value" :data_list="form_field.data_list"
                 :is_visible="form_field.is_visible" :row_col_class="form_field.row_col_class" />
             </template>
+            <address-input :name="`phone_number`" />
             <multi-chip :name="`phone_number`" />
             <multiple-input-field :name="'social_link'" />
           </div>
@@ -53,11 +57,13 @@ import axios from "axios";
 
 import MultiChip from "../components/MultiChip.vue";
 import MultipleInputField from "../components/MultipleInputField.vue";
+import addressInput from "../components/address-input.vue";
 
 export default {
   components: {
     MultiChip,
     MultipleInputField,
+    addressInput,
   },
   data: () => ({
     setup,
@@ -164,3 +170,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.section-title {
+  border: 1px solid #dddddd78;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-weight: 500;
+  color: #343a40;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

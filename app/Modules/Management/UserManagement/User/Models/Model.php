@@ -24,6 +24,9 @@ class Model extends Authenticatable
 
 
     public static $roleModel = \App\Modules\Management\UserManagement\Role\Models\Model::class;
+    static $UserAddressModel = \App\Modules\Management\UserManagement\User\Models\UserAddressModel::class;
+    static $UserLogModel = \App\Modules\Management\UserManagement\User\Models\UserLogModel::class;
+    static $UserSocialLinkModel = \App\Modules\Management\UserManagement\User\Models\UserSocialLinkModel::class;
 
     protected static function booted()
     {
@@ -58,5 +61,18 @@ class Model extends Authenticatable
     public function role()
     {
         return $this->belongsTo(self::$roleModel);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(self::$UserAddressModel, 'user_id', 'id');
+    }
+    public function logs()
+    {
+        return $this->hasMany(self::$UserLogModel, 'user_id', 'id');
+    }
+    public function socialLinks()
+    {
+        return $this->hasMany(self::$UserSocialLinkModel, 'user_id', 'id');
     }
 }

@@ -37,8 +37,17 @@ export default {
     this.$watch(
       "item",
       (newValue) => {
-        if (newValue) {
-          this.set_phone_numbers = newValue.phone_numbers ? newValue.phone_numbers.split(",").filter((phone) => phone) : [];
+        if (newValue && newValue.address && newValue.address.phone_number) {
+          try {
+            // Parse the JSON string to get the array of phone numbers
+            const phoneNumbers = JSON.parse(newValue.address.phone_number);
+            this.set_phone_numbers = Array.isArray(phoneNumbers) ? phoneNumbers.filter((phone) => phone) : [];
+          } catch (error) {
+            console.error("Error parsing phone numbers:", error);
+            this.set_phone_numbers = [];
+          }
+        } else {
+          this.set_phone_numbers = [];
         }
       },
       { immediate: true }

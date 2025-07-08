@@ -37,30 +37,6 @@ export default [
     value: "",
   },
   {
-    name: "state",
-    label: "state",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "city",
-    label: "city",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "post",
-    label: "post",
-    type: "text",
-    value: "",
-  },
-  {
-    name: "country",
-    label: "country",
-    type: "text",
-    value: "",
-  },
-  {
     name: "image",
     label: "image",
     type: "file",

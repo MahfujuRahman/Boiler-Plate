@@ -77,12 +77,12 @@ export default {
   }),
   created: function () {
     this.$watch("item", (newValue) => {
-      console.log("newValue", newValue?.social_media);
+      console.log("newValue", newValue?.social_links);
 
-      if (newValue) {
-        this.contributor_data = newValue?.social_media.map((contributor) => ({
+      if (newValue && newValue.social_links) {
+        this.contributor_data = newValue.social_links.map((contributor) => ({
           media_name: contributor.media_name,
-          media_link: contributor.media_link,
+          media_link: contributor.link,
         }));
       }
     });
