@@ -9,7 +9,6 @@ export const initialState = {
     all: {} as anyObject,
     item: {} as anyObject,
     url: '',
-
     /*_______________*/
     /* data filters */
 
@@ -44,6 +43,7 @@ export const initialState = {
     show_filter_canvas: false,
     show_quick_view_canvas: false,
     show_management_modal: false,
+    import_csv_modal_show: false,
     modal_selected_qty: 1, // how much will checked from management modal
 
     /* trigger showing data form canvas */

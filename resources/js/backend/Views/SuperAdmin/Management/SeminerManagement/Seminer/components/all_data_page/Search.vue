@@ -1,7 +1,7 @@
 <template lang="">
     <input
         @keyup="(e) => set_search_key(e)"
-        class="form-control  ml-4 all_page_search py-1"/>
+        class="form-control  ml-4 "/>
 </template>
 <script>
 import { mapActions, mapWritableState } from 'pinia';
@@ -28,9 +28,6 @@ export default {
     }
 }
 </script>
-<style scoped>
-.all_page_search {
-    width: 300px;
-    height: 35px;
-}
+<style lang="">
+
 </style>

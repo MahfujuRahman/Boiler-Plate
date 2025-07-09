@@ -9,10 +9,7 @@
                 <edit :item="item"/>
             </li>
             <li>
-                <status-button :item="item"/>
-            </li>
-            <li>
-                <delete-restore :item="item"/>
+                <deactive :item="item"/>
             </li>
             <li>
                 <destroy :item="item"/>
@@ -26,8 +23,7 @@
 import active_row from '../../helpers/table_active_row';
 import Details from './action_buttons/Details.vue';
 import Edit from './action_buttons/Edit.vue';
-import StatusButton from './action_buttons/StatusButton.vue';
-import DeleteRestore    from './action_buttons/DeleteRestore.vue';
+import InActive from './action_buttons/InActive.vue';
 import Destroy from './action_buttons/Destroy.vue';
 export default {
     props: {
@@ -39,9 +35,8 @@ export default {
     components: {
         DetailsBtn: Details,
         Edit,
-        StatusButton,
+        InActive,
         Destroy,
-        DeleteRestore,
     },
     methods: {
         active_row,

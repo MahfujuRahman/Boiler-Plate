@@ -2,8 +2,10 @@
 
 namespace App\Modules\Management\UserManagement\User\Actions;
 use App\Modules\Management\UserManagement\User\Others\ImportJob;
+
 use Illuminate\Support\Facades\Bus;
 use Maatwebsite\Excel\Facades\Excel;
+
 class ImportData
 {
     static $model = \App\Modules\Management\UserManagement\User\Models\Model::class;
@@ -21,6 +23,7 @@ class ImportData
             $chunks = array_chunk($data[0], 10);
             $header = [];
             $batch = Bus::batch([])->dispatch();
+
             foreach ($chunks as $key => $chunk) {
                 if ($key === 0) {
                     $header = array_shift($chunk); // Set the header and remove it from data

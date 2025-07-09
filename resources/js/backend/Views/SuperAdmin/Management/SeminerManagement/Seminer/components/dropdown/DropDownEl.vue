@@ -1,6 +1,6 @@
 <template lang="">
-
-    <div class="custom_drop_down border" >
+    <div class="custom_drop_down">
+        <input type="hidden" :id="name" :name="name" :value="multiple?`[${selected_ids}]`:`${selected_ids}`">
         <div class="selected_list" @click="show_list = true">
             <div v-for="item in selected" :key="item.id" :id="item.id" class="selected_item">
                 <div class="label">
@@ -46,7 +46,6 @@
             </div>
         </div>
     </div>
-    <input type="hidden"  :id="name" :name="name" :value="multiple ? `[${selected_ids}]` : `${selected_ids}`">
 </template>
 <script>
 import { mapActions, mapState, mapWritableState } from 'pinia';
@@ -54,6 +53,7 @@ import { store } from '../../store';
 import debounce from '../../helpers/debounce';
 
 export default {
+    name: 'wearhoseDropDownEl',
     props: {
         multiple: {
             type: Boolean,
@@ -76,7 +76,10 @@ export default {
             v.forEach(i=>{
                 this.set_selected(i);
             })
-        })
+        });
+        document.addEventListener("keydown", () =>
+            this.esc_enter_capture(this, "dropdownel")
+        );
     },
     data: () => ({
         selected: [],

@@ -44,7 +44,7 @@ export default [
 	{
 		name: "date_time",
 		label: "Enter your date time",
-		type: "text",
+		type: "datetime-local",
 		value: "",
 	},
 

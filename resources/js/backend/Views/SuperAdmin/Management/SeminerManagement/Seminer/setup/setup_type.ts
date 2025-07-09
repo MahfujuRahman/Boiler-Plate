@@ -15,6 +15,7 @@ export default interface RouteConfig {
     sort_by_cols: string[];
     table_header_data: string[];
     table_row_data: string[];
+    quick_view_data: string[];
 
     layout_title: string;
 
