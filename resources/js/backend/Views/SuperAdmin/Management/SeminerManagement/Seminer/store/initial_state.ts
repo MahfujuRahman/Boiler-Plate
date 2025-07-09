@@ -24,6 +24,7 @@ export const initialState = {
     active_data_count: 0,
     inactive_data_count: 0,
     trased_data_count: 0,
+    is_trased_data: false,
     page: 1,
     paginate: 10,
     search_key: ``,

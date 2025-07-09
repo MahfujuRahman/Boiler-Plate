@@ -1,7 +1,7 @@
 <template lang="">
    <div class="">
-            <a href="" @click.prevent="change_status(`trased`)"
-                class="btn action_btn btn-sm btn-danger d-flex align-items-center">
+            <a href="" @click.prevent="change_status(`trased`), set_is_trashed_data(true)"
+                class="btn action_btn btn-sm btn-danger d-flex align-items-center py-2">
                 <i class="fa fa-trash mr-2"></i> Trased
                 ({{ trased_data_count }})
             </a>
@@ -18,13 +18,9 @@ export default {
             'get_all',
             'set_only_latest_data',
             'set_page',
+            'set_is_trashed_data',
         ]),
         change_status: function (status = 'active') {
-            if (status == 'trased') {
-                this.is_trashed_data = true;
-            } else {
-                this.is_trashed_data = false
-            }
             this.set_only_latest_data(true);
             this.set_status(status);
             this.set_page(1);
@@ -37,6 +33,7 @@ export default {
     computed: {
         ...mapState(store, [
             'trased_data_count',
+            'is_trased_data',
         ]),
     }
 }

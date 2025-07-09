@@ -1,6 +1,6 @@
 <template lang="">
 
-    <a href="" @click.prevent="change_status(`active`)"
+    <a href="" @click.prevent="change_status(`active`),set_is_trashed_data(false)"
         class="btn action_btn btn-sm btn-success d-flex align-items-center">
         <i class="fa fa fa fa-eye mr-2"></i> Active
         ({{ active_data_count }})
@@ -26,6 +26,7 @@ export default {
             `set_item`,
             `set_page`,
             `set_status`,
+            'set_is_trashed_data'
         ]),
         change_status: function (status = 'active') {
             if (status == 'trased') {

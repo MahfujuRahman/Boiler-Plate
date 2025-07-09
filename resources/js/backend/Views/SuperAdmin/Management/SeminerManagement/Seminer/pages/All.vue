@@ -15,6 +15,28 @@
                                 <tbody v-if="all?.data?.length">
                                     <table-body :data="all?.data" />
                                 </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="100%">
+                                            <div
+                                                style="background-color: #00000080 !important;  display: flex; flex-direction: column; align-items: center; padding: 40px 0;">
+                                                <svg width="64" height="64" fill="none" viewBox="0 0 64 64">
+                                                    <circle cx="32" cy="32" r="32" fill="#f5f6fa" />
+                                                    <path
+                                                        d="M32 18c-7.732 0-14 5.373-14 12s6.268 12 14 12 14-5.373 14-12-6.268-12-14-12zm0 22c-5.523 0-10-3.806-10-8.5S26.477 23 32 23s10 3.806 10 8.5S37.523 40 32 40zm0-11a2 2 0 100 4 2 2 0 000-4zm0 7c-2.21 0-4-1.343-4-3h2c0 .552.895 1 2 1s2-.448 2-1h2c0 1.657-1.79 3-4 3z"
+                                                        fill="#a5b4fc" />
+                                                </svg>
+                                                <div
+                                                    style="margin-top: 16px; font-size: 1.25rem; font-weight: 600; color: #fba540;">
+                                                    No data found
+                                                </div>
+                                                <div style="color: #fff; margin-top: 4px;">
+                                                    Try adjusting your filters or add new data to see it here.
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -32,7 +54,7 @@
         <quick-view />
         <filter-data />
         <import-modal />
-      
+
 
     </div>
 </template>
@@ -117,4 +139,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.table_responsive table tbody tr:hover,
+.table_responsive table tbody tr.active {
+    background: none;
+}
+</style>

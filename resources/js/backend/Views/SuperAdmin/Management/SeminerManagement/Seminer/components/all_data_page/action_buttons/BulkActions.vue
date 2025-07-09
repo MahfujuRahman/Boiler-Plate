@@ -1,12 +1,12 @@
 <template>
 
     <div class="" v-if="this.selected?.length">
-        <select @change="bulkActions">
+        <select @change="bulkActions" class="form-control bg-" style="width: 100px; height: 27px; font-size: 12px;">
             <option disabled selected>Select action</option>
             <option value="inactive">Inactive</option>
             <option value="active">Action</option>
-            <!-- <option value="soft_delete">Soft Delete</option> -->
-            <!-- <option value="restore">Restore</option> -->
+            <option value="soft_delete">Soft Delete</option>
+            <option value="restore">Restore</option>
             <option value="destroy">Destroy</option>
         </select>
     </div>
