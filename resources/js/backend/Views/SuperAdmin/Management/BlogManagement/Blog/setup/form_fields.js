@@ -16,21 +16,21 @@ export default [
 	{
 		name: "description",
 		label: "Enter your description",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 
 	{
 		name: "tags",
 		label: "Enter your tags",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 
 	{
 		name: "publish_date",
 		label: "Enter your publish date",
-		type: "text",
+		type: "datetime",
 		value: "",
 	},
 
@@ -51,7 +51,7 @@ export default [
 	{
 		name: "images",
 		label: "Enter your images",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 

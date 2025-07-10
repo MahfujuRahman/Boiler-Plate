@@ -44,14 +44,14 @@ export default [
 	{
 		name: "what_is_this_course",
 		label: "Enter your what is this course",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 
 	{
 		name: "why_is_this_course",
 		label: "Enter your why is this course",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 

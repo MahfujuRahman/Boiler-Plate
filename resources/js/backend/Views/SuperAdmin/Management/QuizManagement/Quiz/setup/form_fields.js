@@ -9,7 +9,7 @@ export default [
 	{
 		name: "description",
 		label: "Enter your description",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 
@@ -23,14 +23,14 @@ export default [
 	{
 		name: "exam_start_datetime",
 		label: "Enter your exam start datetime",
-		type: "text",
+		type: "datetime",
 		value: "",
 	},
 
 	{
 		name: "exam_end_datetime",
 		label: "Enter your exam end datetime",
-		type: "text",
+		type: "datetime",
 		value: "",
 	},
 

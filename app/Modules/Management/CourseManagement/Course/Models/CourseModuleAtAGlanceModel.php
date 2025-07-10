@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\CourseManagement\Course\Models;
+namespace App\Modules\Management\CourseModuleAtAGlance\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CourseModuleAtAGlanceModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "course_module_at_a_glances";
+    protected $table = "course_module_at_a_glance_models";
     protected $guarded = [];
 
     protected static function booted()

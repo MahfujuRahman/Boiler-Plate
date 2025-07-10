@@ -37,7 +37,7 @@ export default [
 	{
 		name: "topic",
 		label: "Enter your topic",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 ];

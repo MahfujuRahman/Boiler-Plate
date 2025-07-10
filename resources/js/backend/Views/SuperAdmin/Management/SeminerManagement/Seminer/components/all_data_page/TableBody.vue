@@ -14,19 +14,6 @@
       <td v-if="row_item == 'id'">
         {{ dataindex + 1 }}
       </td>
-      <td v-else-if="row_item === 'image'" class="text-wrap max-w-120">
-        <a
-          :href="item[row_item]"
-          data-lightbox="blog-image"
-          data-title="Preview"
-        >
-          <img
-            :src="item[row_item]"
-            style="width: 60px; height: 40px; object-fit: cover"
-            alt="image"
-          />
-        </a>
-      </td>
       <td v-else class="text-wrap max-w-120">
         {{ trim_content(item[row_item], row_item) }}
       </td>
@@ -63,7 +50,7 @@ export default {
             second: "2-digit",
           }).format(new Date(content));
         }
-        return content.length > 50 ? content.substring(0, 25) + "..." : content;
+        return content.length > 50 ? content.substring(0, 50) + "..." : content;
       }
       if (content && typeof content === "object") {
         for (const key of Object.keys(content)) {
@@ -85,10 +72,5 @@ export default {
 <style scoped>
 .max-w-120 {
   max-width: 120px;
-}
-.text-wrap {
-    text-overflow: ellipsis !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
 }
 </style>

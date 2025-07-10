@@ -15,29 +15,15 @@ class CheckUser
                     ->select([
                         'id',
                         'slug',
-                        'user_name',
                         'first_name',
                         'last_name',
                         'email',
                         'image',
                         'role_id',
-                    ])->with([
-                        'role' => function ($query) {
-                            $query->select('id', 'name', 'serial_no');
-                        },
-                        'address' => function ($query) {
-                            $query->selectRaw("id, user_id, state, phone_number, city, post, country, address, slug, JSON_UNQUOTE(JSON_EXTRACT(phone_number, '$[0]')) as number")
-                                ->where('user_id', auth()->user()->id);
-                        },
-                         'social_links' => function ($query) {
-                            $query->select('id', 'user_id', 'media_name', 'link')
-                                ->where('user_id', auth()->user()->id);
-                        }
                     ])
                     ->first();
-                    
                 auth()->guard('web')->login($user, 1);
-                
+                $user->role = $user->role()->select('id', 'name', 'serial_no')->first();
                 return entityResponse($user);
             }
             return response()->json(["User not found"], 404);

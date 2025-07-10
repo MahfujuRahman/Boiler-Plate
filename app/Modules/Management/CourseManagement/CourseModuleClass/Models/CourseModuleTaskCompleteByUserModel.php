@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\CourseManagement\CourseModuleClass\Models;
+namespace App\Modules\Management\CourseModuleTaskCompleteByUser\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CourseModuleTaskCompleteByUserModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "course_module_task_complete_by_users";
+    protected $table = "course_module_task_complete_by_user_models";
     protected $guarded = [];
 
     protected static function booted()

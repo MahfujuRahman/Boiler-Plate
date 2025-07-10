@@ -16,14 +16,14 @@ export default [
 	{
 		name: "admission_start_date",
 		label: "Enter your admission start date",
-		type: "text",
+		type: "datetime",
 		value: "",
 	},
 
 	{
 		name: "admission_end_date",
 		label: "Enter your admission end date",
-		type: "text",
+		type: "datetime",
 		value: "",
 	},
 
@@ -72,7 +72,7 @@ export default [
 	{
 		name: "first_class_date",
 		label: "Enter your first class date",
-		type: "text",
+		type: "datetime",
 		value: "",
 	},
 

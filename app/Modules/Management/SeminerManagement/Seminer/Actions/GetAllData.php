@@ -25,26 +25,27 @@ class GetAllData
             if (request()->has('search') && request()->input('search')) {
                 $searchKey = request()->input('search');
                 $data = $data->where(function ($q) use ($searchKey) {
-                    $q->where('title', 'like', '%' . $searchKey . '%');
+    $q->where('title', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('description', 'like', '%' . $searchKey . '%');
+    $q->orWhere('description', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('poster', 'like', '%' . $searchKey . '%');
+    $q->orWhere('poster', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('whatsapp_group', 'like', '%' . $searchKey . '%');
+    $q->orWhere('whatsapp_group', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('facebook_group', 'like', '%' . $searchKey . '%');
+    $q->orWhere('facebook_group', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('telegram_group', 'like', '%' . $searchKey . '%');
+    $q->orWhere('telegram_group', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('date_time', 'like', '%' . $searchKey . '%');
+    $q->orWhere('date_time', 'like', '%' . $searchKey . '%');    
 
-                    $q->orWhere('promo_video', 'like', '%' . $searchKey . '%');
+    $q->orWhere('promo_video', 'like', '%' . $searchKey . '%');              
+
                 });
             }
 
             if ($start_date && $end_date) {
-                if ($end_date > $start_date) {
+                 if ($end_date > $start_date) {
                     $data->whereBetween('created_at', [$start_date . ' 00:00:00', $end_date . ' 23:59:59']);
                 } elseif ($end_date == $start_date) {
                     $data->whereDate('created_at', $start_date);
@@ -64,7 +65,7 @@ class GetAllData
                     ->limit($pageLimit)
                     ->orderBy($orderByColumn, $orderByType)
                     ->get();
-                return entityResponse($data);
+                     return entityResponse($data);
             } else if ($status == 'trased') {
                 $data = $data
                     ->with($with)
@@ -88,6 +89,7 @@ class GetAllData
                 "inactive_data_count" => self::$model::inactive()->count(),
                 "trased_data_count" => self::$model::trased()->count(),
             ]);
+
         } catch (\Exception $e) {
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }

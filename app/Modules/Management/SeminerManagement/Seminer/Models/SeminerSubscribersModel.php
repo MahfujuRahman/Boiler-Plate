@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\SeminerManagement\Seminer\Models;
+namespace App\Modules\Management\SeminerSubscribers\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SeminerSubscribersModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "seminer_subscribers";
+    protected $table = "seminer_subscribers_models";
     protected $guarded = [];
 
     protected static function booted()

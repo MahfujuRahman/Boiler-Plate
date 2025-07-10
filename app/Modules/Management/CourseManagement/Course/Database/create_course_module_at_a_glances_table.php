@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\CourseManagement\Course\Database\create_course_module_at_a_glances_table.php'
+     php artisan migrate --path='\App\Modules\Management\CourseModuleAtAGlance\Database\create_course_module_at_a_glances_table.php'
      * Run the migrations.
      */
     public function up(): void

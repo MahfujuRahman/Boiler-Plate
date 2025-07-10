@@ -19,7 +19,7 @@ class Seeder extends SeederClass
         $faker = Faker::create();
         self::$model::truncate();
 
-          self::$model::create([
+       self::$model::create([
             'first_name' => "super",
             'last_name' => "super",
             'email' => "superadmin@gmail.com",

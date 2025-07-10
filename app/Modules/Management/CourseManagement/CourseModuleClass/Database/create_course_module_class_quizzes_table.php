@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\CourseManagement\CourseModuleClass\Database\create_course_module_class_quizzes_table.php'
+     php artisan migrate --path='\App\Modules\Management\CourseModuleClassQuiz\Database\create_course_module_class_quizzes_table.php'
      * Run the migrations.
      */
     public function up(): void

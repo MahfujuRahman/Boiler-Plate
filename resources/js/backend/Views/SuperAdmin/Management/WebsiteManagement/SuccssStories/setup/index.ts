@@ -11,10 +11,9 @@ const setup: setup_type = {
     api_host: app_config.api_host,
     api_version: app_config.api_version,
     api_end_point: "succss-stories",
-
     module_name: "succss-story",
     store_prefix: "succss_story",
-    route_prefix: "SuccssStories",
+    route_prefix: "SuccssStory",
     route_path: "succss-story",
 
     select_fields: [

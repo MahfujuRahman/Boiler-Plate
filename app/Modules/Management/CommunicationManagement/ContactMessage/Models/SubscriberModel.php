@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\CommunicationManagement\ContactMessage\Models;
+namespace App\Modules\Management\Subscriber\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SubscriberModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "subscribers";
+    protected $table = "subscriber_models";
     protected $guarded = [];
 
     protected static function booted()

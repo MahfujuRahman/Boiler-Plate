@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\SeminerManagement\Seminer\Database\create_seminer_subscribers_table.php'
+     php artisan migrate --path='\App\Modules\Management\SeminerSubscribers\Database\create_seminer_subscribers_table.php'
      * Run the migrations.
      */
     public function up(): void

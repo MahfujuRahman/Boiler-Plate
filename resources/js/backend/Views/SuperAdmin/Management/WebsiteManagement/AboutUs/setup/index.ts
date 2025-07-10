@@ -14,7 +14,7 @@ const setup: setup_type = {
 
     module_name: "about-u",
     store_prefix: "about_u",
-    route_prefix: "AboutUs",
+    route_prefix: "AboutU",
     route_path: "about-u",
 
     select_fields: [

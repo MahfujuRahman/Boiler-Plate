@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\BlogManagement\Blog\Models;
+namespace App\Modules\Management\BlogWriter\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BlogWriterModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "blog_writers";
+    protected $table = "blog_writer_models";
     protected $guarded = [];
 
     protected static function booted()

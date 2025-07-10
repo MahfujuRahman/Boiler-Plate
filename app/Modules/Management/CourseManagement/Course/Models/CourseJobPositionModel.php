@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\CourseManagement\Course\Models;
+namespace App\Modules\Management\CourseJobPosition\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CourseJobPositionModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "course_job_positions";
+    protected $table = "course_job_position_models";
     protected $guarded = [];
 
     protected static function booted()

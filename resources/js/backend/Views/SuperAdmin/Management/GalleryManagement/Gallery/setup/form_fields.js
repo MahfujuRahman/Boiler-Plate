@@ -16,7 +16,7 @@ export default [
 	{
 		name: "description",
 		label: "Enter your description",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 

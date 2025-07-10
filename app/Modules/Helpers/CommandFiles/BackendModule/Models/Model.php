@@ -70,7 +70,6 @@ if (!function_exists('Model')) {
 if (!function_exists('TableModel')) {
     function TableModel($moduleName, $class_name)
     {
-
         $formated_module = explode('/', $moduleName);
         $modelName = '';
         if (count($formated_module) > 1) {
@@ -97,7 +96,7 @@ if (!function_exists('TableModel')) {
             use Illuminate\Database\Eloquent\Model as EloquentModel;
             use Illuminate\Support\Str;
             use Illuminate\Database\Eloquent\SoftDeletes;
-            class $modelName extends EloquentModel
+            class $class_name extends EloquentModel
             {
                 use SoftDeletes;
                 protected \$table = "{$table_name}";

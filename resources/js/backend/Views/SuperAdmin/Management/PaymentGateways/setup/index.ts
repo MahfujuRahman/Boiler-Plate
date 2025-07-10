@@ -14,7 +14,7 @@ const setup: setup_type = {
 
     module_name: "payment-gateway",
     store_prefix: "payment_gateway",
-    route_prefix: "PaymentGateways",
+    route_prefix: "PaymentGateway",
     route_path: "payment-gateway",
 
     select_fields: [

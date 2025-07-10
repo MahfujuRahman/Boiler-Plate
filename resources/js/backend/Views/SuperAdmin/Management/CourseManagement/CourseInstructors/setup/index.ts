@@ -14,7 +14,7 @@ const setup: setup_type = {
 
     module_name: "course-instructor",
     store_prefix: "course_instructor",
-    route_prefix: "CourseInstructors",
+    route_prefix: "CourseInstructor",
     route_path: "course-instructor",
 
     select_fields: [

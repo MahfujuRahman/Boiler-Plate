@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     php artisan migrate --path='\App\Modules\Management\BlogManagement\BlogCategory\Database\create_blog_blog_categories_table.php'
+     php artisan migrate --path='\App\Modules\Management\BlogBlogCategory\Database\create_blog_blog_categories_table.php'
      * Run the migrations.
      */
     public function up(): void

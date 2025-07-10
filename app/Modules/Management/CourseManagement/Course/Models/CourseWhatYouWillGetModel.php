@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\CourseManagement\Course\Models;
+namespace App\Modules\Management\CourseWhatYouWillGet\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CourseWhatYouWillGetModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "course_what_you_will_gets";
+    protected $table = "course_what_you_will_get_models";
     protected $guarded = [];
 
     protected static function booted()

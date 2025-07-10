@@ -23,7 +23,7 @@ export default [
 	{
 		name: "message",
 		label: "Enter your message",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 

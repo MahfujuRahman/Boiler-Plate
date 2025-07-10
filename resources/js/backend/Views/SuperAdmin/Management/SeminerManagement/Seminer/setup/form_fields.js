@@ -9,7 +9,7 @@ export default [
 	{
 		name: "description",
 		label: "Enter your description",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 
@@ -44,14 +44,14 @@ export default [
 	{
 		name: "date_time",
 		label: "Enter your date time",
-		type: "datetime-local",
+		type: "datetime",
 		value: "",
 	},
 
 	{
 		name: "promo_video",
 		label: "Enter your promo video",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 ];

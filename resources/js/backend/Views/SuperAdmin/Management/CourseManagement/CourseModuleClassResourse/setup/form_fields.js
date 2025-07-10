@@ -23,7 +23,7 @@ export default [
 	{
 		name: "resourse_content",
 		label: "Enter your resourse content",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 

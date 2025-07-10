@@ -7,18 +7,19 @@
                     <span class="fa fa-close"></span>
                 </button>
             </div>
+            <hr class="m-0 p-0">
             <div class="data_content">
                 <div class="filter_item">
                     <label for="start_date">Start Date</label>
                     <label for="start_date" class="text-capitalize d-block date_custom_control">
-                        <input v-model="start_date" type="date" id="start_date" name="start_date" class="form-control">
+                        <input v-model="filter.start_date" type="date" id="start_date" name="start_date" class="form-control">
                         <!-- <div class="form-control preview"></div> -->
                     </label>
                 </div>
                 <div class="filter_item">
                     <label for="end_date">End Date</label>
                     <label for="end_date" class="text-capitalize d-block date_custom_control">
-                        <input v-model="end_date" type="date" id="end_date" name="end_date" class="form-control">
+                        <input v-model="filter.end_date" type="date" id="end_date" name="end_date" class="form-control">
                         <!-- <div class="form-control preview"></div> -->
                     </label>
                 </div>
@@ -42,10 +43,11 @@
                         </select>
                     </label>
                 </div>
-                 <div class="filter_item d-flex justify-content-between align-items-center">
-            <button @click.prevent="get_all()" type="button" class="btn btn-sm btn-outline-info">Submit</button>
-            <button class="btn btn-outline-danger btn-sm" @click="reset_filters">Reset</button>
-          </div>
+                <div class="filter_item">
+                    <button @click.prevent="get_all();" type="button" class="btn btn-sm btn-outline-info">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
         <div class="off_canvas_overlay"></div>
@@ -57,68 +59,33 @@ import { store } from '../../store';
 
 export default {
     data: () => ({
-
+        filter: {
+            start_date: '',
+            end_date: '',
+        },
     }),
-    mounted() {
-        // Set default date range to last month
-        this.setDefaultDateRange();
-    },
     watch: {
-
-        start_date: {
-            handler: function (v) {
-                let data = {
-                    start_date: v,
-                };
-                this.set_filter_criteria(data);
+        filter: {
+            handler: function(v){
+                this.set_filter_criteria(v);
             },
             deep: true,
-        },
-        end_date: {
-            handler: function (v) {
-                let data = {
-                    end_date: v,
-                };
-                this.set_filter_criteria(data);
-            },
-            deep: true,
-        },
+        }
     },
     methods: {
         ...mapActions(store, [
             'set_show_filter_canvas',
             'set_filter_criteria',
             'get_all',
-            "reset_filter_criteria",
         ]),
-        async reset_filters() {
-            this.reset_filter_criteria();
-            await this.get_all();
-        },
-        setDefaultDateRange() {
-            const today = new Date();
-            const oneMonthAgo = new Date();
-            oneMonthAgo.setMonth(today.getMonth() - 1);
-            
-            // Format dates to YYYY-MM-DD for input[type="date"]
-            const formatDate = (date) => {
-                return date.toISOString().split('T')[0];
-            };
-            
-            // Set start date to one month ago and end date to today
-            this.start_date = formatDate(oneMonthAgo);
-            this.end_date = formatDate(today);
-        },
     },
-    computed: {
+    computed:{
         ...mapWritableState(store, [
             'show_filter_canvas',
             'item',
             'sort_by_cols',
             'sort_by_col',
             'sort_type',
-            "start_date",
-            "end_date",
         ])
     }
 }

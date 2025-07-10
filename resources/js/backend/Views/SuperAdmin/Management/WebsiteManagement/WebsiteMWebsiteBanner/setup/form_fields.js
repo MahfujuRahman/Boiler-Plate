@@ -9,7 +9,7 @@ export default [
 	{
 		name: "subtitle",
 		label: "Enter your subtitle",
-		type: "textarea",
+		type: "text",
 		value: "",
 	},
 

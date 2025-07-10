@@ -43,10 +43,11 @@
                         </select>
                     </label>
                 </div>
-                <div class="filter_item d-flex justify-content-between align-items-center">
-            <button @click.prevent="get_all()" type="button" class="btn btn-sm btn-outline-info">asdfasSubmit</button>
-            <button class="btn btn-outline-danger btn-sm" @click="reset_filters">Reset</button>
-          </div>
+                <div class="filter_item">
+                    <button @click.prevent="get_all();" type="button" class="btn btn-sm btn-outline-info">
+                        Submit
+                    </button>
+                </div>
             </div>
         </div>
         <div class="off_canvas_overlay"></div>
@@ -65,7 +66,7 @@ export default {
     }),
     watch: {
         filter: {
-            handler: function (v) {
+            handler: function(v){
                 this.set_filter_criteria(v);
             },
             deep: true,
@@ -76,14 +77,9 @@ export default {
             'set_show_filter_canvas',
             'set_filter_criteria',
             'get_all',
-            'reset_filter_criteria'
         ]),
-        async reset_filters() {
-            this.reset_filter_criteria();
-            await this.get_all();
-        },
     },
-    computed: {
+    computed:{
         ...mapWritableState(store, [
             'show_filter_canvas',
             'item',

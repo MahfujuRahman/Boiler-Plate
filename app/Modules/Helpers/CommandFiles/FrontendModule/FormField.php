@@ -29,13 +29,12 @@ if (!function_exists('FormField')) {
                     $type = $fieldName[1];
                     switch ($type) {
                         case 'longtext':
-                        case 'text':
                             $content .= "\t\ttype: \"textarea\",\n";
                             break;
                         case 'date':
                             $content .= "\t\ttype: \"date\",\n";
                             break;
-                        case 'datetime-local':
+                        case 'datetime':
                             $content .= "\t\ttype: \"datetime\",\n";
                             break;
                         case 'int':

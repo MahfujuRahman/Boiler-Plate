@@ -131,24 +131,31 @@ if (!function_exists('Migration')) {
 }
 
 if (!function_exists('TableMigration')) {
-    function TableMigration($fullModulePath, $fields)
+    function TableMigration($moduleName, $fields)
     {
 
 
+        $table_name = '';
+        $formated_module = explode('/', $moduleName);
 
-        // Split the full module path
-        $parts = explode('/', $fullModulePath);
+        if (count($formated_module) > 1) {
 
-        // Get the last part as the model/table base name
-        $lastPart = array_pop($parts); // BlogBlogCategory
-        $tableName = Str::plural(Str::snake($lastPart)); // blog_blog_categories
+            array_pop($formated_module);
 
-        // Remaining parts as the module directory
-        $moduleDirectory = implode('/', $parts); // BlogManagement/Blog
-        $moduleNamespace = Str::replace('/', '\\', $moduleDirectory); // BlogManagement\Blog
+            $moduleName = implode('/', $formated_module);
 
-        // Optional: debug check
-        // dd($moduleNamespace, $tableName);
+            $moduleName = Str::replace("/", "\\", $moduleName);
+            $table_name = Str::plural((Str::snake($formated_module[count($formated_module) - 1])));
+        } else {
+            $table_name = Str::plural((Str::snake($moduleName)));
+            $moduleName = Str::replace("/", "\\", $moduleName);
+            // dd($moduleName);
+        }
+
+
+
+
+
         $content = <<<"EOD"
         <?php
 
@@ -159,12 +166,12 @@ if (!function_exists('TableMigration')) {
         return new class extends Migration
         {
             /**
-             php artisan migrate --path='\App\\Modules\\Management\\{$moduleNamespace}\\Database\\create_{$tableName}_table.php'
+             php artisan migrate --path='\App\\Modules\\Management\\{$moduleName}\\Database\\create_{$table_name}_table.php'
              * Run the migrations.
              */
             public function up(): void
             {
-                Schema::create('{$tableName}', function (Blueprint \$table) {
+                Schema::create('{$table_name}', function (Blueprint \$table) {
                     \$table->id();
 
         EOD;
@@ -247,7 +254,7 @@ if (!function_exists('TableMigration')) {
              */
             public function down(): void
             {
-                Schema::dropIfExists('{$tableName}');
+                Schema::dropIfExists('{$table_name}');
             }
         };
         EOD;

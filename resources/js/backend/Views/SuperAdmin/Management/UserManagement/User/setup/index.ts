@@ -1,7 +1,7 @@
 import app_config from "../../../../../../Config/app_config";
 import setup_type from "./setup_type";
 
-const prefix: string = "User";
+const prefix: string = "Employee";
 
 const setup: setup_type = {
   prefix,
@@ -21,17 +21,19 @@ const setup: setup_type = {
     "first_name",
     "last_name",
     "email",
+    "phone_number",
     "image",
     "role_id",
     "slug",
-    'status',
     "created_at",
   ],
 
   sort_by_cols: [
     "id",
-    "name",
+    "first_name",
+    "last_name",
     "email",
+    "phone_number",
     "image",
     "role_id",
     "created_at",

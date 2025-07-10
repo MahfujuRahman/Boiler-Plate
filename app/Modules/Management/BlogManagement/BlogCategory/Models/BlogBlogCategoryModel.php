@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\BlogManagement\BlogCategory\Models;
+namespace App\Modules\Management\BlogBlogCategory\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BlogBlogCategoryModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "blog_blog_categories";
+    protected $table = "blog_blog_category_models";
     protected $guarded = [];
 
     protected static function booted()

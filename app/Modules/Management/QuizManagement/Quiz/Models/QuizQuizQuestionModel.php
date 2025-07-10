@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\QuizManagement\Quiz\Models;
+namespace App\Modules\Management\QuizQuizQuestion\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class QuizQuizQuestionModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "quiz_quiz_questions";
+    protected $table = "quiz_quiz_question_models";
     protected $guarded = [];
 
     protected static function booted()

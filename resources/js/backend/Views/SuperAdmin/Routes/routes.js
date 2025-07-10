@@ -6,7 +6,8 @@ import Dashboard from "../Management/Dashboard/Dashboard.vue";
 import SettingsRoutes from "../Management/Settings/setup/routes.js";
 //UserRoutes
 import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
-//routesimport EmailConfiguresRoutes from '../Management/EmailConfigures/setup/routes.js';
+//routes
+import EmailConfiguresRoutes from '../Management/EmailConfigures/setup/routes.js';
 import PaymentGatewaysRoutes from '../Management/PaymentGateways/setup/routes.js';
 import EnrollInformationRoutes from '../Management/EnrollInformation/setup/routes.js';
 import CourseModuleClassRoutineRoutes from '../Management/CourseManagement/CourseModuleClassRoutine/setup/routes.js';
@@ -41,6 +42,9 @@ import GalleryRoutes from '../Management/GalleryManagement/Gallery/setup/routes.
 import GalleryCategoryRoutes from '../Management/GalleryManagement/GalleryCategory/setup/routes.js';
 import SeminerRoutes from '../Management/SeminerManagement/Seminer/setup/routes.js';
 
+import BlogWriterRoutes from '../Management/BlogManagement/BlogWriter/setup/routes.js';
+// import BlogRoutes from '../Management/BlogManagement/Blog/setup/routes.js';
+// import BlogCategoryRoutes from '../Management/BlogManagement/BlogCategory/setup/routes.js';
 
 const routes = {
   path: "",
@@ -51,7 +55,8 @@ const routes = {
       component: Dashboard,
       name: "adminDashboard",
     },
-    //management routes        EmailConfiguresRoutes,
+    //management routes
+        EmailConfiguresRoutes,
         PaymentGatewaysRoutes,
         EnrollInformationRoutes,
         CourseModuleClassRoutineRoutes,
@@ -85,6 +90,13 @@ const routes = {
         GalleryRoutes,
         GalleryCategoryRoutes,
         SeminerRoutes,
+
+        BlogWriterRoutes,
+        BlogRoutes,
+        BlogCategoryRoutes,
+
+
+
 
 
     //user routes

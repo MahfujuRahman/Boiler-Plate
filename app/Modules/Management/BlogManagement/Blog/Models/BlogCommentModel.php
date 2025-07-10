@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\BlogManagement\Blog\Models;
+namespace App\Modules\Management\BlogComment\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BlogCommentModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "blog_comments";
+    protected $table = "blog_comment_models";
     protected $guarded = [];
 
     protected static function booted()

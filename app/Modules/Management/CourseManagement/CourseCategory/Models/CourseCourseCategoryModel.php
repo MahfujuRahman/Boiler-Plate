@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\CourseManagement\CourseCategory\Models;
+namespace App\Modules\Management\CourseCourseCategory\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class CourseCourseCategoryModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "course_course_categories";
+    protected $table = "course_course_category_models";
     protected $guarded = [];
 
     protected static function booted()

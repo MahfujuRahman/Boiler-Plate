@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\BlogManagement\Blog\Models;
+namespace App\Modules\Management\BlogVideoLink\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BlogVideoLinkModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "blog_video_links";
+    protected $table = "blog_video_link_models";
     protected $guarded = [];
 
     protected static function booted()

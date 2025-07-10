@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\QuizManagement\Quiz\Models;
+namespace App\Modules\Management\QuizSubmission\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Support\Str;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class QuizSubmissionModel extends EloquentModel
 {
     use SoftDeletes;
-    protected $table = "quiz_submissions";
+    protected $table = "quiz_submission_models";
     protected $guarded = [];
 
     protected static function booted()

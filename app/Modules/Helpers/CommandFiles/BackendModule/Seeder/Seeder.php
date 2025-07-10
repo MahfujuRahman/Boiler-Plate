@@ -75,7 +75,7 @@ if (!function_exists('Seeder')) {
                         $content .= "                '$fieldName' => \$faker->randomFloat(2, 0, 1000),\n";
                         break;
                     case 'tinyint':
-                    case  'boolean':
+                    case  'boolean' :
                         $content .= "                '$fieldName' => \$faker->boolean,\n";
                         break;
                     case 'longtext':
