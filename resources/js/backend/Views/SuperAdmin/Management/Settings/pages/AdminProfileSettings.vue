@@ -9,18 +9,15 @@
             <div class="col-lg-4">
                 <div class="card profile-card-2">
                     <div class="card-img-block">
-                        <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="Card image cap"
+                        <img :src="`${auth_info?.image ?? 'avatar.png'}`" alt="Card image cap"
                             class="img-fluid bg-dark m-auto d-flex justify-content-center">
                     </div>
                     <div class="card-body pt-5">
-                        <img :src="`${auth_info.image ?? 'avatar.png'}`" alt="profile-image" class="profile">
-                        <h5 class="card-title text-capitalize">Name : {{ auth_info.first_name }} {{ auth_info.last_name
-                            }}</h5>
-                        <p class="card-text">Email: {{ auth_info.email }}</p>
-                        <p class="card-text">Phone: {{ auth_info.address.number }}
-
-                        </p>
-                        <p class="card-text">Address: {{ auth_info.address.address ?? 'N/A' }}</p>
+                        <img :src="`${auth_info?.image ?? 'avatar.png'}`" alt="profile-image" class="profile">
+                        <h5 class="card-title text-capitalize">Name : {{ auth_info?.first_name || 'N/A' }} {{ auth_info?.last_name || '' }}</h5>
+                        <p class="card-text">Email: {{ auth_info?.email || 'N/A' }}</p>
+                        <p class="card-text">Phone: {{ auth_info?.address?.number || 'N/A' }}</p>
+                        <p class="card-text">Address: {{ auth_info?.address?.address || 'N/A' }}</p>
 
                     </div>
                     <div class="card-body border-light">
@@ -65,26 +62,26 @@
                         <div class="tab-content p-3">
                             <div v-if="tab == 'edit'" :class="tab == 'edit' ? ' active' : ''" class="tab-pane active"
                                 id="profile">
-                                <form @submit.prevent="UpdateProfileHandler" enctype="multipart/form-data">
+                                <form @submit.prevent="UpdateProfileHandler" enctype="multipart/form-data" v-if="auth_info">
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">User Name</label>
                                         <div class="col-lg-9">
                                             <input v-model="auth_info.user_name" name="user_name" class="form-control"
-                                                type="text" value="">
+                                                type="text">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">First Name</label>
                                         <div class="col-lg-9">
                                             <input v-model="auth_info.first_name" name="first_name" class="form-control"
-                                                type="text" value="">
+                                                type="text">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">Last Name</label>
                                         <div class="col-lg-9">
                                             <input v-model="auth_info.last_name" name="last_name" class="form-control"
-                                                type="text" value="">
+                                                type="text">
                                         </div>
                                     </div>
 
@@ -92,7 +89,7 @@
                                         <label class="col-lg-3 col-form-label form-control-label">Email</label>
                                         <div class="col-lg-9">
                                             <input v-model="auth_info.email" name="email" class="form-control"
-                                                type="email" value="">
+                                                type="email">
                                         </div>
                                     </div>
 
@@ -111,29 +108,49 @@
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">State</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.address.state" name="state" class="form-control"
-                                                type="text" value="" placeholder="State">
+                                            <input
+                                                v-model="stateValue"
+                                                name="state"
+                                                class="form-control"
+                                                type="text"
+                                                :placeholder="(auth_info.address && auth_info.address.state) ? 'State' : 'Enter state'"
+                                            >
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">City</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.address.city" name="city" class="form-control"
-                                                type="text" value="" placeholder="City">
+                                            <input
+                                                v-model="cityValue"
+                                                name="city"
+                                                class="form-control"
+                                                type="text"
+                                                :placeholder="(auth_info.address && auth_info.address.city) ? 'City' : 'Enter city'"
+                                            >
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">Post</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.address.post" name="post" class="form-control"
-                                                type="text" value="" placeholder="Post">
+                                            <input
+                                                v-model="postValue"
+                                                name="post"
+                                                class="form-control"
+                                                type="text"
+                                                :placeholder="(auth_info.address && auth_info.address.post) ? 'Post' : 'Enter post'"
+                                            >
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-lg-3 col-form-label form-control-label">Country</label>
                                         <div class="col-lg-9">
-                                            <input v-model="auth_info.address.country" name="country"
-                                                class="form-control" type="text" value="" placeholder="Country">
+                                            <input
+                                                v-model="countryValue"
+                                                name="country"
+                                                class="form-control"
+                                                type="text"
+                                                :placeholder="(auth_info.address && auth_info.address.country) ? 'Country' : 'Enter country'"
+                                            >
                                         </div>
                                     </div>
 
@@ -141,7 +158,7 @@
                                         <label class="col-lg-3 col-form-label form-control-label">Change image</label>
                                         <div class="col-lg-9">
                                             <input class="form-control" name="image" type="file">
-                                            <img v-if="auth_info.image" class="mt-2" :src="auth_info.image" height="100"
+                                            <img v-if="auth_info?.image" class="mt-2" :src="auth_info.image" height="100"
                                                 width="100" alt="">
                                         </div>
                                     </div>
@@ -227,7 +244,14 @@ export default {
         tab: 'edit',
         phoneNumbers: [],
         socialMediaLinks: [],
+        tempState: '', // for when address is null
     }),
+    created() {
+        // Initialize auth_info with default structure if null
+        if (!this.auth_info) {
+            this.check_is_auth();
+        }
+    },
 
     watch: {
         auth_info: {
@@ -289,26 +313,46 @@ export default {
             check_is_auth: 'check_is_auth',
         }),
         UpdateProfileHandler: async function () {
+            if (!this.auth_info) {
+                window.s_alert('User information not available', 'error');
+                return;
+            }
+
             let formData = new FormData(event.target);
 
             // Add phone numbers and social media as JSON strings
-            formData.append('phone_numbers', JSON.stringify(this.phoneNumbers));
-            formData.append('social_media', JSON.stringify(this.socialMediaLinks));
+            formData.append('phone_numbers', JSON.stringify(this.phoneNumbers || []));
+            formData.append('social_media', JSON.stringify(this.socialMediaLinks || []));
 
-            let response = await axios.post('user-profile-update', formData);
-            if (response.data.status == 'success') {
-                window.s_alert(response.data.message)
-                this.check_is_auth()
-            } else {
-                window.s_alert(response.data.message || 'Update failed', 'error')
+            try {
+                let response = await axios.post('user-profile-update', formData);
+                if (response.data.status == 'success') {
+                    window.s_alert(response.data.message)
+                    this.check_is_auth()
+                } else {
+                    window.s_alert(response.data.message || 'Update failed', 'error')
+                }
+            } catch (error) {
+                window.s_alert('Network error occurred', 'error');
             }
         },
         ChangePasswordHandler: async function () {
-            let formData = new FormData(event.target);
-            let response = await axios.post('user-change-password', formData);
-            if (response.data.status == 'success') {
-                window.s_alert(response.data.message)
-                this.check_is_auth()
+            if (!this.auth_info) {
+                window.s_alert('User information not available', 'error');
+                return;
+            }
+
+            try {
+                let formData = new FormData(event.target);
+                let response = await axios.post('user-change-password', formData);
+                if (response.data.status == 'success') {
+                    window.s_alert(response.data.message)
+                    this.check_is_auth()
+                } else {
+                    window.s_alert(response.data.message || 'Password change failed', 'error')
+                }
+            } catch (error) {
+                window.s_alert('Network error occurred', 'error');
             }
         },
 
@@ -336,6 +380,21 @@ export default {
         ...mapState(auth_store, {
             auth_info: 'auth_info',
         }),
+        stateValue: {
+            get() {
+                if (this.auth_info && this.auth_info.address) {
+                    return this.auth_info.address.state || '';
+                }
+                return this.tempState;
+            },
+            set(val) {
+                if (this.auth_info && this.auth_info.address) {
+                    this.auth_info.address.state = val;
+                } else {
+                    this.tempState = val;
+                }
+            }
+        }
     },
 }
 </script>
