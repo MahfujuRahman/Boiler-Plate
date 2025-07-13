@@ -7,7 +7,7 @@ export const auth_store = defineStore("auth_store", {
         is_auth: 0,
         auth_info: {},
         role: {},
-        
+        isCheckingAuth: false,
     }),
     getters: {
         get_auth_info: function () {
@@ -28,6 +28,20 @@ export const auth_store = defineStore("auth_store", {
             }
         },
         check_is_auth: async function () {
+            // Prevent multiple simultaneous auth checks
+            if (this.isCheckingAuth) {
+                // console.log('Auth check already in progress, skipping...');
+                return;
+            }
+
+            // If user is already authenticated and has auth_info, skip the check
+            if (this.is_auth && this.auth_info && Object.keys(this.auth_info).length > 0) {
+                // console.log('User already authenticated, skipping auth check');
+                return;
+            }
+
+            this.isCheckingAuth = true;
+
             try {
                 let response = await axios.get("/check_user");
                 console.log("data", response);
@@ -47,8 +61,9 @@ export const auth_store = defineStore("auth_store", {
                 } else {
                     console.log("Error message:", error.message);
                 }
-
                 return error;
+            } finally {
+                this.isCheckingAuth = false;
             }
         },
         auth_check: async function () {

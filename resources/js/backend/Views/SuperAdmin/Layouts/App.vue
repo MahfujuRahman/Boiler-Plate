@@ -24,28 +24,40 @@ export default {
   components: { TopHeader, Footer },
   data: () => ({
     rightToggle: false,
+    isInitialized: false,
   }),
   created: async function () {
-    await this.check_is_auth();
-    await this.get_all_website_settings();
+    // Prevent multiple initialization calls
+    if (this.isInitialized) {
+      return;
+    }
+    this.isInitialized = true;
 
-    if (this.is_auth) {
-      let prev_url = window.sessionStorage.getItem("prevurl");
-      if (this.auth_info?.role_id == 1) {
-        window.location.href = "/super-admin#/dashboard";
-        if (this.$route.path === "/super-admin#") {
-          this.$router.push("/dashboard");
+    try {
+      await this.check_is_auth();
+      await this.get_all_website_settings();
+
+      if (this.is_auth) {
+        let prev_url = window.sessionStorage.getItem("prevurl");
+        if (this.auth_info?.role_id == 1) {
+          window.location.href = "/super-admin#/dashboard";
+          if (this.$route.path === "/super-admin#") {
+            this.$router.push("/dashboard");
+          }
+          window.location.hash = prev_url || "/super-admin#/dashboard";
+        } else if (this.auth_info?.role_id == 2) {
+          window.location.href = "/admin#/dashboard";
+          if (this.$route.path === "/admin#") {
+            this.$router.push("/dashboard");
+          }
+          window.location.hash = prev_url || "/admin#/dashboard";
         }
-        window.location.hash = prev_url || "/super-admin#/dashboard";
-      } else if (this.auth_info?.role_id == 2) {
-        window.location.href = "/admin#/dashboard";
-        if (this.$route.path === "/admin#") {
-          this.$router.push("/dashboard");
-        }
-        window.location.hash = prev_url || "/admin#/dashboard";
+      } else {
+        window.location.href = "login";
       }
-    } else {
-      window.location.href = "login";
+    } catch (error) {
+      console.error('Initialization error:', error);
+      this.isInitialized = false; // Reset flag on error
     }
   },
   methods: {

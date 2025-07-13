@@ -46,7 +46,7 @@ export default {
     components: {
         DetailsBtn: Details,
         Edit,
-         InActive,
+        'inactive': InActive,
         Destroy,
         StatusButton,
         DeleteRestore,

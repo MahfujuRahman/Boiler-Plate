@@ -245,6 +245,9 @@ export default {
         phoneNumbers: [],
         socialMediaLinks: [],
         tempState: '', // for when address is null
+        tempCity: '',
+        tempPost: '',
+        tempCountry: '',
     }),
     created() {
         // Initialize auth_info with default structure if null
@@ -392,6 +395,51 @@ export default {
                     this.auth_info.address.state = val;
                 } else {
                     this.tempState = val;
+                }
+            }
+        },
+        cityValue: {
+            get() {
+                if (this.auth_info && this.auth_info.address) {
+                    return this.auth_info.address.city || '';
+                }
+                return this.tempCity;
+            },
+            set(val) {
+                if (this.auth_info && this.auth_info.address) {
+                    this.auth_info.address.city = val;
+                } else {
+                    this.tempCity = val;
+                }
+            }
+        },
+        postValue: {
+            get() {
+                if (this.auth_info && this.auth_info.address) {
+                    return this.auth_info.address.post || '';
+                }
+                return this.tempPost;
+            },
+            set(val) {
+                if (this.auth_info && this.auth_info.address) {
+                    this.auth_info.address.post = val;
+                } else {
+                    this.tempPost = val;
+                }
+            }
+        },
+        countryValue: {
+            get() {
+                if (this.auth_info && this.auth_info.address) {
+                    return this.auth_info.address.country || '';
+                }
+                return this.tempCountry;
+            },
+            set(val) {
+                if (this.auth_info && this.auth_info.address) {
+                    this.auth_info.address.country = val;
+                } else {
+                    this.tempCountry = val;
                 }
             }
         }

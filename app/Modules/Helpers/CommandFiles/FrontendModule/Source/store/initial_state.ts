@@ -1,4 +1,4 @@
-import { anyObject } from '../../../../../../../../common_types/object'
+type anyObject = Record<string, any>;
 import setup from '../setup';
 export const initialState = {
     /** loading status */
@@ -9,7 +9,6 @@ export const initialState = {
     all: {} as anyObject,
     item: {} as anyObject,
     url: '',
-
     /*_______________*/
     /* data filters */
 
@@ -25,6 +24,7 @@ export const initialState = {
     active_data_count: 0,
     inactive_data_count: 0,
     trased_data_count: 0,
+    is_trased_data: false,
     page: 1,
     paginate: 10,
     search_key: ``,
@@ -44,6 +44,7 @@ export const initialState = {
     show_filter_canvas: false,
     show_quick_view_canvas: false,
     show_management_modal: false,
+    import_csv_modal_show: false,
     modal_selected_qty: 1, // how much will checked from management modal
 
     /* trigger showing data form canvas */

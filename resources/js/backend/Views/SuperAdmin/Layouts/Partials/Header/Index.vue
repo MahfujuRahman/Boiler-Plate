@@ -6,13 +6,8 @@
         <i @click.prevent="toggle_menu" class="zmdi zmdi-menu"></i>
       </div>
 
-      <a
-        href="/"
-        target="_blank"
-        title="Visit Website"
-        class="d-flex align-items-center justify-content-center mx-2"
-        style="background: rgba(255, 255, 255, 0.12); width: 30px; height: 30px"
-      >
+      <a href="/" target="_blank" title="Visit Website" class="d-flex align-items-center justify-content-center mx-2"
+        style="background: rgba(255, 255, 255, 0.12); width: 30px; height: 30px">
         <i class="zmdi zmdi-globe mt-1"></i>
       </a>
 
@@ -81,23 +76,14 @@
                     </div>
                 </li> -->
 
-        <li
-          class="nav-item dropdown dropdown-lg"
-          @click="toggle_notification('show_message')"
-        >
-          <a
-            role="button"
-            class="btn nav-link dropdown-toggle dropdown-toggle-nocaret position-relative"
-          >
+        <li class="nav-item dropdown dropdown-lg" @click="toggle_notification('show_message')">
+          <a role="button" class="btn nav-link dropdown-toggle dropdown-toggle-nocaret position-relative">
             <i class="zmdi zmdi-notifications-active align-middle"></i>
             <span class="bg-info text-white badge-up">{{
               unseen_vouchers.length
             }}</span>
           </a>
-          <div
-            class="dropdown-menu dropdown-menu-right"
-            :class="{ show: show_message }"
-          >
+          <div class="dropdown-menu dropdown-menu-right" :class="{ show: show_message }">
             <ul class="list-group list-group-flush">
               <!-- <li
                 class="list-group-item d-flex justify-content-between align-items-center"
@@ -108,10 +94,7 @@
                 >
               </li> -->
               <li class="list-group-item" v-for="voucher in unseen_vouchers">
-                <a
-                  @click.prevent="mark_as_seen(voucher)"
-                  class="cursor-pointer"
-                >
+                <a @click.prevent="mark_as_seen(voucher)" class="cursor-pointer">
                   <div class="media">
                     <div class="media-body">
                       <h6 class="mt-0 msg-title">
@@ -126,34 +109,18 @@
           </div>
         </li>
 
-        <li
-          class="nav-item dropdown"
-          @click="toggle_notification('show_profile')"
-        >
-          <a
-            class="btn nav-link dropdown-toggle dropdown-toggle-nocaret position-relative"
-          >
+        <li class="nav-item dropdown" @click="toggle_notification('show_profile')">
+          <a class="btn nav-link dropdown-toggle dropdown-toggle-nocaret position-relative">
             <span class="user-profile">
-              <img
-                :src="`${auth_info.image ?? 'avatar.png'}`"
-                class="img-circle"
-                alt="user avatar"
-              />
+              <img :src="`${auth_info.image ?? 'avatar.png'}`" class="img-circle" alt="user avatar" />
             </span>
           </a>
-          <ul
-            class="dropdown-menu dropdown-menu-right"
-            :class="{ show: show_profile }"
-          >
+          <ul class="dropdown-menu dropdown-menu-right" :class="{ show: show_profile }">
             <li class="dropdown-item user-details">
               <a href="javaScript:void();">
                 <div class="media">
                   <div class="avatar">
-                    <img
-                      class="align-self-start mr-3"
-                      :src="`${auth_info.image ?? 'avatar.png'}`"
-                      alt="user avatar"
-                    />
+                    <img class="align-self-start mr-3" :src="`${auth_info.image ?? 'avatar.png'}`" alt="user avatar" />
                   </div>
                   <div class="media-body">
                     <h6 class="mt-2 user-title">
@@ -171,13 +138,13 @@
             <li class="dropdown-divider"></li>
 
             <li class="dropdown-divider"></li>
-            <li class="dropdown-item">
-              <router-link :to="{ name: 'AdminProfileSettings' }">
+            <li >
+            <router-link  class="dropdown-item" :to="{ name: 'AdminProfileSettings' }">
                 <i class="zmdi zmdi-accounts mr-3"></i>Profile
               </router-link>
             </li>
-            <li class="dropdown-item">
-              <router-link :to="{ name: 'AdminSiteSettings' }">
+            <li >
+            <router-link class="dropdown-item" :to="{ name: 'AdminSiteSettings' }">
                 <i class="zmdi zmdi-settings mr-3"></i>Settings
               </router-link>
             </li>
@@ -206,7 +173,7 @@ export default {
   }),
 
   created: async function () {
-    
+
   },
 
   methods: {
@@ -237,9 +204,9 @@ export default {
       }
     },
 
-  
 
-   
+
+
   },
 
   mounted() {

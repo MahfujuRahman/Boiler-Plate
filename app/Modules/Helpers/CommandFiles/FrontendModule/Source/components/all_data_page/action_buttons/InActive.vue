@@ -1,8 +1,8 @@
 <template>
 
     <div class="">
-        <a href="" @click.prevent="change_status(`inactive`)"
-            class="btn action_btn btn-sm btn-warning d-flex align-items-center">
+        <a href="" @click.prevent="change_status(`inactive`), set_is_trashed_data(false)"
+            class="btn action_btn btn-sm btn-warning d-flex align-items-center py-2">
             <i class="fa fa fa-eye-slash mr-2"></i> Inactive
             ({{ inactive_data_count }})
         </a>
@@ -17,6 +17,7 @@ export default {
     props: {
         item: {
             slug: "",
+            default: null
         }
     },
     methods: {
@@ -28,6 +29,7 @@ export default {
             `set_item`,
             `set_status`,
             `set_page`,
+            'set_is_trashed_data'
         ]),
         change_status: function (status = 'active') {
             if (status == 'trased') {

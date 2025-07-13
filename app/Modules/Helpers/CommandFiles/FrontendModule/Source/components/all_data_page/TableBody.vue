@@ -86,4 +86,9 @@ export default {
 .max-w-120 {
   max-width: 120px;
 }
+.text-wrap {
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+}
 </style>
