@@ -8,6 +8,8 @@ import SettingsRoutes from "../Management/Settings/setup/routes.js";
 import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
 //routes
 
+import SeminerRoutes from '../../../GlobalManagement/SeminerManagement/Seminer/setup/routes.js';
+
 const routes = {
   path: "",
   component: Layout,
@@ -18,7 +20,7 @@ const routes = {
       name: "adminDashboard",
     },
     //management routes
-
+    SeminerRoutes,
     //user routes
     UserRoutes,
     //settings

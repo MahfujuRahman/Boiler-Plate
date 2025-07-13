@@ -7,6 +7,7 @@ export const auth_store = defineStore("auth_store", {
         is_auth: 0,
         auth_info: {},
         role: {},
+        
     }),
     getters: {
         get_auth_info: function () {
