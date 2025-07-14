@@ -12,4 +12,12 @@ export default [
 		type: "textarea",
 		value: "",
 	},
+	{
+		name: "description",
+		label: "Enter your description",
+		type: "file",
+		value: "",
+		multiple: false,
+		accept: "image/*",
+	},
 ];

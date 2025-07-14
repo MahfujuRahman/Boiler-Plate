@@ -62,3 +62,4 @@ include_once base_path("app/Modules/Management/CourseManagement/Course/Routes/Ro
 include_once base_path("app/Modules/Management/PaymentGateways/Routes/Route.php");
 include_once base_path("app/Modules/Management/EmailConfigures/Routes/Route.php");
 include_once base_path("app/Modules/Management/GalleryManagement/GalleryCategory/Routes/Route.php");
+include_once base_path("app/Modules/Management/GalleryManagement/Gallery/Routes/Route.php");

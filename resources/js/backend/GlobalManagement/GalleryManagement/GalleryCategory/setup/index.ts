@@ -22,6 +22,7 @@ const setup: setup_type = {
         "title",
         "description",
         "status",
+        
         "slug",
         "created_at",
         'deleted_at'

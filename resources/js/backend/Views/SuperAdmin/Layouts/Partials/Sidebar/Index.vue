@@ -50,6 +50,10 @@
             route_name: `AllGalleryCategory`,
             title: `GalleryCategory`,
             icon: `zmdi zmdi-dot-circle-alt`,
+          },          {
+            route_name: `AllGallery`,
+            title: `Gallery`,
+            icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
 />
