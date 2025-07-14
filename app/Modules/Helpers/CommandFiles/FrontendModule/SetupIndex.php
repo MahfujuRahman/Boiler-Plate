@@ -54,6 +54,7 @@ if (!function_exists('SetupIndex')) {
                 "status",
                 "slug",
                 "created_at",
+                'deleted_at'
             ],
 
             sort_by_cols: [

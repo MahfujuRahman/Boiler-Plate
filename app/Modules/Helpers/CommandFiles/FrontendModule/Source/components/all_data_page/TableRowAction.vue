@@ -44,12 +44,12 @@ export default {
         }
     },
     components: {
-        DetailsBtn: Details,
-        Edit,
-        'inactive': InActive,
-        Destroy,
-        StatusButton,
-        DeleteRestore,
+        'details-btn': Details,
+        'edit': Edit,
+        'in-active': InActive,
+        'destroy': Destroy,
+        'status-button': StatusButton,
+        'delete-restore': DeleteRestore,
     },
     methods: {
         active_row,

@@ -20,10 +20,11 @@ const setup: setup_type = {
     select_fields: [
         "id",
         "title",
-            "description",
+        "description",
         "status",
         "slug",
         "created_at",
+        'deleted_at'
     ],
 
     sort_by_cols: [

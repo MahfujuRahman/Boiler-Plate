@@ -1,7 +1,7 @@
 <template>
   <!-- {{ item }} -->
 
-  <template v-for="(row_item, index) in setup.select_fields" :key="index">
+  <template v-for="(row_item, index) in filteredFields" :key="index">
     <tr>
       <th>{{ row_item }}</th>
       <th class="text-center">:</th>
@@ -37,6 +37,12 @@ export default {
     SelectAll,
     TableRowAction,
     SelectSingle,
+  },
+
+  computed: {
+    filteredFields() {
+      return setup.select_fields.filter(field => field !== 'deleted_at');
+    }
   },
 
   methods: {

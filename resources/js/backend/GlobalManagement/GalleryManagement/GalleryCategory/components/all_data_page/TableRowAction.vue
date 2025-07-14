@@ -8,9 +8,9 @@
             <li v-if="!is_trased_data">
                 <edit :item="item"/>
             </li>
-            <li>
+            <!-- <li>
                 <in-active :item="item"/>
-            </li>
+            </li> -->
             <li v-if="!is_trased_data">
                 <status-button :item="item"/>
             </li>
@@ -44,12 +44,12 @@ export default {
         }
     },
     components: {
-        DetailsBtn: Details,
-        Edit,
-        'inactive': InActive,
-        Destroy,
-        StatusButton,
-        DeleteRestore,
+        'details-btn': Details,
+        'edit': Edit,
+        'in-active': InActive,
+        'destroy': Destroy,
+        'status-button': StatusButton,
+        'delete-restore': DeleteRestore,
     },
     methods: {
         active_row,
