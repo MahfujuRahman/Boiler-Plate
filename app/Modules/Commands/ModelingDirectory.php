@@ -86,6 +86,7 @@ class ModelingDirectory extends Command
         $module_path = $this->getModulePath();
         $fields = $this->fields;
 
+
         $files = [
             'Actions/GetAllData.php' => GetAllData($module_path, $fields),
             'Actions/StoreData.php' => StoreData($module_path),
@@ -105,7 +106,7 @@ class ModelingDirectory extends Command
             'Routes/Route.php' => RouteContent($module_path, $this->moduleName),
             'Others/Api.http' => ApiDocumentation($this->moduleName),
             'Others/Doc.txt' => Documentation(),
-            'Others/ImportJob.php' => ImportJob($this->moduleName),
+            'Others/ImportJob.php' => ImportJob($module_path),
             'Seeder/Seeder.php' => Seeder($module_path, $this->moduleName, $fields),
         ];
 
@@ -163,17 +164,22 @@ class ModelingDirectory extends Command
         $ViewModuleName = end($vue_format_dir);
         $vue_module_path_dir = $this->ViewModuleName;
 
-        $roleVueDirectory = resource_path("js/backend/Views/{$role}/Management/");
+        // Create the Vue directory structure for the global management
         $globalVueDirectory = resource_path("js/backend/GlobalManagement/");
-        $vueDirectory = $this->createVueDirectories($roleVueDirectory, $vue_format_dir);
-        $rolesVueDirectory = $this->createVueDirectories($globalVueDirectory, $vue_format_dir);
+        $globalVueDirectory = $this->createGlobalVueDirectories($globalVueDirectory, $vue_format_dir);
 
-        $this->copyVueSourceFiles($vueDirectory, $ViewModuleName);
-        $this->copyVueSourceFilesRoles($rolesVueDirectory, $ViewModuleName);
-        $this->generateVueSetupFiles($vueDirectory, $ViewModuleName, $vue_module_path_dir, $fields);
+        // Create the Vue directory structure for the role
+        $roleVueDirectory = resource_path("js/backend/Views/{$role}/Management/");
+        $roleVueDirectory = $this->createRoleBaseVueDirectories($roleVueDirectory, $vue_format_dir);
+        
+        //Global Vue Directory
+        $this->copyVueSourceFiles($globalVueDirectory, $ViewModuleName);
+        $this->generateVueSetupFiles($globalVueDirectory, $ViewModuleName, $vue_module_path_dir, $fields);
         $this->appendToVueRoutesFile($role, $ViewModuleName, $vue_module_path_dir);
         $this->appendToVueSidebar($role, $ViewModuleName);
-        $this->generateVueRoleFiles( $rolesVueDirectory, $ViewModuleName);
+
+        //Role Base Vue Directory
+        $this->generateVuePagesRoleWise($roleVueDirectory, $ViewModuleName, $vue_format_dir);
     }
 
     /*
@@ -181,7 +187,22 @@ class ModelingDirectory extends Command
     | CreateVueDirectories
     |--------------------------------------------------------------------------
     */
-    protected function createVueDirectories($vueDirectory, $vue_format_dir)
+    protected function createGlobalVueDirectories($vueDirectory, $vue_format_dir)
+    {
+        if (count($vue_format_dir) > 1) {
+            array_pop($vue_format_dir);
+            $vue_module_dir = implode('/', $vue_format_dir);
+
+            if (!File::isDirectory($vueDirectory . $vue_module_dir)) {
+                File::makeDirectory($vueDirectory . $vue_module_dir, 0777, true);
+            }
+
+            $vueDirectory .= $vue_module_dir . '/';
+        }
+
+        return $vueDirectory;
+    }
+    protected function createRoleBaseVueDirectories($vueDirectory, $vue_format_dir)
     {
         if (count($vue_format_dir) > 1) {
             array_pop($vue_format_dir);
@@ -215,17 +236,14 @@ class ModelingDirectory extends Command
             echo "Source directory does not exist.";
         }
     }
-    protected function copyVueSourceFilesRoles($vueDirectory, $ViewModuleName)
+    protected function generateVuePagesRoleWise($rolesVueDirectory, $ViewModuleName, $vue_format_dir)
     {
-        $targetDirectory = $vueDirectory . $ViewModuleName;
-        $sourceDirectory = base_path('app/Modules/Helpers/CommandFiles/FrontendModule/Source');
+        $SetupDirectory = "{$rolesVueDirectory}{$ViewModuleName}";
+        File::ensureDirectoryExists($SetupDirectory);
 
-        File::ensureDirectoryExists($targetDirectory);
-        if (File::isDirectory(directory: $sourceDirectory)) {
-            File::copyDirectory($sourceDirectory, $targetDirectory);
-        } else {
-            echo "Source directory does not exist.";
-        }
+        File::put("{$SetupDirectory}/All.vue", ManagementAllPage($vue_format_dir));
+        File::put("{$SetupDirectory}/Details.vue", ManagementDetailsPage($vue_format_dir));
+        File::put("{$SetupDirectory}/Form.vue", ManagementFormPage($vue_format_dir));
     }
 
     protected function generateVueSetupFiles($vueDirectory, $ViewModuleName, $vue_module_path_dir, $fields)
@@ -235,16 +253,6 @@ class ModelingDirectory extends Command
 
         File::put("{$SetupDirectory}/form_fields.js", FormField($fields));
         File::put("{$SetupDirectory}/index.ts", SetupIndex($vue_module_path_dir, $fields));
-    }
-
-    protected function generateVueRoleFiles($rolesVueDirectory,$ViewModuleName)
-    {
-        $SetupDirectory = "{$rolesVueDirectory}";
-        File::ensureDirectoryExists($SetupDirectory);
-
-        File::put("{$SetupDirectory}/All.vue", ManagementAllPage($ViewModuleName));
-        File::put("{$SetupDirectory}/Details.vue", ManagementDetailsPage($ViewModuleName));
-        File::put("{$SetupDirectory}/Form.vue", ManagementDetailsPage($ViewModuleName));
     }
 
     protected function appendToVueRoutesFile($role, $ViewModuleName, $vue_module_path_dir)

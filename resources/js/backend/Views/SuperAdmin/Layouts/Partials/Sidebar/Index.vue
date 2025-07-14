@@ -42,7 +42,18 @@
           icon: `zmdi zmdi-dot-circle-alt`,
         },
       ]" />
-      <!-- Management end -->
+      <side-bar-drop-down-menus
+        :icon="`fa fa-plus`"
+        :menu_title="`GalleryManagement`"
+        :menus="[
+          {
+            route_name: `AllGalleryCategory`,
+            title: `GalleryCategory`,
+            icon: `zmdi zmdi-dot-circle-alt`,
+          },
+        ]"
+/>
+<!-- Management end -->
     </ul>
   </div>
 </template>

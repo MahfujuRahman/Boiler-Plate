@@ -30,7 +30,7 @@ if (!function_exists('SetupIndex')) {
 
         $content = <<<"EOD"
 
-        import app_config from "../../../../{$relativePath}Config/app_config";
+        import app_config from "@config/app_config";
         import setup_type from "./setup_type";
 
         const prefix: string = "{$prefix}";
@@ -54,7 +54,6 @@ if (!function_exists('SetupIndex')) {
                 "status",
                 "slug",
                 "created_at",
-                "deleted_at",
             ],
 
             sort_by_cols: [
@@ -70,6 +69,12 @@ if (!function_exists('SetupIndex')) {
                 "created_at",
             ],
             table_row_data: [
+                "id",
+                {$selectFields},
+                "status",
+                "created_at",
+            ],
+            quick_view_data: [
                 "id",
                 {$selectFields},
                 "status",

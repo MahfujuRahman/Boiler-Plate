@@ -12,16 +12,19 @@ use Illuminate\Support\Str;
 if (!function_exists('ManagementAllPage')) {
     function ManagementAllPage($moduleName)
     {
-        $formated_module = explode('/', $moduleName);
 
-        if (count($formated_module) > 1) {
 
-            $moduleName = implode('/', $formated_module);
-            $moduleName = Str::replace("/", "\\", $moduleName);
+        // Check if $moduleName is an array and format it
+        $formated_module = [];
+        if (is_array($moduleName)) {
+            $formated_module = $moduleName;
         } else {
-            $moduleName = Str::replace("/", "\\", $moduleName);
+            // If $moduleName is a string, convert it to array if it contains "/"
+            $formated_module = explode('/', $moduleName);
         }
-
+    
+        // Join array elements with "/" to create the module path
+        $modulePathForImport = implode('/', $formated_module);
 
         $content = <<<EOD
         <template>
@@ -31,7 +34,7 @@ if (!function_exists('ManagementAllPage')) {
         <script>
 
 
-        import Allpage from '../../../../../GlobalManagement/{$moduleName}/pages/All.vue';
+        import Allpage from '../../../../../GlobalManagement/{$modulePathForImport}/pages/All.vue';
 
 
         export default {
