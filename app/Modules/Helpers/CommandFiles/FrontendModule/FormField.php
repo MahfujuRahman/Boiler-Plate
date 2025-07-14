@@ -68,6 +68,9 @@ if (!function_exists('FormField')) {
                         case 'password':
                             $content .= "\t\ttype: \"password\",\n";
                             break;
+                        case 'file':
+                            $content .= "\t\ttype: \"file\",\n";
+                            break;
                         default:
                             $content .= "\t\ttype: \"text\",\n";
                     }

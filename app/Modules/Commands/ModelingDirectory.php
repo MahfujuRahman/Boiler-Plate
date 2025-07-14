@@ -16,6 +16,8 @@ class ModelingDirectory extends Command
     protected $moduleName;
     protected $ViewModuleName;
     protected $fields = [];
+    protected $fileFields = [];
+    protected $hasFileUploads = false;
     protected $baseDirectory;
     protected $withVue;
 
@@ -58,6 +60,16 @@ class ModelingDirectory extends Command
         foreach (explode(',', $arg) as $item) {
             $this->fields[] = explode(':', $item);
         }
+
+        // Identify file fields
+        $this->fileFields = [];
+        $this->hasFileUploads = false;
+        foreach ($this->fields as $key => $field) {
+            if (isset($field[1]) && $field[1] === 'file') {
+                $this->fileFields[] = $field[0];
+                $this->hasFileUploads = true;
+            }
+        }
     }
 
     protected function createBaseDirectories()
@@ -89,18 +101,18 @@ class ModelingDirectory extends Command
 
         $files = [
             'Actions/GetAllData.php' => GetAllData($module_path, $fields),
-            'Actions/StoreData.php' => StoreData($module_path),
+            'Actions/StoreData.php' => StoreData($module_path, $this->fileFields, $this->hasFileUploads),
+            'Actions/UpdateData.php' => UpdateData($module_path,$this->fileFields, $this->hasFileUploads),
             'Actions/GetSingleData.php' => GetSingleData($module_path),
-            'Actions/UpdateData.php' => UpdateData($module_path),
             'Actions/UpdateStatus.php' => UpdateStatus($module_path),
+            'Actions/SoftDelete.php' => SoftDelete($module_path),
             'Actions/DestroyData.php' => DestroyData($module_path),
             'Actions/RestoreData.php' => RestoreData($module_path),
-            'Actions/SoftDelete.php' => SoftDelete($module_path),
             'Actions/ImportData.php' => ImportData($module_path, $fields),
             'Actions/BulkActions.php' => BulkActions($module_path),
             'Validations/DataStoreValidation.php' => DataStoreValidation($module_path, $fields),
             'Validations/BulkActionsValidation.php' => BulkActionsValidation($module_path, $fields),
-            'Controller/Controller.php' => Controller($module_path, $fields),
+            'Controller/Controller.php' => Controller($module_path),
             'Models/Model.php' => Model($module_path, $this->moduleName),
             "Database/create_" . Str::plural(Str::snake($this->moduleName)) . "_table.php" => Migration($module_path, $fields),
             'Routes/Route.php' => RouteContent($module_path, $this->moduleName),
@@ -171,7 +183,7 @@ class ModelingDirectory extends Command
         // Create the Vue directory structure for the role
         $roleVueDirectory = resource_path("js/backend/Views/{$role}/Management/");
         $roleVueDirectory = $this->createRoleBaseVueDirectories($roleVueDirectory, $vue_format_dir);
-        
+
         //Global Vue Directory
         $this->copyVueSourceFiles($globalVueDirectory, $ViewModuleName);
         $this->generateVueSetupFiles($globalVueDirectory, $ViewModuleName, $vue_module_path_dir, $fields);

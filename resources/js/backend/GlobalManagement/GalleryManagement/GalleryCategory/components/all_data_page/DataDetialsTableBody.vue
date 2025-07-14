@@ -7,7 +7,11 @@
       <th class="text-center">:</th>
       <th class="text-trim">
         <template v-if="row_item === 'image' && item[row_item]">
-          <a :href="item[row_item]" data-lightbox="image" data-title="Preview">
+          <a 
+            :href="item[row_item]" 
+            data-fancybox="detail-gallery" 
+            :data-caption="`${row_item} - Detail View`"
+          >
             <img
               :src="item[row_item]"
               style="width: 120px; height: 80px; object-fit: cover"
@@ -28,6 +32,9 @@ import setup from "../../setup";
 import SelectAll from "./select_data/SelectAll.vue";
 import TableRowAction from "./TableRowAction.vue";
 import SelectSingle from "./select_data/SelectSingle.vue";
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
 export default {
   props: ["item"],
   data: () => ({
@@ -39,6 +46,19 @@ export default {
     SelectSingle,
   },
 
+  mounted() {
+    this.initFancybox();
+  },
+
+  updated() {
+    this.initFancybox();
+  },
+
+  beforeUnmount() {
+    // Cleanup Fancybox instances
+    Fancybox.destroy();
+  },
+
   computed: {
     filteredFields() {
       return setup.select_fields.filter(field => field !== 'deleted_at');
@@ -46,6 +66,37 @@ export default {
   },
 
   methods: {
+    initFancybox() {
+      // Initialize Fancybox for detail images
+      Fancybox.bind('[data-fancybox="detail-gallery"]', {
+        // Fancybox options for detail view
+        Toolbar: {
+          display: {
+            left: ["infobar"],
+            middle: [
+              "zoomIn",
+              "zoomOut",
+              "toggle1to1",
+              "rotateCCW",
+              "rotateCW",
+              "flipX",
+              "flipY",
+            ],
+            right: ["download", "close"],
+          },
+        },
+        Thumbs: {
+          autoStart: false,
+        },
+        // Better for single image detail view
+        wheel: "zoom",
+        touch: {
+          vertical: true,
+          momentum: true,
+        },
+      });
+    },
+
     trim_content(content, row_item = null) {
       if (typeof content == "string") {
         if (row_item == "created_at" || row_item == "updated_at") {

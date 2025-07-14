@@ -8,9 +8,6 @@
             <li v-if="!is_trased_data">
                 <edit :item="item"/>
             </li>
-            <!-- <li>
-                <in-active :item="item"/>
-            </li> -->
             <li v-if="!is_trased_data">
                 <status-button :item="item"/>
             </li>

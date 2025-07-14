@@ -2,22 +2,21 @@ export default [
 	{
 		name: "title",
 		label: "Enter your title",
-		type: "text",
+		type: "file",
 		value: "",
 	},
 
 	{
 		name: "description",
 		label: "Enter your description",
-		type: "textarea",
-		value: "",
-	},
-	{
-		name: "description",
-		label: "Enter your description",
 		type: "file",
 		value: "",
-		multiple: false,
-		accept: "image/*",
+	},
+
+	{
+		name: "test",
+		label: "Enter your test",
+		type: "text",
+		value: "",
 	},
 ];

@@ -13,6 +13,17 @@ class UpdateData
                 return messageResponse('Data not found...',$data, 404, 'error');
             }
             $requestData = $request->validated();
+
+             // Process file uploads for specific fields
+                            if ($request->hasFile('title')) {
+                    $file = $request->file('title');
+                    $requestData['title'] = uploader($file, 'uploads/GalleryManagement/GalleryCategory');
+                }
+                if ($request->hasFile('description')) {
+                    $file = $request->file('description');
+                    $requestData['description'] = uploader($file, 'uploads/GalleryManagement/GalleryCategory');
+                }
+  
             $data->update($requestData);
             return messageResponse('Item updated successfully',$data, 201);
         } catch (\Exception $e) {

@@ -20,9 +20,9 @@ const setup: setup_type = {
     select_fields: [
         "id",
         "title",
-        "description",
+            "description",
+            "test",
         "status",
-        
         "slug",
         "created_at",
         'deleted_at'
@@ -32,6 +32,7 @@ const setup: setup_type = {
         "id",
         "title",
             "description",
+            "test",
         "status",
         "created_at",
     ],
@@ -39,6 +40,7 @@ const setup: setup_type = {
         "id",
         "title",
             "description",
+            "test",
         "status",
         "created_at",
     ],
@@ -46,6 +48,7 @@ const setup: setup_type = {
         "id",
         "title",
             "description",
+            "test",
         "status",
         "created_at",
     ],
@@ -53,6 +56,7 @@ const setup: setup_type = {
         "id",
         "title",
             "description",
+            "test",
         "status",
         "created_at",
     ],
