@@ -3,7 +3,7 @@
 use Illuminate\Support\Str;
 
 if (!function_exists('Model')) {
-    function Model($moduleName, $class_name)
+    function Model($moduleName, $class_name, $fileFields, $hasFileUploads = false)
     {
 
         $formated_module = explode('/', $moduleName);
@@ -29,7 +29,22 @@ if (!function_exists('Model')) {
                 use SoftDeletes;
                 protected \$table = "{$table_name}";
                 protected \$guarded = [];
-
+            EOD;
+        if ($hasFileUploads && !empty($fileFields)) {
+            $castsArray = [];
+            foreach ($fileFields as $field) {
+                $castsArray[] = "'$field' => 'array'";
+            }
+            $castsString = implode(",\n                    ", $castsArray);
+            $content .= <<<EOD
+            
+                            protected \$casts = [
+                                $castsString
+                            ];
+            EOD;
+        }
+        $content .= <<<EOD
+            
                 protected static function booted()
                 {
                     static::created(function (\$data) {
@@ -74,11 +89,10 @@ if (!function_exists('TableModel')) {
         $formated_module = explode('/', $moduleName);
         $modelName = '';
         if (count($formated_module) > 1) {
-            $modelName = $formated_module[count($formated_module) - 1].'Model';
+            $modelName = $formated_module[count($formated_module) - 1] . 'Model';
             array_pop($formated_module);
             $moduleName = implode('/', $formated_module);
             $moduleName = Str::replace("/", "\\", $moduleName);
-
         } else {
             $moduleName = Str::replace("/", "\\", $moduleName);
         }

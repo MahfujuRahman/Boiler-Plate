@@ -17,7 +17,9 @@ class ModelingDirectory extends Command
     protected $ViewModuleName;
     protected $fields = [];
     protected $fileFields = [];
+    protected $jsonFields = [];
     protected $hasFileUploads = false;
+    protected $hasJsonUploads = false;
     protected $baseDirectory;
     protected $withVue;
 
@@ -70,6 +72,15 @@ class ModelingDirectory extends Command
                 $this->hasFileUploads = true;
             }
         }
+
+        $this->jsonFields = [];
+        $this->hasJsonUploads = false;
+        foreach ($this->fields as $key => $field) {
+            if (isset($field[1]) && $field[1] === 'json') {
+                $this->jsonFields[] = $field[0];
+                $this->hasJsonUploads = true;
+            }
+        }
     }
 
     protected function createBaseDirectories()
@@ -113,7 +124,7 @@ class ModelingDirectory extends Command
             'Validations/DataStoreValidation.php' => DataStoreValidation($module_path, $fields),
             'Validations/BulkActionsValidation.php' => BulkActionsValidation($module_path, $fields),
             'Controller/Controller.php' => Controller($module_path),
-            'Models/Model.php' => Model($module_path, $this->moduleName),
+            'Models/Model.php' => Model($module_path, $this->moduleName, $this->jsonFields, $this->hasJsonUploads),
             "Database/create_" . Str::plural(Str::snake($this->moduleName)) . "_table.php" => Migration($module_path, $fields),
             'Routes/Route.php' => RouteContent($module_path, $this->moduleName),
             'Others/Api.http' => ApiDocumentation($this->moduleName),
