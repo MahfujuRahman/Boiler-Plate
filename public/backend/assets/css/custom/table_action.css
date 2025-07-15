@@ -86,6 +86,7 @@
 
                 &:nth-child(1) {
                     padding: 0;
+                    text-align: center;
                     .icon {
                         cursor: pointer;
                         position: relative;

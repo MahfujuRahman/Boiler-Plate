@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('gallery_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255)->nullable();
-            $table->text('description')->nullable();
+            $table->string('title', 100)->nullable();
+            $table->string('description', 100)->nullable();
+            $table->string('test', 255)->nullable();
 
             $table->bigInteger('creator')->unsigned()->nullable();
             $table->string('slug', 50)->nullable();

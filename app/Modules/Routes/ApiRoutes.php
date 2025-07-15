@@ -29,13 +29,7 @@ include_once base_path("app/Modules/Management/UserManagement/User/Routes/Route.
 | Others Management Module
 |--------------------------------------------------------------------------
 */
-// include_once base_path("app/Modules/Management/BlogManagement/BlogCategory/Routes/Route.php");
-// include_once base_path("app/Modules/Management/BlogManagement/Blog/Routes/Route.php");
-// include_once base_path("app/Modules/Management/BlogManagement/BlogWriter/Routes/Route.php");include_once base_path("app/Modules/Management/SeminerManagement/Seminer/Routes/Route.php");
-include_once base_path("app/Modules/Management/GalleryManagement/GalleryCategory/Routes/Route.php");
-include_once base_path("app/Modules/Management/GalleryManagement/Gallery/Routes/Route.php");
-include_once base_path("app/Modules/Management/CommunicationManagement/ContactMessage/Routes/Route.php");
-include_once base_path("app/Modules/Management/WebsiteManagement/WebsiteMWebsiteBanner/Routes/Route.php");
+include_once base_path("app/Modules/Management/SeminerManagement/Seminer/Routes/Route.php");
 include_once base_path("app/Modules/Management/WebsiteManagement/SubBanner/Routes/Route.php");
 include_once base_path("app/Modules/Management/WebsiteManagement/SuccssStories/Routes/Route.php");
 include_once base_path("app/Modules/Management/WebsiteManagement/OurSpeciality/Routes/Route.php");
@@ -61,5 +55,13 @@ include_once base_path("app/Modules/Management/CourseManagement/CourseModuleClas
 include_once base_path("app/Modules/Management/CourseManagement/CourseModuleClassResourse/Routes/Route.php");
 include_once base_path("app/Modules/Management/CourseManagement/CourseModuleClassRoutine/Routes/Route.php");
 include_once base_path("app/Modules/Management/EnrollInformation/Routes/Route.php");
+include_once base_path("app/Modules/Management/CommunicationManagement/ContactMessage/Routes/Route.php");
+include_once base_path("app/Modules/Management/WebsiteManagement/WebsiteMWebsiteBanner/Routes/Route.php");
+include_once base_path("app/Modules/Management/BlogManagement/Blog/Routes/Route.php");
+include_once base_path("app/Modules/Management/QuizManagement/QuizQuestion/Routes/Route.php");
+include_once base_path("app/Modules/Management/QuizManagement/Quiz/Routes/Route.php");
+include_once base_path("app/Modules/Management/CourseManagement/Course/Routes/Route.php");
 include_once base_path("app/Modules/Management/PaymentGateways/Routes/Route.php");
 include_once base_path("app/Modules/Management/EmailConfigures/Routes/Route.php");
+include_once base_path("app/Modules/Management/GalleryManagement/Gallery/Routes/Route.php");
+include_once base_path("app/Modules/Management/GalleryManagement/GalleryCategory/Routes/Route.php");

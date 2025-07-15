@@ -27,7 +27,9 @@ class GetAllData
                 $data = $data->where(function ($q) use ($searchKey) {
     $q->where('title', 'like', '%' . $searchKey . '%');    
 
-    $q->orWhere('description', 'like', '%' . $searchKey . '%');              
+    $q->orWhere('description', 'like', '%' . $searchKey . '%');    
+
+    $q->orWhere('test', 'like', '%' . $searchKey . '%');              
 
                 });
             }

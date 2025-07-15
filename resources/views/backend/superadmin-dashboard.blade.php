@@ -35,8 +35,8 @@
     <script src="{{ asset('backend/assets/plugins/summernote/dist/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('backend/assets/plugins/inputtags/js/bootstrap-tagsinput.js') }}"></script>
     <!-- Lightbox2 CDN -->
-    <link href="backend/assets/plugins/lightbox/css/lightbox.min.css" rel="stylesheet" />
-    <script src="backend/assets/plugins/lightbox/js/lightbox.min.js"></script>
+    {{-- <link href="backend/assets/plugins/lightbox/css/lightbox.min.css" rel="stylesheet" />
+    <script src="backend/assets/plugins/lightbox/js/lightbox.min.js"></script> --}}
 
     @vite(['resources/js/backend/Views/SuperAdmin/app.js'])
 </head>

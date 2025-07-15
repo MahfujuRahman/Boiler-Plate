@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Management\Gallery\Others;
+namespace App\Modules\Management\GalleryManagement\Gallery\Others;
 
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -32,7 +32,7 @@ class ImportJob implements ShouldQueue
     public function handle(): void
     {
 
-        $model = \App\Modules\Management\Gallery\Models\Model::class;
+        $model = \App\Modules\Management\GalleryManagement\Gallery\Models\Model::class;
         foreach ($this->data as $item) {
             $StoreData = array_combine($this->header, $item);
             $model::create($StoreData);

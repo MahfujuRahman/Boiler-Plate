@@ -27,19 +27,21 @@
         </router-link>
       </li>
       <!-- Management start -->
-      <side-bar-drop-down-menus
-        :icon="`fa fa-plus`"
-        :menu_title="`User Management`"
-        :menus="[
-          {
-            route_name: `AllUser`,
-            title: `User`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-        ]"
-      />
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`User Management`" :menus="[
+        {
+          route_name: `AllUser`,
+          title: `User`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
 
-    
+      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`SeminerManagement`" :menus="[
+        {
+          route_name: `AllSeminer`,
+          title: `Seminer`,
+          icon: `zmdi zmdi-dot-circle-alt`,
+        },
+      ]" />
       <!-- Management end -->
     </ul>
   </div>

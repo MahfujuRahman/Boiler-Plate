@@ -14,11 +14,13 @@ class ModelingDirectory extends Command
     protected $signature = 'make:module {module_name} {[field]?} {--vue}';
     protected $description = 'Create a folder and files in the app directory';
 
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $moduleName;
+    protected $ViewModuleName;
+    protected $fields = [];
+    protected $fileFields = [];
+    protected $hasFileUploads = false;
+    protected $baseDirectory;
+    protected $withVue;
 
     public function handle()
     {
@@ -33,15 +35,35 @@ class ModelingDirectory extends Command
 
 
 
-        // Check if the field argument is provided
-        if ($this->hasArgument('[field]') && $this->argument('[field]')) {
-            $fieldName = $this->argument('[field]');
-            $fieldName = str_replace('[', '', $fieldName);
-            $fieldName = str_replace(']', '', $fieldName);
-            $fieldName = explode(',', $fieldName);
-            foreach ($fieldName as $item) {
-                $fields[] =  explode(':', $item);
+    protected function parseFields()
+    {
+        $arg = $this->argument('[field]');
+        if (!$arg) return;
+
+        $arg = str_replace(['[', ']'], '', $arg);
+        foreach (explode(',', $arg) as $item) {
+            $this->fields[] = explode(':', $item);
+        }
+
+        // Identify file fields
+        $this->fileFields = [];
+        $this->hasFileUploads = false;
+        foreach ($this->fields as $key => $field) {
+            if (isset($field[1]) && $field[1] === 'file') {
+                $this->fileFields[] = $field[0];
+                $this->hasFileUploads = true;
             }
+        }
+    }
+
+    protected function createBaseDirectories()
+    {
+        $formatDir = explode('/', $this->moduleName);
+        if (count($formatDir) > 1) {
+            $this->moduleName = array_pop($formatDir);
+            $subPath = implode('/', $formatDir);
+            $this->baseDirectory .= $subPath . '/';
+            File::ensureDirectoryExists($this->baseDirectory);
         }
 
 
@@ -106,20 +128,173 @@ class ModelingDirectory extends Command
             'ImportJob.php',
             'Doc.txt',
 
+
+        $files = [
+            'Actions/GetAllData.php' => GetAllData($module_path, $fields),
+            'Actions/StoreData.php' => StoreData($module_path, $this->fileFields, $this->hasFileUploads),
+            'Actions/UpdateData.php' => UpdateData($module_path,$this->fileFields, $this->hasFileUploads),
+            'Actions/GetSingleData.php' => GetSingleData($module_path),
+            'Actions/UpdateStatus.php' => UpdateStatus($module_path),
+            'Actions/SoftDelete.php' => SoftDelete($module_path),
+            'Actions/DestroyData.php' => DestroyData($module_path),
+            'Actions/RestoreData.php' => RestoreData($module_path),
+            'Actions/ImportData.php' => ImportData($module_path, $fields),
+            'Actions/BulkActions.php' => BulkActions($module_path),
+            'Validations/DataStoreValidation.php' => DataStoreValidation($module_path, $fields),
+            'Validations/BulkActionsValidation.php' => BulkActionsValidation($module_path, $fields),
+            'Controller/Controller.php' => Controller($module_path),
+            'Models/Model.php' => Model($module_path, $this->moduleName),
+            "Database/create_" . Str::plural(Str::snake($this->moduleName)) . "_table.php" => Migration($module_path, $fields),
+            'Routes/Route.php' => RouteContent($module_path, $this->moduleName),
+            'Others/Api.http' => ApiDocumentation($this->moduleName),
+            'Others/Doc.txt' => Documentation(),
+            'Others/ImportJob.php' => ImportJob($module_path),
+            'Seeder/Seeder.php' => Seeder($module_path, $this->moduleName, $fields),
         ];
 
-        if ($module_dir != null) {
-            $module_name = $module_dir . '/' . $moduleName;
+        foreach ($files as $relativePath => $content) {
+            File::put($this->baseDirectory . $this->moduleName . '/' . $relativePath, $content);
+        }
+    }
+
+    protected function runMigration()
+    {
+        $table = Str::plural(Str::snake($this->moduleName));
+        $migrationPath = "/app/Modules/Management/{$this->ViewModuleName}/Database/create_{$table}_table.php";
+        Artisan::call('migrate', ['--path' => $migrationPath]);
+    }
+
+    protected function runSeeder()
+    {
+        $path = str_replace('/', '\\', $this->ViewModuleName);
+        $seederClass = "\\App\\Modules\\Management\\{$path}\\Seeder\\Seeder";
+        Artisan::call('db:seed', ['--class' => $seederClass]);
+    }
+
+    protected function appendRouteToApiRoutes()
+    {
+        $filePath = base_path("app/Modules/Routes/ApiRoutes.php");
+        $routeInclude = "include_once base_path(\"app/Modules/Management/{$this->ViewModuleName}/Routes/Route.php\");\n";
+
+        if (!str_contains(file_get_contents($filePath), $routeInclude)) {
+            file_put_contents($filePath, $routeInclude, FILE_APPEND);
+        }
+    }
+
+    protected function getModulePath()
+    {
+        $parts = explode('/', $this->ViewModuleName);
+        if (count($parts) > 1) {
+            $module = array_pop($parts);
+            return implode('/', $parts) . '/' . $module;
+        }
+        return $this->moduleName;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Vue js Management Module
+    | Vue js Management Module
+    |--------------------------------------------------------------------------
+    */
+
+    protected function generateVueFiles()
+    {
+        $role = 'SuperAdmin';
+        $fields = $this->fields;
+        $vue_format_dir = explode('/', $this->ViewModuleName);
+        $ViewModuleName = end($vue_format_dir);
+        $vue_module_path_dir = $this->ViewModuleName;
+
+        // Create the Vue directory structure for the global management
+        $globalVueDirectory = resource_path("js/backend/GlobalManagement/");
+        $globalVueDirectory = $this->createGlobalVueDirectories($globalVueDirectory, $vue_format_dir);
+
+        // Create the Vue directory structure for the role
+        $roleVueDirectory = resource_path("js/backend/Views/{$role}/Management/");
+        $roleVueDirectory = $this->createRoleBaseVueDirectories($roleVueDirectory, $vue_format_dir);
+
+        //Global Vue Directory
+        $this->copyVueSourceFiles($globalVueDirectory, $ViewModuleName);
+        $this->generateVueSetupFiles($globalVueDirectory, $ViewModuleName, $vue_module_path_dir, $fields);
+        $this->appendToVueRoutesFile($role, $ViewModuleName, $vue_module_path_dir);
+        $this->appendToVueSidebar($role, $ViewModuleName);
+
+        //Role Base Vue Directory
+        $this->generateVuePagesRoleWise($roleVueDirectory, $ViewModuleName, $vue_format_dir);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CreateVueDirectories
+    |--------------------------------------------------------------------------
+    */
+    protected function createGlobalVueDirectories($vueDirectory, $vue_format_dir)
+    {
+        if (count($vue_format_dir) > 1) {
+            array_pop($vue_format_dir);
+            $vue_module_dir = implode('/', $vue_format_dir);
+
+            if (!File::isDirectory($vueDirectory . $vue_module_dir)) {
+                File::makeDirectory($vueDirectory . $vue_module_dir, 0777, true);
+            }
+
+            $vueDirectory .= $vue_module_dir . '/';
+        }
+
+        return $vueDirectory;
+    }
+    protected function createRoleBaseVueDirectories($vueDirectory, $vue_format_dir)
+    {
+        if (count($vue_format_dir) > 1) {
+            array_pop($vue_format_dir);
+            $vue_module_dir = implode('/', $vue_format_dir);
+
+            if (!File::isDirectory($vueDirectory . $vue_module_dir)) {
+                File::makeDirectory($vueDirectory . $vue_module_dir, 0777, true);
+            }
+
+            $vueDirectory .= $vue_module_dir . '/';
+        }
+
+        return $vueDirectory;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CopyVueSourceFiles
+    |--------------------------------------------------------------------------
+    */
+
+    protected function copyVueSourceFiles($vueDirectory, $ViewModuleName)
+    {
+        $targetDirectory = $vueDirectory . $ViewModuleName;
+        $sourceDirectory = base_path('app/Modules/Helpers/CommandFiles/FrontendModule/Source');
+
+        File::ensureDirectoryExists($targetDirectory);
+        if (File::isDirectory(directory: $sourceDirectory)) {
+            File::copyDirectory($sourceDirectory, $targetDirectory);
         } else {
             $module_name = $moduleName;
         }
+    }
+    protected function generateVuePagesRoleWise($rolesVueDirectory, $ViewModuleName, $vue_format_dir)
+    {
+        $SetupDirectory = "{$rolesVueDirectory}{$ViewModuleName}";
+        File::ensureDirectoryExists($SetupDirectory);
+
+        File::put("{$SetupDirectory}/All.vue", ManagementAllPage($vue_format_dir));
+        File::put("{$SetupDirectory}/Details.vue", ManagementDetailsPage($vue_format_dir));
+        File::put("{$SetupDirectory}/Form.vue", ManagementFormPage($vue_format_dir));
+    }
 
 
 
-        $ValidationDirectory = $baseDirectory . $moduleName . '/Validations';
-        if (!File::isDirectory($ValidationDirectory)) {
-            File::makeDirectory($ValidationDirectory);
-        }
+    protected function appendToVueRoutesFile($role, $ViewModuleName, $vue_module_path_dir)
+    {
+        $filePath = base_path("resources/js/backend/Views/{$role}/Routes/routes.js");
+        $routeImport = "import {$ViewModuleName}Routes from '../../../GlobalManagement/{$vue_module_path_dir}/setup/routes.js';\n";
+        $newRouteChild = "        {$ViewModuleName}Routes,\n";
 
 
 

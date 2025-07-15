@@ -9,6 +9,7 @@
       <a
         href="/"
         target="_blank"
+        title="Visit Website"
         class="d-flex align-items-center justify-content-center mx-2"
         style="background: rgba(255, 255, 255, 0.12); width: 30px; height: 30px"
       >
@@ -236,12 +237,9 @@ export default {
       }
     },
 
-   
+  
 
-    mark_as_seen: async function (voucher) {
-     
-      
-    },
+   
   },
 
   mounted() {

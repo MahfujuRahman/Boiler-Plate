@@ -26,7 +26,7 @@ export default {
     rightToggle: false,
   }),
   created: async function () {
-    await this.check_is_auth();
+    // await this.check_is_auth();
     await this.get_all_website_settings();
    
 
