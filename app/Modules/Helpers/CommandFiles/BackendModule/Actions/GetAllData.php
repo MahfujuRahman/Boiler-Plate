@@ -3,7 +3,7 @@
 use Illuminate\Support\Str;
 
 if (!function_exists('GetAllData')) {
-    function GetAllData($moduleName, $fields)
+    function GetAllData($moduleName, $fields, $fieldsWithBraces = [])
     {
 
 
@@ -25,6 +25,14 @@ if (!function_exists('GetAllData')) {
             $form_fields[] = $field[0];
         }
 
+        if ($fieldsWithBraces && !empty($fieldsWithBraces)) {
+            $relationName = '';
+            foreach ($fieldsWithBraces as $field) {
+                $relationName .= "                 \$with = ['{$field['field']}'];\n";
+            }
+        } else {
+            $relationName = "                 \$with = [];\n";
+        }
 
 
 
@@ -49,7 +57,8 @@ if (!function_exists('GetAllData')) {
                     \$fields = request()->input('fields') ?? '*';
                     \$start_date = request()->input('start_date');
                     \$end_date = request()->input('end_date');
-                    \$with = [];
+        
+                   {$relationName}
                     \$condition = [];
 
                     \$data = self::\$model::query();

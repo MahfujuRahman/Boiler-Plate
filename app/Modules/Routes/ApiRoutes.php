@@ -32,3 +32,5 @@ include_once base_path("app/Modules/Management/UserManagement/Role/Routes/Route.
 
 
 include_once base_path("app/Modules/Management/TestModule/ComprehensiveDataTypeTest/Routes/Route.php");
+include_once base_path("app/Modules/Management/GalleryManagement/GalleryCategory/Routes/Route.php");
+include_once base_path("app/Modules/Management/GalleryManagement/Gallery/Routes/Route.php");

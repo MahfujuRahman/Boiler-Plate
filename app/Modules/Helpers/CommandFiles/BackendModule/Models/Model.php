@@ -3,9 +3,8 @@
 use Illuminate\Support\Str;
 
 if (!function_exists('Model')) {
-    function Model($moduleName, $class_name, $fileFields, $hasFileUploads = false)
+    function Model($moduleName, $class_name, $jsonFields, $hasJsonUploads = false, $fieldsWithBraces = [])
     {
-
         $formated_module = explode('/', $moduleName);
         if (count($formated_module) > 1) {
             $moduleName = implode('/', $formated_module);
@@ -14,7 +13,6 @@ if (!function_exists('Model')) {
             $moduleName = Str::replace("/", "\\", $moduleName);
         }
         $table_name = Str::plural((Str::snake($class_name)));
-
 
         $content = <<<"EOD"
             <?php
@@ -30,9 +28,9 @@ if (!function_exists('Model')) {
                 protected \$table = "{$table_name}";
                 protected \$guarded = [];
             EOD;
-        if ($hasFileUploads && !empty($fileFields)) {
+        if ($hasJsonUploads && !empty($jsonFields)) {
             $castsArray = [];
-            foreach ($fileFields as $field) {
+            foreach ($jsonFields as $field) {
                 $castsArray[] = "'$field' => 'array'";
             }
             $castsString = implode(",\n                    ", $castsArray);
@@ -74,6 +72,22 @@ if (!function_exists('Model')) {
                 {
                     return \$q->onlyTrashed();
                 }
+            EOD;
+
+        if ($fieldsWithBraces && !empty($fieldsWithBraces)) {
+
+            foreach ($fieldsWithBraces as $field) {
+            $braceContent = str_replace('/', '\\', $field['brace_content']);
+            $content .= <<<EOD
+            
+                public function {$field['field']}()
+            {
+                return \$this->belongsTo("App\\Modules\\Management\\{$braceContent}\\Models\\Model", "{$field['field']}");
+            }
+            EOD;
+            }
+        }
+        $content .= <<<EOD
             }
             EOD;
 
