@@ -195,7 +195,7 @@ if (!function_exists('TableMigration')) {
                     }
 
                     //enum value set end
-                    if ($type == in_array($type, ['string', 'stringfile'])) {
+                    if ($type == in_array($type, ['string', 'stringfile','file'])) {
                         $type = 'string';
                     } elseif (in_array($type, ['longtext', 'text'])) {
                         $type = 'text';
