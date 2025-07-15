@@ -5,7 +5,7 @@
     <tr>
       <th>{{ row_item }}</th>
       <th class="text-center">:</th>
-      <th class="text-trim">
+      <th class="">
         <template v-if="row_item === 'image' && item[row_item]">
           <a 
             :href="item[row_item]" 
