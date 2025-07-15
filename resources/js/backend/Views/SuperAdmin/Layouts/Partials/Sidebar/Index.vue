@@ -42,17 +42,14 @@
           icon: `zmdi zmdi-dot-circle-alt`,
         },
       ]" />
-      <side-bar-drop-down-menus
+     
+<side-bar-drop-down-menus
         :icon="`fa fa-plus`"
-        :menu_title="`GalleryManagement`"
+        :menu_title="`TestModule`"
         :menus="[
           {
-            route_name: `AllGalleryCategory`,
-            title: `GalleryCategory`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },          {
-            route_name: `AllGallery`,
-            title: `Gallery`,
+            route_name: `AllComprehensiveDataTypeTest`,
+            title: `ComprehensiveDataTypeTest`,
             icon: `zmdi zmdi-dot-circle-alt`,
           },
         ]"
