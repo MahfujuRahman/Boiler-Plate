@@ -69,7 +69,7 @@ export default {
       default: "users_" + parseInt(Math.random() * 1000),
     },
     value: {
-      type: Array,
+      type: [Array, Object, String, Number],
       default: [],
     },
   },
@@ -84,6 +84,13 @@ export default {
       } else if (Array.isArray(v) && this.all && Array.isArray(this.all.data)) {
         // fallback for array of ids, only if all.data is available
         this.selected = this.all.data.filter(item => v.includes(item.id));
+      } else if (typeof v === 'object' && v !== null && v.id) {
+        // Handle single object (like from relationship)
+        this.selected = [v];
+      } else if ((typeof v === 'string' || typeof v === 'number') && this.all && Array.isArray(this.all.data)) {
+        // Handle single ID (string or number)
+        const item = this.all.data.find(item => item.id == v);
+        this.selected = item ? [item] : [];
       } else {
         this.selected = [];
       }
