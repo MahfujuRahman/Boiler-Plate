@@ -7,6 +7,8 @@ import SettingsRoutes from "../Management/Settings/setup/routes.js";
 //UserRoutes
 import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
 //routes
+import GalleryCategoryRoutes from '../../../GlobalManagement/GalleryManagement/GalleryCategory/setup/routes.js';
+import GalleryRoutes from '../../../GlobalManagement/GalleryManagement/Gallery/setup/routes.js';
 
 
 const routes = {
@@ -19,6 +21,8 @@ const routes = {
       name: "adminDashboard",
     },
     //management routes
+        GalleryCategoryRoutes,
+        GalleryRoutes,
 
       
 

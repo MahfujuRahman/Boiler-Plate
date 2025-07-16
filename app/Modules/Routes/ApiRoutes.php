@@ -29,3 +29,5 @@ include_once base_path("app/Modules/Management/UserManagement/Role/Routes/Route.
 | Others Management Module
 |--------------------------------------------------------------------------
 */
+include_once base_path("app/Modules/Management/GalleryManagement/Gallery/Routes/Route.php");
+include_once base_path("app/Modules/Management/GalleryManagement/GalleryCategory/Routes/Route.php");
