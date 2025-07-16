@@ -18,7 +18,7 @@ if (!function_exists('SetupIndex')) {
 
         $prefix = ucfirst($moduleName);
         $Name = Str::kebab($moduleName);
-        $apiName = Str::kebab($moduleName);
+        $apiName = Str::plural(Str::kebab($moduleName));
         $store = Str::snake($moduleName);
 
 
