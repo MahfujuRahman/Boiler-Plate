@@ -23,7 +23,7 @@ https://github.com/MahfujuRahman/Boiler-Plate/tree/master
 
 ### Git clone or Download Zip
 ```bash
-git clone git@github.com:MahfujuRahman/Boiler-Plate.git
+git clone https://github.com/MahfujuRahman/Boiler-Plate.git
 ```
 
 ### Composer and Npm Install
