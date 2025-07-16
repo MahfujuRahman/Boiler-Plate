@@ -38,5 +38,4 @@ class Model extends EloquentModel
      public function scopeTrased($q)
     {
         return $q->onlyTrashed();
-    }
-}
+    }}

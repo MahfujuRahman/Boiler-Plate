@@ -35,26 +35,6 @@
         },
       ]" />
 
-      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`SeminerManagement`" :menus="[
-        {
-          route_name: `AllSeminer`,
-          title: `Seminer`,
-          icon: `zmdi zmdi-dot-circle-alt`,
-        },
-      ]" />
-     
-
-<side-bar-drop-down-menus
-        :icon="`fa fa-plus`"
-        :menu_title="`TestModule`"
-        :menus="[
-          {
-            route_name: `AllComprehensiveDataTypeTest`,
-            title: `ComprehensiveDataTypeTest`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-        ]"
-/>
 <side-bar-drop-down-menus
         :icon="`fa fa-plus`"
         :menu_title="`GalleryManagement`"

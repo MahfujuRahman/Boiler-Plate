@@ -7,20 +7,13 @@
       <th class="text-center">:</th>
       <th class="text-trim">
         <template v-if="row_item === 'image' && item[row_item]">
-          <a 
-            :href="item[row_item]" 
-            data-fancybox="detail-gallery" 
-            :data-caption="`${row_item} - Detail View`"
-          >
-            <img
-              :src="item[row_item]"
-              style="width: 120px; height: 80px; object-fit: cover"
-              alt="image"
-            />
+          <a :href="item[row_item]" data-fancybox="detail-gallery" :data-caption="`${row_item} - Detail View`">
+            <img :src="item[row_item]" style="width: 120px; height: 80px; object-fit: cover" alt="image" />
           </a>
         </template>
         <template v-else>
-          {{ trim_content(item[row_item], row_item) }}
+          <div v-if="isHtmlContent(item[row_item])" v-html="trim_content(item[row_item], row_item)"></div>
+          <div v-else>{{ trim_content(item[row_item], row_item) }}</div>
         </template>
       </th>
     </tr>
@@ -95,6 +88,14 @@ export default {
           momentum: true,
         },
       });
+    },
+
+    isHtmlContent(content) {
+      // Check if content contains HTML tags
+      if (typeof content === "string") {
+        return /<[^>]*>/.test(content);
+      }
+      return false;
     },
 
     trim_content(content, row_item = null) {

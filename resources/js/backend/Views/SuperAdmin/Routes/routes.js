@@ -9,9 +9,7 @@ import UserRoutes from "../Management/UserManagement/User/setup/routes.js";
 //routes
 import GalleryRoutes from '../../../GlobalManagement/GalleryManagement/Gallery/setup/routes.js';
 import GalleryCategoryRoutes from '../../../GlobalManagement/GalleryManagement/GalleryCategory/setup/routes.js';
-import ComprehensiveDataTypeTestRoutes from '../../../GlobalManagement/TestModule/ComprehensiveDataTypeTest/setup/routes.js';
 
-import SeminerRoutes from '../../../GlobalManagement/SeminerManagement/Seminer/setup/routes.js';
 
 
 const routes = {
@@ -26,11 +24,7 @@ const routes = {
     //management routes
         GalleryRoutes,
         GalleryCategoryRoutes,
-        ComprehensiveDataTypeTestRoutes,
-
-  
-        SeminerRoutes,
-
+      
 
     //user routes
     UserRoutes,
