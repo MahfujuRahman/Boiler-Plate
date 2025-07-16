@@ -13,7 +13,6 @@ if (!function_exists('FormField')) {
     {
 
 
-
         $content = <<<EOD
         export default [
         EOD;
@@ -21,6 +20,10 @@ if (!function_exists('FormField')) {
         if (count($fields)) {
             foreach ($fields as $fieldName) {
                 $label = Str::of($fieldName[0])->snake()->replace('_', ' ');
+                if (preg_match('/\{.*\}/', $fieldName[1])) {
+                    continue;
+                }
+
                 $content .= "\n\t{\n";
                 $content .= "\t\tname: \"$fieldName[0]\",\n";
                 $content .= "\t\tlabel: \"Enter your $label\",\n";
@@ -33,12 +36,14 @@ if (!function_exists('FormField')) {
                     if (strpos($type, 'string-') === 0) {
                         $type = 'string';
                     }
-                    
+
                     // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
                     if (strpos($type, 'tinyint-') === 0 || strpos($type, 'boolean-') === 0) {
                         // Keep the original type for processing in switch statement
                         $type = strpos($type, 'tinyint-') === 0 ? 'tinyint' : 'boolean';
                     }
+
+
 
                     switch ($type) {
                         case 'longtext':

@@ -1,5 +1,4 @@
 export default [
-
 	{
 		name: "title",
 		label: "Enter your title",
