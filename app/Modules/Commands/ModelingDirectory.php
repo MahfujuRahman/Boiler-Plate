@@ -126,7 +126,7 @@ class ModelingDirectory extends Command
             'Actions/GetAllData.php' => GetAllData($module_path, $fields, $this->fieldsWithBraces),
             'Actions/StoreData.php' => StoreData($module_path, $this->fileFields, $this->hasFileUploads),
             'Actions/UpdateData.php' => UpdateData($module_path, $this->fileFields, $this->hasFileUploads),
-            'Actions/GetSingleData.php' => GetSingleData($module_path,$this->fieldsWithBraces),
+            'Actions/GetSingleData.php' => GetSingleData($module_path, $this->fieldsWithBraces),
             'Actions/UpdateStatus.php' => UpdateStatus($module_path),
             'Actions/SoftDelete.php' => SoftDelete($module_path),
             'Actions/DestroyData.php' => DestroyData($module_path),
@@ -136,7 +136,7 @@ class ModelingDirectory extends Command
             'Validations/DataStoreValidation.php' => DataStoreValidation($module_path, $fields),
             'Validations/BulkActionsValidation.php' => BulkActionsValidation($module_path, $fields),
             'Controller/Controller.php' => Controller($module_path),
-            'Models/Model.php' => Model($module_path, $this->moduleName, $this->jsonFields, $this->hasJsonUploads,$this->fieldsWithBraces),
+            'Models/Model.php' => Model($module_path, $this->moduleName, $this->jsonFields, $this->hasJsonUploads, $this->fieldsWithBraces),
             "Database/create_" . Str::plural(Str::snake($this->moduleName)) . "_table.php" => Migration($module_path, $fields),
             'Routes/Route.php' => RouteContent($module_path, $this->moduleName),
             'Others/Api.http' => ApiDocumentation($this->moduleName),
@@ -215,6 +215,9 @@ class ModelingDirectory extends Command
 
         //Role Base Vue Directory
         $this->generateVuePagesRoleWise($roleVueDirectory, $ViewModuleName, $vue_format_dir);
+        
+        // Generate Management Form Page Dropdown
+        $this->generateManagementFormPageDropdown($globalVueDirectory, $ViewModuleName, $this->fieldsWithBraces);
     }
 
     /*
@@ -288,6 +291,13 @@ class ModelingDirectory extends Command
 
         File::put("{$SetupDirectory}/form_fields.js", FormField($fields));
         File::put("{$SetupDirectory}/index.ts", SetupIndex($vue_module_path_dir, $fields));
+    }
+
+    protected function generateManagementFormPageDropdown($vueDirectory, $ViewModuleName, $fieldsWithBraces)
+    {
+        $SetupDirectory = "{$vueDirectory}{$ViewModuleName}/pages";
+
+        File::put("{$SetupDirectory}/Form.vue", ManagementFormPageDropdown($fieldsWithBraces));
     }
 
     protected function appendToVueRoutesFile($role, $ViewModuleName, $vue_module_path_dir)

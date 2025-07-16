@@ -47,9 +47,9 @@ include_once(__DIR__ . '/FrontendModule/FormField.php');
 include_once(__DIR__ . '/FrontendModule/All.php');
 include_once(__DIR__ . '/FrontendModule/Details.php');
 include_once(__DIR__ . '/FrontendModule/Form.php');
+include_once(__DIR__ . '/FrontendModule/FormPage.php');
 // include_once(__DIR__ . '/FrontendModule/Pages/AllDataPage.php');
 // include_once(__DIR__ . '/FrontendModule/Pages/DetailsPage.php');
-// include_once(__DIR__ . '/FrontendModule/Pages/FormPage.php');
 // include_once(__DIR__ . '/FrontendModule/Pages/LayoutPage.php');
 
 

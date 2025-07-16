@@ -1,10 +1,4 @@
 export default [
-	{
-		name: "gallery_category_id",
-		label: "Enter your gallery category id",
-		type: "text",
-		value: "",
-	},
 
 	{
 		name: "title",

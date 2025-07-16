@@ -91,7 +91,7 @@ export default {
     },
     type: {
       required: true,
-      type: String,
+      type: [String, Array, Object],
     },
     multiple: {
       required: false,
@@ -99,7 +99,7 @@ export default {
     },
     value: {
       required: false,
-      type: String,
+      type: [String, Number],
     },
     data_list: {
       required: false,
