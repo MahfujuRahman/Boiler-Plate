@@ -16,10 +16,10 @@ if (!function_exists('SetupIndex')) {
             $relativePath = $relativePath . str_repeat('../', $lengthOfFormatedModule);
         }
 
-        $prefix = Str::singular(ucfirst($moduleName));
-        $Name = Str::singular(Str::kebab($moduleName));
-        $apiName = Str::plural(Str::kebab($moduleName));
-        $store = Str::singular(Str::snake($moduleName));
+        $prefix = ucfirst($moduleName);
+        $Name = Str::kebab($moduleName);
+        $apiName = Str::kebab($moduleName);
+        $store = Str::snake($moduleName);
 
 
         $form_fields = array_column($fields, 0);
