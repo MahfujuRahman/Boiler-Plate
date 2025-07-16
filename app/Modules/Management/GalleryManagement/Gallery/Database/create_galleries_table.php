@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('gallery_category_id', 100)->nullable();
             $table->string('title', 255)->nullable();
             $table->text('description')->nullable();
-            $table->string('image', 255)->nullable();
+            $table->string('image', 100)->nullable();
             $table->tinyInteger('top_image')->default(0);
 
             $table->bigInteger('creator')->unsigned()->nullable();

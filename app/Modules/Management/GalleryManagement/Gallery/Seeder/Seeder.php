@@ -21,7 +21,7 @@ class Seeder extends SeederClass
             self::$model::create([                'gallery_category_id' => null,
                 'title' => $faker->text(255),
                 'description' => $faker->paragraph,
-                'image' => $faker->text(255),
+                'image' => null,
                 'top_image' => $faker->boolean,
             ]);
         }
