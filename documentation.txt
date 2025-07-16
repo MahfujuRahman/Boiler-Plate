@@ -33,7 +33,7 @@ DB-datatype: datetime
 DB-datatype: int,integer,bigint 
 <input type="number" placeholder="Number"><br>
 
-DB-datatype: stringfile(string)
+DB-datatype: file , stringfile(string)
 <input type="file"><br>
 
 DB-datatype: enum 

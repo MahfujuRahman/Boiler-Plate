@@ -3,9 +3,8 @@
 use Illuminate\Support\Str;
 
 if (!function_exists('Model')) {
-    function Model($moduleName, $class_name)
+    function Model($moduleName, $class_name, $jsonFields, $hasJsonUploads = false, $fieldsWithBraces = [])
     {
-
         $formated_module = explode('/', $moduleName);
         if (count($formated_module) > 1) {
             $moduleName = implode('/', $formated_module);
@@ -14,7 +13,6 @@ if (!function_exists('Model')) {
             $moduleName = Str::replace("/", "\\", $moduleName);
         }
         $table_name = Str::plural((Str::snake($class_name)));
-
 
         $content = <<<"EOD"
             <?php
@@ -29,7 +27,22 @@ if (!function_exists('Model')) {
                 use SoftDeletes;
                 protected \$table = "{$table_name}";
                 protected \$guarded = [];
-
+            EOD;
+        if ($hasJsonUploads && !empty($jsonFields)) {
+            $castsArray = [];
+            foreach ($jsonFields as $field) {
+                $castsArray[] = "'$field' => 'array'";
+            }
+            $castsString = implode(",\n                    ", $castsArray);
+            $content .= <<<EOD
+            
+                            protected \$casts = [
+                                $castsString
+                            ];
+            EOD;
+        }
+        $content .= <<<EOD
+            
                 protected static function booted()
                 {
                     static::created(function (\$data) {
@@ -59,6 +72,22 @@ if (!function_exists('Model')) {
                 {
                     return \$q->onlyTrashed();
                 }
+            EOD;
+
+        if ($fieldsWithBraces && !empty($fieldsWithBraces)) {
+
+            foreach ($fieldsWithBraces as $field) {
+            $braceContent = str_replace('/', '\\', $field['brace_content']);
+            $content .= <<<EOD
+            
+                public function {$field['field']}()
+            {
+                return \$this->belongsTo("App\\Modules\\Management\\{$braceContent}\\Models\\Model", "{$field['field']}");
+            }
+            EOD;
+            }
+        }
+        $content .= <<<EOD
             }
             EOD;
 
@@ -73,11 +102,10 @@ if (!function_exists('TableModel')) {
         $formated_module = explode('/', $moduleName);
         $modelName = '';
         if (count($formated_module) > 1) {
-            $modelName = $formated_module[count($formated_module) - 1].'Model';
+            $modelName = $formated_module[count($formated_module) - 1] . 'Model';
             array_pop($formated_module);
             $moduleName = implode('/', $formated_module);
             $moduleName = Str::replace("/", "\\", $moduleName);
-
         } else {
             $moduleName = Str::replace("/", "\\", $moduleName);
         }

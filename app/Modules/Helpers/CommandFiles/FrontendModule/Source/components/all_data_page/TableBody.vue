@@ -16,13 +16,14 @@
       </td>
       <td v-else-if="row_item === 'image' || isImageFile(item[row_item])" class="text-wrap max-w-120">
         <a
-          :href="item[row_item]"
+          :href="item[row_item] || '/avatar.png'"
           data-fancybox="gallery"
           :data-caption="`Image ${dataindex + 1}`"
         >
           <img
-            :src="item[row_item]"
-            style="width: 60px; height: 40px; object-fit: cover"
+            :src="item[row_item] || '/avatar.png'"
+            @error="handleImageError($event)"
+            style="width: 40px; height: 40px; object-fit: cover"
             alt="image"
           />
         </a>
@@ -30,12 +31,13 @@
       <td v-else-if="isFileField(item[row_item])" class="text-wrap max-w-120">
         <template v-if="isImageFile(item[row_item])">
           <a
-            :href="item[row_item]"
+            :href="item[row_item] || '/avatar.png'"
             data-fancybox="gallery"
             :data-caption="`${row_item} - Image ${dataindex + 1}`"
           >
             <img
-              :src="item[row_item]"
+              :src="item[row_item] || '/avatar.png'"
+              @error="handleImageError($event)"
               style="width: 60px; height: 40px; object-fit: cover"
               alt="image"
             />
@@ -93,6 +95,16 @@ export default {
   },
 
   methods: {
+    handleImageError(event) {
+      // When image fails to load, set src to avatar.png
+      event.target.src = '/avatar.png';
+      // Also update the parent link href to avatar.png
+      const parentLink = event.target.closest('a');
+      if (parentLink) {
+        parentLink.href = '/avatar.png';
+      }
+    },
+
     initFancybox() {
       // Initialize Fancybox for all images in this component
       Fancybox.bind('[data-fancybox="gallery"]', {

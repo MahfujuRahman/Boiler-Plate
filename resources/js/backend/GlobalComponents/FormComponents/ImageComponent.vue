@@ -1,14 +1,7 @@
 <template>
   <div>
-    <input
-      @change="preview"
-      class="form-control form-control-square"
-      type="file"
-      ref="input_files"
-      :accept="accept"
-      :class="classNames"
-      :name="name"
-    />
+    <input @change="preview" class="form-control form-control-square" type="file" ref="input_files" :accept="accept"
+      :class="classNames" :name="name" />
 
     <div v-if="image_preview && image_preview != ''" class="d-flex justify-content-start align-items-start">
       <a :href="image_preview" data-lightbox="image-preview" data-title="Preview">
@@ -46,6 +39,19 @@ export default {
   }),
 
   created: function () {
+
+    const currentRoute = this.$router && this.$route ? this.$route : null;
+    // Dynamically get the first element after '/gallery/edit/' in the route path
+    let modalName = null;
+    if (currentRoute && currentRoute.path) {
+      const segments = currentRoute.path.split('/').filter(Boolean);
+      if (segments.length > 0) {
+        modalName = this.getPlural(segments[0]);
+        this.modalNames = segments;
+        console.log("Plural Element:", modalName);
+      }
+    }
+
     this.$watch(
       "value",
       (newValue) => {
@@ -58,6 +64,57 @@ export default {
   },
 
   methods: {
+    getPlural: function(word) {
+      if (!word || typeof word !== 'string') return word;
+      
+      const word_lower = word.toLowerCase();
+      
+      // Use Intl.PluralRules to determine if we need plural form
+      const pluralRules = new Intl.PluralRules('en-US');
+      const rule = pluralRules.select(2); // 2 means plural
+      
+      // Simple pluralization rules for English
+      if (rule === 'other') {
+        // Handle common irregular plurals
+        const irregulars = {
+          'child': 'children',
+          'man': 'men', 
+          'woman': 'women',
+          'tooth': 'teeth',
+          'foot': 'feet',
+          'mouse': 'mice',
+          'person': 'people'
+        };
+        
+        if (irregulars[word_lower]) {
+          return irregulars[word_lower];
+        }
+        
+        // Words ending in 'y' preceded by consonant
+        if (word_lower.endsWith('y') && !/[aeiou]/.test(word_lower[word_lower.length - 2])) {
+          return word_lower.slice(0, -1) + 'ies';
+        }
+        
+        // Words ending in 's', 'sh', 'ch', 'x', 'z'
+        if (/[sxz]$|[cs]h$/.test(word_lower)) {
+          return word_lower + 'es';
+        }
+        
+        // Words ending in 'f' or 'fe'
+        if (word_lower.endsWith('f')) {
+          return word_lower.slice(0, -1) + 'ves';
+        }
+        if (word_lower.endsWith('fe')) {
+          return word_lower.slice(0, -2) + 'ves';
+        }
+        
+        // Default: add 's'
+        return word_lower + 's';
+      }
+      
+      return word_lower;
+    },
+
     preview: function () {
       const file = this.$refs.input_files.files[0];
       if (!file) return;
@@ -69,7 +126,18 @@ export default {
       reader.readAsDataURL(file);
     },
 
+    removeImage: async function (data) {
+      if (this.item.slug) {
+        const parsedData = { field: this.name, index: data.index };
+        const confirmed = await window.s_confirm();
+        if (!confirmed) return;
+        const response = await axios.post(`${modalName}/image-delete/${this.item.slug}?data=${JSON.stringify(parsedData)}`);
+        window.s_alert(response.data.message);
+      }
+    },
+
     remove: function () {
+
       this.image_preview = null;
       this.$refs.input_files.value = null;
     },
@@ -86,6 +154,7 @@ export default {
   border: 1px solid #ffffff2e;
   padding: 2px;
 }
+
 .image-remove-btn {
   margin-left: -18px;
   border-radius: 0px;

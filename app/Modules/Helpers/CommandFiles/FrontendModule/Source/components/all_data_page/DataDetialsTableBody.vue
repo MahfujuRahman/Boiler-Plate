@@ -6,15 +6,16 @@
       <th>{{ row_item }}</th>
       <th class="text-center">:</th>
       <th class="text-trim">
-        <template v-if="row_item === 'image' && item[row_item]">
+        <template v-if="row_item === 'image'">
           <a 
-            :href="item[row_item]" 
+            :href="item[row_item] || '/avatar.png'" 
             data-fancybox="detail-gallery" 
             :data-caption="`${row_item} - Detail View`"
           >
             <img
-              :src="item[row_item]"
-              style="width: 120px; height: 80px; object-fit: cover"
+              :src="item[row_item] || '/avatar.png'"
+              @error="handleImageError($event)"
+              style="width: 120px; height: 120px; object-fit: cover"
               alt="image"
             />
           </a>
@@ -66,6 +67,16 @@ export default {
   },
 
   methods: {
+    handleImageError(event) {
+      // When image fails to load, set src to avatar.png
+      event.target.src = '/avatar.png';
+      // Also update the parent link href to avatar.png
+      const parentLink = event.target.closest('a');
+      if (parentLink) {
+        parentLink.href = '/avatar.png';
+      }
+    },
+
     initFancybox() {
       // Initialize Fancybox for detail images
       Fancybox.bind('[data-fancybox="detail-gallery"]', {

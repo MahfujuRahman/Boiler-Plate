@@ -47,7 +47,7 @@ if (!function_exists('Migration')) {
                 $stringLimit = 100;
 
                 if (count($fieldName) == 1) {
-                    $content .= "            \$table->string('{$fieldName[0]}, {$stringLimit}')}')->nullable();\n";
+                    $content .= "            \$table->string('{$fieldName[0]}', {$stringLimit})->nullable();\n";
                 }
                 if (count($fieldName) > 1) {
                     $type = $fieldName[1];
@@ -69,10 +69,20 @@ if (!function_exists('Migration')) {
                     }
 
                     //enum value set end
-                    if ($type == in_array($type, ['string', 'stringfile','file'])) {
+                    
+                    // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
+                    if (strpos($type, 'tinyint-') === 0 || strpos($type, 'boolean-') === 0) {
+                        $enumType = explode('-', $type);
+                        $type = 'enum';
+                        $enumvalue = explode('.', $enumType[1]);
+                    }
+                    
+                    if (in_array($type, ['string', 'stringfile','file'])) {
                         $type = 'string';
-                    } elseif (in_array($type, ['longtext', 'text'])) {
+                    } elseif (in_array($type, ['text'])) {
                         $type = 'text';
+                    } elseif (in_array($type, ['longtext'])) {
+                        $type = 'longtext';
                     } elseif (in_array($type, ['number', 'integer', 'intiger', 'int'])) {
                         $type = 'integer';
                     } elseif (in_array($type, ['bigint', 'biginteger'])) {
@@ -81,14 +91,36 @@ if (!function_exists('Migration')) {
                         $type = 'tinyInteger';
                     } elseif ($type == 'date') {
                         $type = 'date';
-                    } elseif ($type == 'datetime') {
+                    } elseif (in_array($type, ['datetime', 'datetime-local'])) {
                         $type = 'datetime';
+                    } elseif ($type == 'time') {
+                        $type = 'time';
+                    } elseif ($type == 'year') {
+                        $type = 'year';
+                    } elseif ($type == 'month') {
+                        $type = 'month';
+                    } elseif ($type == 'unsigned_int') {
+                        $type = 'unsignedInteger';
+                    } elseif ($type == 'unsignedInteger') {
+                        $type = 'unsignedInteger';
+                    } elseif ($type == 'timestamp') {
+                        $type = 'timestamp';
                     } elseif ($type == 'json') {
                         $type = 'json';
                     } elseif ($type == 'enum') {
                         $type = 'enum';
                     } elseif ($type == 'float') {
                         $type = 'float';
+                    } elseif ($type == 'double') {
+                        $type = 'double';
+                    } elseif ($type == 'decimal') {
+                        $type = 'decimal';
+                    } elseif ($type == 'binary') {
+                        $type = 'binary';
+                    } elseif ($type == 'uuid') {
+                        $type = 'uuid';
+                    } elseif ($type == 'password') {
+                        $type = 'string';
                     } else {
                         $type = 'string';
                     }
@@ -180,7 +212,7 @@ if (!function_exists('TableMigration')) {
                 $stringLimit = 100;
 
                 if (count($fieldName) == 1) {
-                    $content .= "            \$table->string('{$fieldName[0]}, {$stringLimit}')}')->nullable();\n";
+                    $content .= "            \$table->string('{$fieldName[0]}', {$stringLimit})->nullable();\n";
                 }
                 if (count($fieldName) > 1) {
                     $type = $fieldName[1];
@@ -202,10 +234,20 @@ if (!function_exists('TableMigration')) {
                     }
 
                     //enum value set end
-                    if ($type == in_array($type, ['string', 'stringfile'])) {
+                    
+                    // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
+                    if (strpos($type, 'tinyint-') === 0 || strpos($type, 'boolean-') === 0) {
+                        $enumType = explode('-', $type);
+                        $type = 'enum';
+                        $enumvalue = explode('.', $enumType[1]);
+                    }
+                    
+                    if (in_array($type, ['string', 'stringfile','file'])) {
                         $type = 'string';
-                    } elseif (in_array($type, ['longtext', 'text'])) {
+                    } elseif (in_array($type, ['text'])) {
                         $type = 'text';
+                    } elseif (in_array($type, ['longtext'])) {
+                        $type = 'longtext';
                     } elseif (in_array($type, ['number', 'integer', 'intiger', 'int'])) {
                         $type = 'integer';
                     } elseif (in_array($type, ['bigint', 'biginteger'])) {
@@ -214,14 +256,34 @@ if (!function_exists('TableMigration')) {
                         $type = 'tinyInteger';
                     } elseif ($type == 'date') {
                         $type = 'date';
-                    } elseif ($type == 'datetime') {
+                    } elseif (in_array($type, ['datetime', 'datetime-local'])) {
                         $type = 'datetime';
+                    } elseif ($type == 'time') {
+                        $type = 'time';
+                    } elseif ($type == 'year') {
+                        $type = 'year';
+                    } elseif ($type == 'unsigned_int') {
+                        $type = 'unsigned_int';
+                    } elseif ($type == 'unsignedInteger') {
+                        $type = 'unsignedInteger';
+                    } elseif ($type == 'timestamp') {
+                        $type = 'timestamp';
                     } elseif ($type == 'json') {
                         $type = 'json';
                     } elseif ($type == 'enum') {
                         $type = 'enum';
                     } elseif ($type == 'float') {
                         $type = 'float';
+                    } elseif ($type == 'double') {
+                        $type = 'double';
+                    } elseif ($type == 'decimal') {
+                        $type = 'decimal';
+                    } elseif ($type == 'binary') {
+                        $type = 'binary';
+                    } elseif ($type == 'uuid') {
+                        $type = 'uuid';
+                    } elseif ($type == 'password') {
+                        $type = 'string';
                     } else {
                         $type = 'string';
                     }

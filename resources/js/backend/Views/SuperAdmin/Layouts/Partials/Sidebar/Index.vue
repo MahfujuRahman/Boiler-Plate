@@ -35,29 +35,8 @@
         },
       ]" />
 
-      <side-bar-drop-down-menus :icon="`fa fa-plus`" :menu_title="`SeminerManagement`" :menus="[
-        {
-          route_name: `AllSeminer`,
-          title: `Seminer`,
-          icon: `zmdi zmdi-dot-circle-alt`,
-        },
-      ]" />
-      <side-bar-drop-down-menus
-        :icon="`fa fa-plus`"
-        :menu_title="`GalleryManagement`"
-        :menus="[
-          {
-            route_name: `AllGalleryCategory`,
-            title: `GalleryCategory`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },          {
-            route_name: `AllGallery`,
-            title: `Gallery`,
-            icon: `zmdi zmdi-dot-circle-alt`,
-          },
-        ]"
-/>
-<!-- Management end -->
+
+      <!-- Management end -->
     </ul>
   </div>
 </template>
