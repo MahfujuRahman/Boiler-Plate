@@ -4,7 +4,6 @@
 
 ## 📋 Table of Contents
 
-- [Installation](#-installation)
 - [Quick Start](#-quick-start)
 - [Command Structure](#-command-structure)
 - [Data Types Reference](#-data-types-reference)
@@ -14,47 +13,19 @@
 - [Troubleshooting](#-troubleshooting)
 
 ---
-## ⚡ Installation
-
-### Go To this Repo and Branch must be master
-```bash
-https://github.com/MahfujuRahman/Boiler-Plate/tree/master
-```
-
-### Git clone or Download Zip
-```bash
-git clone git@github.com:MahfujuRahman/Boiler-Plate.git
-```
-
-### Composer and Npm Install
-```bash
-composer install && npm install
-```
-### Run this command for fresh migrate and passport install
-```bash
-npm run reload
-```
-### Run project
-```bash
-php artisan serve && npm run dev
-```
----
 
 ## 🚀 Quick Start
 
 ### Basic Module Generation
 ```bash
-php artisan make:module UserManagement/User [name:string,email:string-255,is_active:boolean,role:enum-admin.superadmin.user] --vue
+php artisan make:module UserManagement/User [name:string,email:string-255,is_active:boolean] --vue
 ```
 
 ### Basic Table Generation
 ```bash
-php artisan make:table UserManagement/User/UserProfile [user_id:bigint,bio:text,avatar:file] --model
+php artisan make:table UserManagement/User/UserProfile [user_id:bigint,bio:text,avatar:stringfile] --model
 ```
-### Run With BelongsTo Relationship 
-```bash
-php artisan make:module ContentManagement/Blog [title:string-255,blog_category_id:bigint{ContentManagement/BlogCategory},slug:string-255,excerpt:text] --vue
-```
+
 ---
 
 ## 🏗️ Command Structure
@@ -69,24 +40,7 @@ php artisan make:module ModuleName/SubModule [field1:type1,field2:type2] --vue
 php artisan make:table ModuleName/SubModule/TableName [field1:type1,field2:type2] --model
 ```
 
-### 📝 Module Command With BelongsTo Relationship 
-```bash
-php artisan make:module ModuleName/SubModule [field1:type1{ModuleName/SubModule},field2:type2] --vue
-```
-Suppose you want to link `BlogManagement/BlogCategory` to `BlogManagement/Blog`.
-
-In the **Blog** module, define the field like this: `blog_category_id:bigint{BlogManagement/BlogCategory}`
-
-
-This will:
-
-- Automatically generate a **select dropdown** in the form for `blog_category_id`.
-- Populate the dropdown with data from the `BlogCategory` module.
-
-> **Note:** Always use the `{ModuleName/SubModule}` format to correctly define the relational path.
-
 ### Generated Files
-- **Module with Relation**: Use this curly `{}` to define relationship and `ModuleName/SubModule` should be your relational command path.
 - **Module**: Creates controllers, migrations, Vue components, routes
 - **Table**: Creates migration and model files only
 - **Flags**: `--vue` for Vue components, `--model` for Eloquent models
@@ -275,6 +229,97 @@ php artisan make:module TestModule/SpecialTest [
   identifier:uuid
 ] --vue
 ```
+
+---
+
+## 🏆 Advanced Examples
+
+### 🛒 E-commerce Product Module
+```bash
+php artisan make:module EcommerceManagement/Product [
+  name:string-255,
+  slug:string-255,
+  description:text,
+  long_description:longtext,
+  price:decimal,
+  discount_price:decimal,
+  stock:integer,
+  min_stock:integer,
+  weight:double,
+  dimensions:json,
+  is_active:boolean,
+  is_featured:boolean,
+  status:enum-draft.published.archived,
+  category_id:bigint,
+  brand_id:bigint,
+  sku:string-100,
+  barcode:string-50,
+  created_at:datetime,
+  published_at:datetime,
+  image:stringfile,
+  gallery:json,
+  meta_title:string-255,
+  meta_description:text,
+  seo_keywords:text
+] --vue
+```
+
+### 👤 User Profile Module
+```bash
+php artisan make:module UserManagement/UserProfile [
+  user_id:bigint,
+  first_name:string-100,
+  last_name:string-100,
+  full_name:string-255,
+  bio:text,
+  phone:string-20,
+  date_of_birth:date,
+  gender:enum-male.female.other,
+  country:string-100,
+  city:string-100,
+  address:text,
+  postal_code:string-20,
+  avatar:stringfile,
+  cover_photo:stringfile,
+  social_links:json,
+  preferences:json,
+  is_verified:boolean,
+  is_public:boolean,
+  account_type:enum-free.premium.enterprise,
+  last_login:datetime,
+  email_verified_at:datetime
+] --vue
+```
+
+### 📝 Blog Post Module
+```bash
+php artisan make:module ContentManagement/BlogPost [
+  title:string-255,
+  slug:string-255,
+  excerpt:text,
+  content:longtext,
+  author_id:bigint,
+  category_id:bigint,
+  featured_image:stringfile,
+  gallery:json,
+  tags:json,
+  status:enum-draft.published.archived,
+  is_featured:boolean,
+  is_sticky:boolean,
+  allow_comments:boolean,
+  published_at:datetime,
+  scheduled_at:datetime,
+  view_count:integer,
+  like_count:integer,
+  comment_count:integer,
+  reading_time:integer,
+  meta_title:string-255,
+  meta_description:text,
+  meta_keywords:text,
+  seo_score:float
+] --vue
+```
+
 ---
 
 ## 💡 Best Practices
