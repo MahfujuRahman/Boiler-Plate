@@ -10,7 +10,7 @@
           <i :class="show_list ? 'fa fa-angle-up' : 'fa fa-angle-down'"  style="position: absolute; right: 10px;"></i>
         </template>
 
-        <template v-else>
+<template v-else>
           <div v-for="item in selected" :key="item.id" :id="item.id" class="selected_item">
             <div class="label">
               {{ item.name || item.title  }}
@@ -20,38 +20,34 @@
             </div>
           </div>
         </template>
-      </div>
-      <div class="drop_down_items" v-if="show_list">
-        <div class="drop_down_data_search">
-          <input @keyup="search_item($event)" class="form-control" placeholder="search.." id="table_search_box" type="search" />
+</div>
+<div class="drop_down_items" v-if="show_list">
+  <div class="drop_down_data_search">
+    <input @keyup="search_item($event)" class="form-control" placeholder="search.." id="table_search_box"
+      type="search" />
 
-          <button type="button" @click.prevent="show_list = false" class="btn btn-danger">
-            <i class="fa fa-close"></i>
-          </button>
-        </div>
-        <ul class="option_list custom_scroll">
-          <li class="option_item" v-for="item in all.data" :key="item.id">
-            <label :for="`drop_item_${item.id}`">
-              <div class="check_box">
-                <input
-                  @change="set_selected(item, $event)"
-                  :checked="is_selected(item)"
-                  type="checkbox"
-                  :id="`drop_item_${item.id}`"
-                  class="form-check-input ml-0"
-                />
-              </div>
-              <div class="label">{{ item.name || item.title }}</div>
-            </label>
-          </li>
-        </ul>
-        <div class="drop_down_footer data_list">
-          <pagination :data="all" :get_data="get_all" :set_paginate="set_paginate" :set_page="set_page" />
-        </div>
-      </div>
-    </div>
-    <input type="hidden" :id="name" :name="name" :value="multiple ? `[${selected_ids}]` : `${selected_ids}`" />
+    <button type="button" @click.prevent="show_list = false" class="btn btn-danger">
+      <i class="fa fa-close"></i>
+    </button>
   </div>
+  <ul class="option_list custom_scroll">
+    <li class="option_item" v-for="item in all.data" :key="item.id">
+      <label :for="`drop_item_${item.id}`">
+        <div class="check_box">
+          <input @change="set_selected(item, $event)" :checked="is_selected(item)" type="checkbox"
+            :id="`drop_item_${item.id}`" class="form-check-input ml-0" />
+        </div>
+        <div class="label">{{ item.name || item.title }}</div>
+      </label>
+    </li>
+  </ul>
+  <div class="drop_down_footer data_list">
+    <pagination :data="all" :get_data="get_all" :set_paginate="set_paginate" :set_page="set_page" />
+  </div>
+</div>
+</div>
+<input type="hidden" :id="name" :name="name" :value="multiple ? `[${selected_ids}]` : `${selected_ids}`" />
+</div>
 </template>
 <script>
 import { mapActions, mapState, mapWritableState } from "pinia";
@@ -141,3 +137,10 @@ export default {
   },
 };
 </script>
+
+
+<style scoped>
+.selected_list {
+  overflow: hidden;
+}
+</style>

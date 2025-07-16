@@ -37,6 +37,7 @@ if (!function_exists('RouteContent')) {
                     Route::post('restore', [Controller::class,'restore']);
                     Route::post('import', [Controller::class,'import']);
                     Route::post('bulk-action', [Controller::class, 'bulkAction']);
+                    Route::post('image-delete/{slug}', [Controller::class, 'DeletePropertyImage']);
                 });
             });
             EOD;
@@ -44,3 +45,4 @@ if (!function_exists('RouteContent')) {
         return $content;
     }
 }
+ 

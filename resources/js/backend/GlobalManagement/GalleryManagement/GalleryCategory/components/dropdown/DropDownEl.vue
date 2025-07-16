@@ -141,3 +141,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.selected_list{
+  overflow: hidden;
+}
+</style>
