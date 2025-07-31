@@ -16,12 +16,5 @@ class Controller extends ControllersController
         $data = GetAllDashboardData::execute();
         return $data;
     }
-    public function GetEmployeeDashboardData( ){
-
-        $data = GetEmployeeDashboardData::execute();
-        return $data;
-    }
-
-   
 
 }
