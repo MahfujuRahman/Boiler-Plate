@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid">
     <!--Start Dashboard Content-->
-
     <div class="card mt-3">
       <div class="card-content">
         <div class="row row-group m-0">

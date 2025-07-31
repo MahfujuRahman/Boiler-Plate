@@ -7,7 +7,12 @@
 */
 
 include_once base_path("app/Modules/Management/Auth/Routes/Route.php");
-
+/*
+|--------------------------------------------------------------------------
+| Dashboard data
+|--------------------------------------------------------------------------
+*/
+include_once base_path("app/Modules/Management/Dashboard/Routes/Route.php");
 /*
 |--------------------------------------------------------------------------
 | Setting Management Module
