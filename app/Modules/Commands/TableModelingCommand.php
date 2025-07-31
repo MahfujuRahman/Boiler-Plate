@@ -107,15 +107,16 @@ class TableModelingCommand extends Command
          $parts = explode('/', $this->modulePath);
 
          // Get the last part as the model/table base name
-         $lastPart = array_pop($parts); // BlogBlogCategory
-         $tableName = Str::plural(Str::snake($lastPart)); // blog_blog_categories
+         $lastPart = array_pop($parts); // CourseCourseCategory
+         $tableName = Str::plural(Str::snake($lastPart)); // course_course_categories
  
          // Remaining parts as the module directory
-         $moduleDirectory = implode('/', $parts); // BlogManagement/Blog
-         $moduleNamespace = Str::replace('/', '\\', $moduleDirectory); // BlogManagement\Blog
+         $moduleDirectory = implode('/', $parts); // CourseManagement/CourseCategory
+       
  
-
-        $path = "//App//Modules//Management//{$moduleNamespace}//Database//create_{$tableName}_table.php";
+         // Construct the path for migration
+         // $path = "/app/Modules/Management/{$moduleDirectory}/{$lastPart}/Database/create_{$tableName}_table.php";
+        $path = "/app/Modules/Management/{$moduleDirectory}/Database/create_{$tableName}_table.php";
 
         Artisan::call('migrate', ['--path' => $path]);
     }

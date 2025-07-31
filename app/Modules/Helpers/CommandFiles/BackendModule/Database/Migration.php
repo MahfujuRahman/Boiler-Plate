@@ -5,8 +5,6 @@ use Illuminate\Support\Str;
 if (!function_exists('Migration')) {
     function Migration($moduleName, $fields)
     {
-
-
         $table_name = '';
         $formated_module = explode('/', $moduleName);
 
@@ -69,15 +67,15 @@ if (!function_exists('Migration')) {
                     }
 
                     //enum value set end
-                    
+
                     // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
                     if (strpos($type, 'tinyint-') === 0 || strpos($type, 'boolean-') === 0) {
                         $enumType = explode('-', $type);
                         $type = 'enum';
                         $enumvalue = explode('.', $enumType[1]);
                     }
-                    
-                    if (in_array($type, ['string', 'stringfile','file'])) {
+
+                    if (in_array($type, ['string', 'stringfile', 'file'])) {
                         $type = 'string';
                     } elseif (in_array($type, ['text'])) {
                         $type = 'text';
@@ -165,22 +163,16 @@ if (!function_exists('Migration')) {
 if (!function_exists('TableMigration')) {
     function TableMigration($fullModulePath, $fields)
     {
-
-
-
         // Split the full module path
         $parts = explode('/', $fullModulePath);
 
         // Get the last part as the model/table base name
-        $lastPart = array_pop($parts); // BlogBlogCategory
-        $tableName = Str::plural(Str::snake($lastPart)); // blog_blog_categories
+        $lastPart = array_pop($parts); // CourseCategory
+        $tableName = Str::plural(Str::snake($lastPart)); // course_categories
 
         // Remaining parts as the module directory
-        $moduleDirectory = implode('/', $parts); // BlogManagement/Blog
-        $moduleNamespace = Str::replace('/', '\\', $moduleDirectory); // BlogManagement\Blog
-
-        // Optional: debug check
-        // dd($moduleNamespace, $tableName);
+        $moduleDirectory = implode('/', $parts); // CourseManagement
+        
         $content = <<<"EOD"
         <?php
 
@@ -191,7 +183,7 @@ if (!function_exists('TableMigration')) {
         return new class extends Migration
         {
             /**
-             php artisan migrate --path='\App\\Modules\\Management\\{$moduleNamespace}\\Database\\create_{$tableName}_table.php'
+             php artisan migrate --path='/app/Modules/Management/{$moduleDirectory}/Database/create_{$tableName}_table.php' 
              * Run the migrations.
              */
             public function up(): void
@@ -227,15 +219,15 @@ if (!function_exists('TableMigration')) {
                     }
 
                     //enum value set end
-                    
+
                     // Handle tinyint and boolean with custom options (e.g., tinyint-yes.no, boolean-active.inactive)
                     if (strpos($type, 'tinyint-') === 0 || strpos($type, 'boolean-') === 0) {
                         $enumType = explode('-', $type);
                         $type = 'enum';
                         $enumvalue = explode('.', $enumType[1]);
                     }
-                    
-                    if (in_array($type, ['string', 'stringfile','file'])) {
+
+                    if (in_array($type, ['string', 'stringfile', 'file'])) {
                         $type = 'string';
                     } elseif (in_array($type, ['text'])) {
                         $type = 'text';
@@ -256,7 +248,7 @@ if (!function_exists('TableMigration')) {
                     } elseif ($type == 'year') {
                         $type = 'year';
                     } elseif ($type == 'unsigned_int') {
-                        $type = 'unsigned_int';
+                        $type = 'unsignedInteger';
                     } elseif ($type == 'unsignedInteger') {
                         $type = 'unsignedInteger';
                     } elseif ($type == 'timestamp') {
