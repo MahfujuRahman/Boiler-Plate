@@ -10,7 +10,23 @@
 
         <!-- Search Input -->
         <div class="col-12 col-md-6 mb-2 mb-md-0">
-            <input class="form-control" @keyup="(e) => set_search_key(e)" placeholder="Search" />
+            <div class="search-input-container position-relative">
+                <input 
+                    class="form-control" 
+                    @keyup="(e) => set_search_key(e)" 
+                    placeholder="Search"
+                    v-model="search_key"
+                />
+                <button 
+                    v-if="search_key && search_key.length > 0"
+                    class="btn btn-sm search-clear-btn position-absolute"
+                    @click="clearSearch"
+                    title="Clear search"
+                    type="button"
+                >
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Sorting Button -->
@@ -52,6 +68,12 @@ export default {
             this.reset_filter_criteria();
             await this.get_all();
         },
+        async clearSearch() {
+            this.search_key = '';
+            this.only_latest_data = true;
+            await this.get_all();
+            this.only_latest_data = false;
+        },
     },
     computed: {
         ...mapWritableState(store, [
@@ -63,6 +85,37 @@ export default {
     }
 }
 </script>
-<style lang="">
+<style scoped>
+.search-input-container {
+    position: relative;
+}
 
+.search-clear-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    /* color: #6c757d; */
+    padding: 2px 6px;
+    line-height: 1;
+    z-index: 10;
+    transition: color 0.2s ease;
+}
+
+.search-clear-btn:hover {
+    color: #dc3545;
+    background: transparent;
+}
+
+.search-clear-btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.search-input-container .form-control {
+    padding-right: 35px;
+}
 </style>
