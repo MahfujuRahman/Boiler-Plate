@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Classification" content="Portfolio" />
+    <meta name="identifier-URL" content="" />
+    <meta name="directory" content="submission" />
+    <meta name="category" content="Internet" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    <meta name="target" content="all" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="author" content="nextechcode" />
+    <meta name="developer" content="Alif Sagir" />
+    <meta name="developer-email" content="alifsagir99@gmail.com" />
+    <meta name="developer-company" content="nextechcode" />
+    <meta name="copyright" content="Amber-Personal-portfolio" />
+    <meta name="revisit" content="1 days" />
+    <meta name="keywords"
+        content="amber, nextechcode, alif sagir, personal portfolio, professional portfolio, freelancer portfolio, creative portfolio personal, portfolio,  cv, vcard, resume, business card, business, designer, agency, html template,
+ bootstrap 5, css3, sass, javaScript, responsive, clean, dark, light, sco, minimal, multiple page, modern, creative, freelancer, programmer," />
+    <meta name="description" content="Personal-portfolio" />
+    <meta property="og:title" content="Amber-Personal-portfolio" />
+    <meta property="og:site_name" content="Amber-Personal-portfolio" />
+    <meta property="og:description" content="Amber-Personal-portfolio" />
+    <meta property="og:type" content="Personal portfolio" />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="./assets/images/logo/dark_logo.png" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="315" />
+    <meta name="twitter:title" content="Amber Personal portfolio" />
+    <meta name="twitter:description" content="Amber Personal portfolio" />
+    <meta name="twitter:image" content="./assets/images/logo/dark_logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>About</title>
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/icon/fontawesome-free-6.2.0-web/css/all.min.css" />
+    <link rel="stylesheet" href="./assets/styles/style.css" />
+    <style>
+        .vplayer {
+            margin-bottom: 30px;
+            position: relative;
+            padding-top: 56.25%;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #000;
+        }
+
+        .vplayer img {
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0.7;
+        }
+
+        .vplayer .plybtn {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            width: 90px;
+            height: 60px;
+            background-color: #333;
+            z-index: 1;
+            opacity: 0.8;
+            border-radius: 6px;
+        }
+
+        .vplayer .plybtn:before {
+            content: "";
+            border-style: solid;
+            border-width: 15px 0 15px 26.0px;
+            border-color: transparent transparent transparent #fff;
+        }
+
+        .vplayer img,
+        .vplayer .plybtn {
+            cursor: pointer;
+        }
+
+        .vplayer img,
+        .vplayer iframe,
+        .vplayer .plybtn,
+        .vplayer .plybtn:before {
+            position: absolute;
+        }
+
+        .vplayer .plybtn,
+        .vplayer .plybtn:before {
+            top: 50%;
+            left: 50%;
+            transform: translate3d(-50%, -50%, 0);
+        }
+
+        .vplayer iframe {
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body id="top">
+    <div class="vplayer" data-v="J1yoQAdHuu0">
+
+        <!-- play btn -->
+        <div class="plybtn"></div>
+
+    </div>
+    <script>
+        (function () {
+
+            var vplayer = document.querySelectorAll(".vplayer");
+
+            for (var i = 0; i < vplayer.length; i++) {
+                console.log(vplayer[i].dataset.v);
+                var source = "https://img.youtube.com/vi/" + vplayer[i].dataset.v + "/sddefault.jpg";
+
+                var image = new Image();
+                image.src = source;
+                image.addEventListener("load", function () {
+                    vplayer[i].appendChild(image);
+                }(i));
+
+                vplayer[i].addEventListener("click", function () {
+
+                    var iframe = document.createElement("iframe");
+
+                    iframe.setAttribute("allowfullscreen", "");
+                    iframe.setAttribute("frameborder", "0");
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/" + this.dataset.v + "?rel=0&showinfo=0&autoplay=1");
+
+                    this.innerHTML = "";
+                    this.appendChild(iframe);
+                });
+            };
+
+        })();
+    </script>
+</body>
+
+</html>
