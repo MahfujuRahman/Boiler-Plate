@@ -133,9 +133,9 @@ php artisan make:module EmailConfigures [host:string-255,port:int,email:string-2
 |--------------------------------------------------------------------------
 */   
 php artisan make:module SeminerManagement/Seminer [title:string-255,description:text,poster:string-255,whatsapp_group:stringo-255,facebook_group:string-255,telegram_group:string-255,date_time:datetime,promo_video:text] --vue
-php artisan make:module SeminerManagement/Seminer/SeminerParticipant [seminar_id:bigint{SeminerManagement/Seminer},full_name:string-255,email:string-255,phone_number:string-20,address:string-255] --vue
-php artisan make:module SeminerManagement/Seminer/SeminerSubscribers [seminar_id:bigint{SeminerManagement/Seminer},email:string-255] --vue
-php artisan make:module SeminerManagement/Seminer/SeminerReviews [seminar_id:bigint{SeminerManagement/Seminer},comment:string-255,rating:float,comment_reply:json] --vue
+php artisan make:module SeminerManagement/SeminerParticipant [seminar_id:bigint{SeminerManagement/Seminer},full_name:string-255,email:string-255,phone_number:string-20,address:string-255] --vue
+php artisan make:module SeminerManagement/SeminerSubscribers [seminar_id:bigint{SeminerManagement/Seminer},email:string-255] --vue
+php artisan make:module SeminerManagement/SeminerReviews [seminar_id:bigint{SeminerManagement/Seminer},comment:string-255,rating:float,comment_reply:json] --vue
 
 /*
 |--------------------------------------------------------------------------
