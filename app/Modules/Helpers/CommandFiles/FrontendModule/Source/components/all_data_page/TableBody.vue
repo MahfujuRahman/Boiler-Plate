@@ -1,9 +1,5 @@
 <template>
-  <tr
-    v-for="(item, dataindex) in data"
-    :key="item.id"
-    :class="`table_rows table_row_${item.id}`"
-  >
+  <tr v-for="(item, dataindex) in data" :key="item.id" :class="`table_rows table_row_${item.id}`">
     <td>
       <table-row-action :item="item"></table-row-action>
     </td>
@@ -12,44 +8,25 @@
     </td>
     <template v-for="(row_item, index) in setup.table_row_data" :key="index">
       <td v-if="row_item == 'id'">
-        {{ dataindex + 1 }}
+       {{ (current_page - 1) * per_page + dataindex + 1 }}
       </td>
       <td v-else-if="row_item === 'image' || isImageFile(item[row_item])" class="text-wrap max-w-120">
-        <a
-          :href="item[row_item] || '/avatar.png'"
-          data-fancybox="gallery"
-          :data-caption="`Image ${dataindex + 1}`"
-        >
-          <img
-            :src="item[row_item] || '/avatar.png'"
-            @error="handleImageError($event)"
-            style="width: 40px; height: 40px; object-fit: cover"
-            alt="image"
-          />
+        <a :href="item[row_item] || '/avatar.png'" data-fancybox="gallery" :data-caption="`Image ${dataindex + 1}`">
+          <img :src="item[row_item] || '/avatar.png'" @error="handleImageError($event)"
+            style="width: 40px; height: 40px; object-fit: cover" alt="image" />
         </a>
       </td>
       <td v-else-if="isFileField(item[row_item])" class="text-wrap max-w-120">
         <template v-if="isImageFile(item[row_item])">
-          <a
-            :href="item[row_item] || '/avatar.png'"
-            data-fancybox="gallery"
-            :data-caption="`${row_item} - Image ${dataindex + 1}`"
-          >
-            <img
-              :src="item[row_item] || '/avatar.png'"
-              @error="handleImageError($event)"
-              style="width: 60px; height: 40px; object-fit: cover"
-              alt="image"
-            />
+          <a :href="item[row_item] || '/avatar.png'" data-fancybox="gallery"
+            :data-caption="`${row_item} - Image ${dataindex + 1}`">
+            <img :src="item[row_item] || '/avatar.png'" @error="handleImageError($event)"
+              style="width: 60px; height: 40px; object-fit: cover" alt="image" />
           </a>
         </template>
         <template v-else>
-          <a
-            :href="item[row_item]"
-            target="_blank"
-            class="file-download-link"
-            :title="`Download ${getFileName(item[row_item])}`"
-          >
+          <a :href="item[row_item]" target="_blank" class="file-download-link"
+            :title="`Download ${getFileName(item[row_item])}`">
             <i class="fas fa-file-download"></i>
             {{ getFileName(item[row_item]) }}
           </a>
@@ -71,7 +48,7 @@ import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 export default {
-  props: ["data"],
+  props: ["data", "current_page", "per_page"],
   data: () => ({
     setup,
   }),
@@ -140,7 +117,7 @@ export default {
 
     isImageFile(content) {
       if (!content || typeof content !== "string") return false;
-      
+
       const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp'];
       const extension = this.getFileExtension(content);
       return imageExtensions.includes(extension.toLowerCase());
@@ -148,25 +125,25 @@ export default {
 
     getFileExtension(filePath) {
       if (!filePath || typeof filePath !== "string") return "";
-      
+
       const parts = filePath.split('.');
       return parts.length > 1 ? parts[parts.length - 1] : "";
     },
 
     getFileName(filePath) {
       if (!filePath || typeof filePath !== "string") return "Download";
-      
+
       // Extract filename from path like "uploads/GalleryManagement\\GalleryCategory/2025-07-14-10352237554.pdf"
       const parts = filePath.split(/[\/\\]/);
       const fileName = parts[parts.length - 1];
-      
+
       // If filename is too long, truncate it
       if (fileName.length > 20) {
         const extension = this.getFileExtension(fileName);
         const nameWithoutExt = fileName.substring(0, fileName.lastIndexOf('.'));
         return nameWithoutExt.substring(0, 15) + '...' + (extension ? '.' + extension : '');
       }
-      
+
       return fileName;
     },
 
@@ -205,10 +182,11 @@ export default {
 .max-w-120 {
   max-width: 120px;
 }
+
 .text-wrap {
-    text-overflow: ellipsis !important;
-    overflow: hidden !important;
-    white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
 }
 
 .file-download-link {

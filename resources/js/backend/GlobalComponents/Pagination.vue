@@ -3,13 +3,9 @@
     <ul class="pagination my-2" style="font-size: 11px">
       <template v-for="(link, index) in data.links" :key="index">
         <li class="page-item" :class="{ active: link.active }">
-          <a
-            class="page-link"
+          <a class="page-link"
             :class="data.current_page == data.last_page && data.links.length - 1 == index ? 'disabled' : ''"
-            @click.prevent="set_page_data(link)"
-            :href="link.url"
-            v-html="`<span>${link.label}</span>`"
-          >
+            @click.prevent="set_page_data(link)" :href="link.url" v-html="`<span>${link.label}</span>`">
           </a>
         </li>
       </template>
@@ -52,10 +48,11 @@ export default {
         let page = url.searchParams.get("page");
         link.url ? this.set_page(parseInt(page)) : "";
         this.get_data();
-      } catch (error) {}
+      } catch (error) { }
     },
     set_per_page_limit: function () {
       this.set_paginate(event.target.value);
+      this.set_page(1);
       this.get_data();
     },
   },
